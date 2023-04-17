@@ -7,50 +7,50 @@ if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;
 }
 
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    options.tableName = 'EventImages';
+    options.tableName = 'Attendances';
     await queryInterface.bulkInsert(options, [
       {
         eventId: 1,
-        url: "image1@images.com",
-        preview: true
+        userId: 1,
+        status: "attending"
       },
       {
         eventId: 1,
-        url: "image2@images.com",
-        preview: false
+        userId: 2,
+        status: "waitlist"
       },
       {
         eventId: 2,
-        url: "image3@images.com",
-        preview: true
+        userId: 3,
+        status: "pending"
       },
       {
         eventId: 2,
-        url: "image4@images.com",
-        preview: false
+        userId: 1,
+        status: "waitlist"
       },
       {
         eventId: 3,
-        url: "image5@images.com",
-        preview: true
+        userId: 2,
+        status: "pending"
       },
       {
         eventId: 3,
-        url: "image6@images.com",
-        preview: false
+        userId: 3,
+        status: "attending"
       }
     ], {})
+
   },
 
   async down (queryInterface, Sequelize) {
-    options.tableName = 'EventImages';
+    options.tableName = 'Attendances';
     const Op = Sequelize.Op;
     await queryInterface.bulkDelete(options, {
-      url: { [Op.in]: ["image1@images.com", "image2@images.com", "image3@images.com", "image4@images.com", "image5@images.com", "image6@images.com"] }
+      id: { [Op.in]: [1, 2, 3, 4, 5, 6] }
     }, {});
   }
 };
