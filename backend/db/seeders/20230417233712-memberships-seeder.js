@@ -32,7 +32,7 @@ module.exports = {
     options.tableName = 'Memberships';
     const Op = Sequelize.Op;
     await queryInterface.bulkDelete(options, {
-      id: { [Op.in]: [1, 2, 3] }
+      userId: { [Op.eq]: [1, 2, 3] }
     }, {});
   }
 };
