@@ -14,10 +14,18 @@ module.exports = (sequelize, DataTypes) => {
       Venue.hasMany(models.Event, {
         foreignKey: "venueId"
       })
-      Venue.belongsTo(models.Group)
+      Venue.belongsTo(models.Group, {
+        otherKey: "groupId"
+      })
     }
   }
   Venue.init({
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
+    },
     groupId: DataTypes.INTEGER,
     address: DataTypes.VARCHAR,
     city: DataTypes.VARCHAR,
