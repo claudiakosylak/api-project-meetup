@@ -8,6 +8,10 @@ const { Venue } = require('../../db/models');
 const { Attendance } = require('../../db/models');
 const { EventImage } = require('../../db/models');
 
+const bcrypt = require('bcryptjs');
+
+const { requireAuth } = require('../../utils/auth');
+
 const router = express.Router();
 
 router.get("/:groupId/events", async (req, res) => {
@@ -78,9 +82,48 @@ router.get("/", async (req, res) => {
                 }
             }
         });
-        group.dataValues.previewImage = preview.url;
+        if (preview) {
+            group.dataValues.previewImage = preview.url
+        } else group.dataValues.previewImage = null;
+
     }
     return res.json({ "Groups": groups});
 });
+
+router.post("/", requireAuth, async (req, res) => {
+    const { name, about, type, private, city, state } = req.body;
+    const organizer = req.user.id;
+
+    const errors = {};
+    if (name.length > 60) errors.name = "Name must be 60 characters or less";
+    if (about.length < 50) errors.about = "About must be 50 characters or less";
+    if (type !== "Online" && type !== "In person") errors.type = "Type must be 'Online' or 'In Person'";
+    if (private !== true && private !== false) errors.private = "Private must be a boolean";
+    if (!city) errors.city = "City is required";
+    if (!state) errors.state = "State is required";
+
+    if (Object.keys(errors).length > 0) {
+        res.status(400)
+        return res.json({
+            "message": "Bad Request",
+            errors
+        })
+    }
+
+    const newGroup = await Group.create({
+        organizerId: organizer,
+        name: name,
+        about: about,
+        type: type,
+        private: private,
+        city: city,
+        state: state
+    });
+
+
+
+    res.status(201)
+    return res.json(newGroup)
+})
 
 module.exports = router;
