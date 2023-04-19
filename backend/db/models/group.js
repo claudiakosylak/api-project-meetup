@@ -36,12 +36,12 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true
     },
     organizerId: DataTypes.INTEGER,
-    name: DataTypes.VARCHAR,
+    name: DataTypes.STRING,
     about: DataTypes.TEXT,
     type: DataTypes.ENUM("Online", "In Person"),
     private: DataTypes.BOOLEAN,
-    city: DataTypes.VARCHAR,
-    state: DataTypes.VARCHAR
+    city: DataTypes.STRING,
+    state: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Group',

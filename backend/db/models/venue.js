@@ -27,9 +27,9 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true
     },
     groupId: DataTypes.INTEGER,
-    address: DataTypes.VARCHAR,
-    city: DataTypes.VARCHAR,
-    state: DataTypes.VARCHAR,
+    address: DataTypes.STRING,
+    city: DataTypes.STRING,
+    state: DataTypes.STRING,
     lat: DataTypes.DECIMAL,
     lng: DataTypes.DECIMAL
   }, {

@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     venueId: DataTypes.INTEGER,
     groupId: DataTypes.INTEGER,
-    name: DataTypes.VARCHAR,
+    name: DataTypes.STRING,
     description: DataTypes.TEXT,
     type: DataTypes.ENUM("Online", "In Person"),
     capacity: DataTypes.INTEGER,
