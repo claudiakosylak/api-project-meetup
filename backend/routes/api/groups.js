@@ -57,10 +57,30 @@ router.get("/:groupId/events", async (req, res) => {
         event.dataValues.previewImage = image.url;
     };
     return res.json({"Events": events})
+});
+
+router.get("/current", requireAuth, async (req, res) => {
+    const groups = await Group.findAll({
+        attributes: ["id", "organizerId", "name", "about", "type", "private", "city", "state", "createdAt", "updatedAt"],
+        where: {
+            organizerId: req.user.id
+        }
+    });
+
+    const membershipGroups = await Membership.findAll({
+        attributes: ["id", "userId", "groupId"],
+        where: {
+            userId: req.user.id
+        }
+    });
+
+    console.log(membershipGroups);
+
+    return res.json(groups);
+
 })
 
 router.get("/", async (req, res) => {
-    console.log(requireAuth);
     const groups = await Group.findAll({
         attributes: ["id", "organizerId", "name", "about", "type", "private", "city", "state", "createdAt", "updatedAt"]
     });
