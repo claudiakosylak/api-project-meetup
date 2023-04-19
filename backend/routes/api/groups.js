@@ -60,6 +60,7 @@ router.get("/:groupId/events", async (req, res) => {
 })
 
 router.get("/", async (req, res) => {
+    console.log(requireAuth);
     const groups = await Group.findAll({
         attributes: ["id", "organizerId", "name", "about", "type", "private", "city", "state", "createdAt", "updatedAt"]
     });
@@ -124,6 +125,11 @@ router.post("/", requireAuth, async (req, res) => {
 
     res.status(201)
     return res.json(newGroup)
+})
+
+router.use((err, req, res, next) => {
+    res.status(401);
+    return res.json(err.errors)
 })
 
 module.exports = router;
