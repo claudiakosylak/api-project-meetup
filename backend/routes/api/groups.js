@@ -31,6 +31,9 @@ router.get("/:groupId/events", async (req, res) => {
             model: Venue,
             attributes: ["id", "city", "state"]
         }],
+        where: {
+            groupId: groupId
+        }
     });
 
     for (let event of events) {
