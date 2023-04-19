@@ -11,6 +11,17 @@ const { EventImage } = require('../../db/models');
 const router = express.Router();
 
 router.get("/:groupId/events", async (req, res) => {
+    const { groupId } = req.params;
+    const currentGroup = await Group.findAll({
+        where: {
+            id: groupId
+        }
+    });
+
+    if (currentGroup.length === 0) {
+        res.status(404);
+        return res.json({ "message": "Group couldn't be found"})
+    }
     const events = await Event.findAll({
         attributes: ["id", "groupId", "venueId", "name", "type", "startDate", "endDate"],
         include: [{
