@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true
     },
     eventId: DataTypes.INTEGER,
-    url: DataTypes.VARCHAR(255),
+    url: DataTypes.STRING,
     preview: DataTypes.BOOLEAN
   }, {
     sequelize,
