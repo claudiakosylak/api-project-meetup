@@ -3,14 +3,48 @@ const { Op } = require('sequelize');
 const { Group } = require('../../db/models');
 const { Membership } = require('../../db/models');
 const { GroupImage } = require('../../db/models');
+const { Event } = require('../../db/models');
+const { Venue } = require('../../db/models');
+const { Attendance } = require('../../db/models');
+const { EventImage } = require('../../db/models');
 
 const router = express.Router();
+
+router.get("/:groupId/events", async (req, res) => {
+    const events = await Event.findAll({
+        attributes: ["id", "groupId", "venueId", "name", "type", "startDate", "endDate"],
+        include: [{
+            model: Group,
+            attributes: ["id", "name", "city", "state"]
+        }, {
+            model: Venue,
+            attributes: ["id", "city", "state"]
+        }],
+    });
+
+    for (let event of events) {
+        const attendances = await Attendance.count({
+            where: {
+                eventId: event.id
+            }
+        });
+        event.dataValues.numAttending = attendances;
+
+        const image = await EventImage.findOne({
+            where: {
+                eventId: event.id,
+                preview: true
+            }
+        });
+        event.dataValues.previewImage = image.url;
+    };
+    return res.json({"Events": events})
+})
 
 router.get("/", async (req, res) => {
     const groups = await Group.findAll({
         attributes: ["id", "organizerId", "name", "about", "type", "private", "city", "state", "createdAt", "updatedAt"]
     });
-    console.log(groups);
     for (let group of groups) {
         let id = group.id;
         const members = await Membership.count({
