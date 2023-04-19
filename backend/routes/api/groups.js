@@ -8,6 +8,10 @@ const { Venue } = require('../../db/models');
 const { Attendance } = require('../../db/models');
 const { EventImage } = require('../../db/models');
 
+const bcrypt = require('bcryptjs');
+
+const { requireAuth } = require('../../utils/auth');
+
 const router = express.Router();
 
 router.get("/:groupId/events", async (req, res) => {
@@ -78,9 +82,31 @@ router.get("/", async (req, res) => {
                 }
             }
         });
-        group.dataValues.previewImage = preview.url;
+        if (preview) {
+            group.dataValues.previewImage = preview.url
+        } else group.dataValues.previewImage = null;
+
     }
     return res.json({ "Groups": groups});
 });
+
+router.post("/", requireAuth, async (req, res) => {
+    const { name, about, type, private, city, state } = req.body;
+    const organizer = req.user.id;
+    const newGroup = await Group.create({
+        organizerId: organizer,
+        name: name,
+        about: about,
+        type: type,
+        private: private,
+        city: city,
+        state: state
+    });
+
+
+
+    res.status(201)
+    return res.json(newGroup)
+})
 
 module.exports = router;
