@@ -13,12 +13,12 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Attendance.belongsTo(
         models.Event, {
-          otherKey: "eventId"
+          foreignKey: "eventId"
         }
       )
       Attendance.belongsTo(
         models.User, {
-          otherKey: "userId"
+          foreignKey: "userId"
         }
       )
     }
