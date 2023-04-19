@@ -93,6 +93,23 @@ router.get("/", async (req, res) => {
 router.post("/", requireAuth, async (req, res) => {
     const { name, about, type, private, city, state } = req.body;
     const organizer = req.user.id;
+
+    const errors = {};
+    if (name.length > 60) errors.name = "Name must be 60 characters or less";
+    if (about.length < 50) errors.about = "About must be 50 characters or less";
+    if (type !== "Online" && type !== "In person") errors.type = "Type must be 'Online' or 'In Person'";
+    if (private !== true && private !== false) errors.private = "Private must be a boolean";
+    if (!city) errors.city = "City is required";
+    if (!state) errors.state = "State is required";
+
+    if (Object.keys(errors).length > 0) {
+        res.status(400)
+        return res.json({
+            "message": "Bad Request",
+            errors
+        })
+    }
+
     const newGroup = await Group.create({
         organizerId: organizer,
         name: name,
