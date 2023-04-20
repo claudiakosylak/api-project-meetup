@@ -30,7 +30,8 @@ router.get("/:groupId/venues", requireAuth, async (req, res) => {
 
     const memberships = await Membership.findAll({
         where: {
-            userId: req.user.id
+            userId: req.user.id,
+            status: "co-host"
         }
     })
 
