@@ -15,26 +15,51 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
-router.get("/:groupId/members", async (req, res) => {
-    const { groupId } = req.params;
+// router.get("/:groupId/members", async (req, res) => {
+//     const { groupId } = req.params;
 
-    const group = await Group.findOne({
-        where: {
-            id: groupId
-        }
-    });
+//     const group = await Group.findOne({
+//         where: {
+//             id: groupId
+//         }
+//     });
 
-    if (!group) {
-        res.status(404);
-        return res.json({"message": "Group couldn't be found"})
-    };
-    
-    const memberships = await Membership.findAll({
-        where: {
-            groupId: groupId
-        }
-    })
-})
+//     if (!group) {
+//         res.status(404);
+//         return res.json({"message": "Group couldn't be found"})
+//     };
+
+//     const memberships = await Membership.findAll({
+//         where: {
+//             groupId: groupId
+//         },
+//         include: {
+//             model: User
+//         }
+//     })
+
+//     console.log("memberships:", memberships)
+
+//     const members = memberships.map(membership => {
+//        return membership.User
+//     })
+
+//     console.log("members:", members);
+
+//     const authedUsers = members.filter(member => {
+//         return member.status
+//     })
+
+//     if ((group.organizerId !== req.user.id) && (!userMemberOfGroup.includes(groupId))) {
+//         const nonAuthMembers = members.filter(member => {
+//             return member.Membership.status === "co-host"
+//         })
+
+//         return res.json({"Members": nonAuthMembers})
+//     }
+
+//     return res.json({"Members": members});
+// })
 
 router.get("/:groupId/venues", requireAuth, async (req, res) => {
     const { groupId } = req.params;
