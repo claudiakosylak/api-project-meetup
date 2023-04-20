@@ -11,6 +11,7 @@ const { EventImage } = require('../../db/models');
 const bcrypt = require('bcryptjs');
 
 const { requireAuth } = require('../../utils/auth');
+const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
@@ -164,12 +165,33 @@ router.put("/:groupId", requireAuth, async (req, res) => {
         }
     });
 
+    if (!group) {
+        res.status(404);
+        return res.json({"message": "Group couldn't be found"})
+    }
+
     if (req.user.id !== group.organizerId) {
         let err = new Error("Forbidden");
         err.title = 'Forbidden';
         err.errors = { message: 'Forbidden' };
         res.status(403);
         return res.json(err.errors)
+    }
+
+    const errors = {};
+    if (name.length > 60) errors.name = "Name must be 60 characters or less";
+    if (about.length < 50) errors.about = "About must be 50 characters or more";
+    if (type !== "Online" && type !== "In Person") errors.type = "Type must be 'Online' or 'In Person'";
+    if (private !== true && private !== false) errors.private = "Private must be a boolean";
+    if (!city) errors.city = "City is required";
+    if (!state) errors.state = "State is required";
+
+    if (Object.keys(errors).length > 0) {
+        res.status(400)
+        return res.json({
+            "message": "Bad Request",
+            errors
+        })
     }
 
     group.dataValues.name = name;
@@ -188,7 +210,7 @@ router.post("/", requireAuth, async (req, res) => {
 
     const errors = {};
     if (name.length > 60) errors.name = "Name must be 60 characters or less";
-    if (about.length < 50) errors.about = "About must be 50 characters or less";
+    if (about.length < 50) errors.about = "About must be 50 characters or more";
     if (type !== "Online" && type !== "In Person") errors.type = "Type must be 'Online' or 'In Person'";
     if (private !== true && private !== false) errors.private = "Private must be a boolean";
     if (!city) errors.city = "City is required";

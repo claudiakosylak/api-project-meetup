@@ -34,8 +34,8 @@ module.exports = {
         about: "We like to do business and network.",
         type: "Online",
         private: true,
-        city: null,
-        state: null
+        city: "Dallas",
+        state: "Texas"
       }
     ], {})
   },

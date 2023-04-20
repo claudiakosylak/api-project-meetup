@@ -40,8 +40,14 @@ module.exports = (sequelize, DataTypes) => {
     about: DataTypes.TEXT,
     type: DataTypes.ENUM("Online", "In Person"),
     private: DataTypes.BOOLEAN,
-    city: DataTypes.STRING,
-    state: DataTypes.STRING
+    city: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    state: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Group',
