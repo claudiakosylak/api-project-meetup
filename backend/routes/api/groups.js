@@ -6,7 +6,7 @@ const { GroupImage } = require('../../db/models');
 const { Event } = require('../../db/models');
 const { Venue } = require('../../db/models');
 const { Attendance } = require('../../db/models');
-const { EventImage } = require('../../db/models');
+const { EventImage, User } = require('../../db/models');
 
 const bcrypt = require('bcryptjs');
 
@@ -76,9 +76,11 @@ router.get("/:groupId", async (req, res) => {
         },
         {
             model: User,
-            as: "Organizer"
-        }],
-        })
+            as: "Organizer",
+            attributes: ["id", "firstName", "lastName"]
+        }
+    ],
+        });
 
     if (!group) {
         res.status(404);
