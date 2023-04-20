@@ -387,6 +387,8 @@ router.post("/:groupId/events", requireAuth, async (req, res) => {
         return res.json({"message": "Group couldn't be found"})
     }
 
+    console.log("test", "hi")
+
     const userMembership = await Membership.findOne({
         where: {
             groupId: groupId,
@@ -409,8 +411,14 @@ router.post("/:groupId/events", requireAuth, async (req, res) => {
         }
     })
 
+
+
     let currentTime = new Date();
     currentTime = currentTime.toDateString();
+    console.log("currentTime", currentTime)
+
+    let startDateUsable = new Date(startDate).toDateString();
+    let endDateUsable = new Date(endDate).toDateString();
 
     const errors = {};
     if (!venue) errors.venueId = "Venue does not exist";
@@ -418,10 +426,14 @@ router.post("/:groupId/events", requireAuth, async (req, res) => {
     if (type !== "Online" && type !== "In Person") errors.type = "Type must be Online or In Person";
     if (!Number.isInteger(capacity)) errors.capacity = "Capacity must be an integer";
     if (!description) errors.description = "Description is required";
-    if (startDate.toDateString() <= currentTime) errors.startDate = "Start date must be in the future";
-    if (endDate.toDateString() < startDate.toDateString()) errors.endDate = "End date is less than start date";
+
+    console.log("errors", errors)
+    if (startDateUsable <= currentTime) errors.startDate = "Start date must be in the future";
+    if (endDateUsable < startDateUsable) errors.endDate = "End date is less than start date";
+
 
     if (Object.keys(errors).length > 0) {
+
         res.status(400)
         return res.json({
             "message": "Bad Request",
@@ -437,8 +449,8 @@ router.post("/:groupId/events", requireAuth, async (req, res) => {
         type: type,
         capacity: capacity,
         price: price,
-        startDate: startDate,
-        endDate: endDate
+        startDate: startDateUsable,
+        endDate: endDateUsable
     })
 
     console.log(newEvent)
