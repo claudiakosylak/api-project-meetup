@@ -242,6 +242,28 @@ router.post("/", requireAuth, async (req, res) => {
     return res.json(newGroup)
 })
 
+router.delete("/:groupId", requireAuth, async (req, res) => {
+    const { groupId } = req.params;
+    const group = await Group.findOne({
+        where: {
+            id: groupId
+        }
+    })
+
+    if (!group) {
+        res.status(404);
+        return res.json({"message": "Group couldn't be found"})
+    }
+
+    if (group.organizerId !== req.user.id) {
+        res.status(403);
+        return res.json({"message": "Forbidden"})
+    }
+
+    group.destroy();
+    return res.json({"message": "Successfully deleted"})
+})
+
 router.use((err, req, res, next) => {
     return res.json(err.errors)
 })
