@@ -373,6 +373,10 @@ router.post("/:groupId/images", requireAuth, async (req, res) => {
     });
 })
 
+// router.post("/:groupId/events", requireAuth, async (req, res) => {
+//     const { groupId } = req.params;
+// })
+
 router.put("/:groupId", requireAuth, async (req, res) => {
     const { name, about, type, private, city, state } = req.body;
     const { groupId } = req.params;
