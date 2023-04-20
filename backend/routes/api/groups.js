@@ -6,7 +6,7 @@ const { GroupImage } = require('../../db/models');
 const { Event } = require('../../db/models');
 const { Venue } = require('../../db/models');
 const { Attendance } = require('../../db/models');
-const { EventImage } = require('../../db/models');
+const { EventImage, User } = require('../../db/models');
 
 const bcrypt = require('bcryptjs');
 
@@ -60,8 +60,47 @@ router.get("/:groupId/events", async (req, res) => {
     return res.json({"Events": events})
 });
 
+router.get("/:groupId", async (req, res) => {
+    const { groupId } = req.params;
+    const group = await Group.findOne({
+        where: {
+            id: groupId
+        },
+        include: [{
+            model: GroupImage,
+            attributes: ["id", "url", "preview"]
+        },
+        {
+                model: Venue,
+                attributes: ["id", "groupId", "address", "city", "state", "lat", "lng"]
+        },
+        {
+            model: User,
+            as: "Organizer",
+            attributes: ["id", "firstName", "lastName"]
+        }
+    ],
+        });
+
+    if (!group) {
+        res.status(404);
+        return res.json({"message": "Group couldn't be found"})
+    }
+
+    const members = await Membership.count({
+        where: {
+            groupId: groupId
+        }
+    })
+
+    console.log(group)
+    group.dataValues.numMembers = members;
+
+    return res.json(group)
+
+})
+
 router.get("/current", requireAuth, async (req, res) => {
-    console.log(req.user.id)
     const groups = await Group.findAll({
         attributes: ["id", "organizerId", "name", "about", "type", "private", "city", "state", "createdAt", "updatedAt"],
         where: {
@@ -111,15 +150,6 @@ router.get("/current", requireAuth, async (req, res) => {
         } else group.dataValues.previewImage = null;
 
     }
-
-    // groups = [...groups, ...membGroup];
-
-    // if (membershipGroups.length > 1) {
-    //     for (let membership of membershipGroups) {
-    //         let currentGroupId = membership.dataValues.groupId;
-    //         if (membership.dataValues.groupId)
-    //     }
-    // }
 
     return res.json({"Groups": groups});
 
