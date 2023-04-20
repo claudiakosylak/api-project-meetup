@@ -60,6 +60,7 @@ router.get("/:groupId/events", async (req, res) => {
 });
 
 router.get("/current", requireAuth, async (req, res) => {
+    console.log(req.user.id)
     const groups = await Group.findAll({
         attributes: ["id", "organizerId", "name", "about", "type", "private", "city", "state", "createdAt", "updatedAt"],
         where: {
@@ -71,12 +72,55 @@ router.get("/current", requireAuth, async (req, res) => {
         attributes: ["id", "userId", "groupId"],
         where: {
             userId: req.user.id
+        },
+        include: {
+            model: Group
         }
     });
 
-    console.log(membershipGroups);
+    const membGroup = membershipGroups.map(membership => {
+        return membership.dataValues.Group
+    });
 
-    return res.json(groups);
+    if (membGroup.length > 1) {
+        groups.concat(membGroup);
+    };
+
+    for (let group of groups) {
+        let id = group.id;
+        const members = await Membership.count({
+            where: {
+                groupId: id
+            }
+        });
+
+        group.dataValues.numMembers = members;
+        const preview = await GroupImage.findOne({
+            where: {
+                groupId: {
+                    [Op.eq]: id
+                },
+                preview: {
+                    [Op.eq]: true
+                }
+            }
+        });
+        if (preview) {
+            group.dataValues.previewImage = preview.url
+        } else group.dataValues.previewImage = null;
+
+    }
+
+    // groups = [...groups, ...membGroup];
+
+    // if (membershipGroups.length > 1) {
+    //     for (let membership of membershipGroups) {
+    //         let currentGroupId = membership.dataValues.groupId;
+    //         if (membership.dataValues.groupId)
+    //     }
+    // }
+
+    return res.json({"Groups": groups});
 
 })
 
