@@ -373,6 +373,92 @@ router.post("/:groupId/images", requireAuth, async (req, res) => {
     });
 })
 
+router.post("/:groupId/events", requireAuth, async (req, res) => {
+    const { groupId } = req.params;
+    const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body;
+    const group = await Group.findOne({
+        where: {
+            id: groupId
+        }
+    })
+
+    if (!group) {
+        res.status(404);
+        return res.json({"message": "Group couldn't be found"})
+    }
+
+    console.log("test", "hi")
+
+    const userMembership = await Membership.findOne({
+        where: {
+            groupId: groupId,
+            userId: req.user.id,
+            status: "co-host"
+        }
+    })
+
+    if (group.organizerId !== req.user.id && !userMembership) {
+        let err = new Error("Forbidden");
+        err.title = 'Forbidden';
+        err.errors = { message: 'Forbidden' };
+        res.status(403);
+        return res.json(err.errors)
+    }
+
+    const venue = await Venue.findOne({
+        where: {
+            id: venueId
+        }
+    })
+
+
+
+    let currentTime = new Date();
+    currentTime = currentTime.toDateString();
+    console.log("currentTime", currentTime)
+
+    let startDateUsable = new Date(startDate).toDateString();
+    let endDateUsable = new Date(endDate).toDateString();
+
+    const errors = {};
+    if (!venue) errors.venueId = "Venue does not exist";
+    if (name.length < 5) errors.name = "Name must be at least 5 characters";
+    if (type !== "Online" && type !== "In Person") errors.type = "Type must be Online or In Person";
+    if (!Number.isInteger(capacity)) errors.capacity = "Capacity must be an integer";
+    if (!description) errors.description = "Description is required";
+
+    console.log("errors", errors)
+    if (startDateUsable <= currentTime) errors.startDate = "Start date must be in the future";
+    if (endDateUsable < startDateUsable) errors.endDate = "End date is less than start date";
+
+
+    if (Object.keys(errors).length > 0) {
+
+        res.status(400)
+        return res.json({
+            "message": "Bad Request",
+            errors
+        })
+    }
+
+    const newEvent = await Event.create({
+        venueId: venueId,
+        groupId: groupId,
+        name: name,
+        description: description,
+        type: type,
+        capacity: capacity,
+        price: price,
+        startDate: startDateUsable,
+        endDate: endDateUsable
+    })
+
+    console.log(newEvent)
+    res.status(201);
+    return res.json(newEvent)
+
+})
+
 router.put("/:groupId", requireAuth, async (req, res) => {
     const { name, about, type, private, city, state } = req.body;
     const { groupId } = req.params;
