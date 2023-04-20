@@ -69,29 +69,15 @@ router.get("/:groupId", async (req, res) => {
         include: [{
             model: GroupImage,
             attributes: ["id", "url", "preview"]
-        }, {
+        },
+        {
                 model: Venue,
                 attributes: ["id", "groupId", "address", "city", "state", "lat", "lng"]
-        }, {
+        },
+        {
             model: User,
-            as: "Organizer",
-            key: "organizerId"
-        }
-
-    ],
-    //     include: [{
-    //         model: GroupImage,
-    //         attributes: ["id", "url", "preview"]
-    //        },
-    //         {
-    //          model: Organizer,
-    //         attributes: ["id", "firstName", "lastName"]
-    //         }, {
-    //             model: Venue,
-    //             attributes: ["id", "groupId", "address", "city", "state", "lat", "lng"]
-    //         }
-
-    // ],
+            as: "Organizer"
+        }],
         })
 
     if (!group) {
