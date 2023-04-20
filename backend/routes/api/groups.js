@@ -93,7 +93,6 @@ router.get("/:groupId", async (req, res) => {
         }
     })
 
-    console.log(group)
     group.dataValues.numMembers = members;
 
     return res.json(group)
@@ -185,6 +184,43 @@ router.get("/", async (req, res) => {
     }
     return res.json({ "Groups": groups});
 });
+
+router.post("/:groupId/images", requireAuth, async (req, res) => {
+    const { groupId } = req.params;
+    const { url, preview } = req.body;
+    const group = await Group.findOne({
+        where: {
+            id: groupId
+        }
+    });
+
+    if (!group) {
+        res.status(404);
+        return res.json({"message": "Group couldn't be found"})
+    }
+
+    if (req.user.id !== group.organizerId) {
+        let err = new Error("Forbidden");
+        err.title = 'Forbidden';
+        err.errors = { message: 'Forbidden' };
+        res.status(403);
+        return res.json(err.errors)
+    }
+
+    const newImage = await GroupImage.create({
+        groupId: groupId,
+        url: url,
+        preview: preview
+    })
+
+    console.log(newImage)
+
+    return res.json({
+        "id": newImage.dataValues.id,
+        "url": newImage.dataValues.url,
+        "preview": newImage.dataValues.preview
+    });
+})
 
 router.put("/:groupId", requireAuth, async (req, res) => {
     const { name, about, type, private, city, state } = req.body;
