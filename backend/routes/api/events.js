@@ -18,8 +18,6 @@ router.get("/", async (req, res) => {
     }]
     })
 
-    console.log("events:", events);
-
     for (let event of events) {
         const attendances = await Attendance.count({
             where: {
@@ -36,8 +34,12 @@ router.get("/", async (req, res) => {
             }
         })
 
+        console.log("prevImage", prevImage)
+
         event.dataValues.previewImage = prevImage.url;
     }
+
+    console.log("events:", events);
 
     return res.json(events);
 })
