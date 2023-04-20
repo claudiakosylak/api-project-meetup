@@ -155,6 +155,33 @@ router.get("/", async (req, res) => {
     return res.json({ "Groups": groups});
 });
 
+router.put("/:groupId", requireAuth, async (req, res) => {
+    const { name, about, type, private, city, state } = req.body;
+    const { groupId } = req.params;
+    const group = await Group.findOne({
+        where: {
+            id: groupId
+        }
+    });
+
+    if (req.user.id !== group.organizerId) {
+        let err = new Error("Forbidden");
+        err.title = 'Forbidden';
+        err.errors = { message: 'Forbidden' };
+        res.status(403);
+        return res.json(err.errors)
+    }
+
+    group.dataValues.name = name;
+    group.dataValues.about = about;
+    group.dataValues.type = type;
+    group.dataValues.private = private;
+    group.dataValues.city = city;
+    group.dataValues.state = state;
+
+    return res.json(group);
+})
+
 router.post("/", requireAuth, async (req, res) => {
     const { name, about, type, private, city, state } = req.body;
     const organizer = req.user.id;
@@ -192,7 +219,6 @@ router.post("/", requireAuth, async (req, res) => {
 })
 
 router.use((err, req, res, next) => {
-    res.status(401);
     return res.json(err.errors)
 })
 
