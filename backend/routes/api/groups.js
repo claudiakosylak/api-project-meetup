@@ -194,12 +194,14 @@ router.put("/:groupId", requireAuth, async (req, res) => {
         })
     }
 
-    group.dataValues.name = name;
-    group.dataValues.about = about;
-    group.dataValues.type = type;
-    group.dataValues.private = private;
-    group.dataValues.city = city;
-    group.dataValues.state = state;
+    group.update({
+        name: name,
+        about: about,
+        type: type,
+        private: private,
+        city: city,
+        state: state
+    })
 
     return res.json(group);
 })
