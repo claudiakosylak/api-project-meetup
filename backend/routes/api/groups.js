@@ -15,6 +15,52 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
+// router.get("/:groupId/members", async (req, res) => {
+//     const { groupId } = req.params;
+
+//     const group = await Group.findOne({
+//         where: {
+//             id: groupId
+//         }
+//     });
+
+//     if (!group) {
+//         res.status(404);
+//         return res.json({"message": "Group couldn't be found"})
+//     };
+
+//     const memberships = await Membership.findAll({
+//         where: {
+//             groupId: groupId
+//         },
+//         include: {
+//             model: User
+//         }
+//     })
+
+//     console.log("memberships:", memberships)
+
+//     const members = memberships.map(membership => {
+//        return membership.User
+//     })
+
+//     console.log("members:", members);
+
+//     const authedUsers = members.filter(member => {
+//         return member.status
+//     })
+
+//     if ((group.organizerId !== req.user.id) && (!userMemberOfGroup.includes(groupId))) {
+//         const nonAuthMembers = members.filter(member => {
+//             return member.Membership.status === "co-host"
+//         })
+
+//         return res.json({"Members": nonAuthMembers})
+//     }
+
+//     return res.json({"Members": members});
+// })
+
 router.get("/:groupId/venues", requireAuth, async (req, res) => {
     const { groupId } = req.params;
     const group = await Group.findOne({
@@ -224,6 +270,74 @@ router.get("/", async (req, res) => {
     return res.json({ "Groups": groups});
 });
 
+router.post("/:groupId/venues", requireAuth, async (req, res) => {
+    const {groupId} = req.params;
+    const { address, city, state, lat, lng } = req.body;
+
+    const group = await Group.findOne({
+        where: {
+            id: groupId
+        }
+    });
+
+    if (!group) {
+        res.status(404);
+        return res.json({"message": "Group couldn't be found"})
+    }
+
+    const userMembership = await Membership.findOne({
+        where: {
+            groupId: groupId,
+            userId: req.user.id,
+            status: "co-host"
+        }
+    })
+
+    if (group.organizerId !== req.user.id && !userMembership) {
+        let err = new Error("Forbidden");
+        err.title = 'Forbidden';
+        err.errors = { message: 'Forbidden' };
+        res.status(403);
+        return res.json(err.errors)
+    }
+
+    const newVenue = await Venue.create({
+        groupId: groupId,
+        address: address,
+        city: city,
+        state: state,
+        lat: lat,
+        lng: lng
+    });
+
+    const errors = {};
+    if (!address) errors.address = "Street address is required";
+    if (!city) errors.city = "City is required";
+    if (!state) errors.state = "State is required";
+    if (isNaN(lat)) errors.lat = "Latitude is not valid";
+    if (isNaN(lng)) errors.lng = "Longitude is not valid";
+
+
+
+    if (Object.keys(errors).length > 0) {
+        res.status(400)
+        return res.json({
+            "message": "Bad Request",
+            errors
+        })
+    }
+
+    return res.json({
+        "id": newVenue.id,
+        "groupId": newVenue.groupId,
+        "address": newVenue.address,
+        "city": newVenue.city,
+        "state": newVenue.state,
+        "lat": lat,
+        "lng": lng
+    })
+})
+
 router.post("/:groupId/images", requireAuth, async (req, res) => {
     const { groupId } = req.params;
     const { url, preview } = req.body;
@@ -251,8 +365,6 @@ router.post("/:groupId/images", requireAuth, async (req, res) => {
         url: url,
         preview: preview
     })
-
-    console.log(newImage)
 
     return res.json({
         "id": newImage.dataValues.id,
