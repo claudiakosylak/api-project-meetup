@@ -15,6 +15,27 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
+router.get("/:groupId/members", async (req, res) => {
+    const { groupId } = req.params;
+
+    const group = await Group.findOne({
+        where: {
+            id: groupId
+        }
+    });
+
+    if (!group) {
+        res.status(404);
+        return res.json({"message": "Group couldn't be found"})
+    };
+    
+    const memberships = await Membership.findAll({
+        where: {
+            groupId: groupId
+        }
+    })
+})
+
 router.get("/:groupId/venues", requireAuth, async (req, res) => {
     const { groupId } = req.params;
     const group = await Group.findOne({
