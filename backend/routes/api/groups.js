@@ -57,10 +57,74 @@ router.get("/:groupId/events", async (req, res) => {
         event.dataValues.previewImage = image.url;
     };
     return res.json({"Events": events})
+});
+
+router.get("/current", requireAuth, async (req, res) => {
+    console.log(req.user.id)
+    const groups = await Group.findAll({
+        attributes: ["id", "organizerId", "name", "about", "type", "private", "city", "state", "createdAt", "updatedAt"],
+        where: {
+            organizerId: req.user.id
+        }
+    });
+
+    const membershipGroups = await Membership.findAll({
+        attributes: ["id", "userId", "groupId"],
+        where: {
+            userId: req.user.id
+        },
+        include: {
+            model: Group
+        }
+    });
+
+    const membGroup = membershipGroups.map(membership => {
+        return membership.dataValues.Group
+    });
+
+    if (membGroup.length > 1) {
+        groups.concat(membGroup);
+    };
+
+    for (let group of groups) {
+        let id = group.id;
+        const members = await Membership.count({
+            where: {
+                groupId: id
+            }
+        });
+
+        group.dataValues.numMembers = members;
+        const preview = await GroupImage.findOne({
+            where: {
+                groupId: {
+                    [Op.eq]: id
+                },
+                preview: {
+                    [Op.eq]: true
+                }
+            }
+        });
+        if (preview) {
+            group.dataValues.previewImage = preview.url
+        } else group.dataValues.previewImage = null;
+
+    }
+
+    // groups = [...groups, ...membGroup];
+
+    // if (membershipGroups.length > 1) {
+    //     for (let membership of membershipGroups) {
+    //         let currentGroupId = membership.dataValues.groupId;
+    //         if (membership.dataValues.groupId)
+    //     }
+    // }
+
+    return res.json({"Groups": groups});
+
 })
 
 router.get("/", async (req, res) => {
-    console.log(requireAuth);
     const groups = await Group.findAll({
         attributes: ["id", "organizerId", "name", "about", "type", "private", "city", "state", "createdAt", "updatedAt"]
     });
