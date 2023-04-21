@@ -23,7 +23,10 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true
     },
-    eventId: DataTypes.INTEGER,
+    eventId: {
+      type: DataTypes.INTEGER,
+      onDelete: "cascade"
+    },
     url: DataTypes.STRING,
     preview: DataTypes.BOOLEAN
   }, {
