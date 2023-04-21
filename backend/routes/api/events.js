@@ -567,7 +567,7 @@ router.get("/", async (req, res) => {
 
     // console.log("events:", events);
 
-    return res.json(events);
+    return res.json({"Events": events});
 })
 
 
