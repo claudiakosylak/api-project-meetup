@@ -1,10 +1,64 @@
 const express = require('express');
-const { Event, Group, Venue, Attendance, EventImage } = require('../../db/models');
+const { Event, Group, Venue, Attendance, EventImage, Membership } = require('../../db/models');
 
 const { requireAuth } = require('../../utils/auth');
 
 const router = express.Router();
 
+
+router.post("/:eventId/images", requireAuth, async (req, res) => {
+    const { eventId } = req.params;
+    const { url, preview } = req.body;
+    const event = await Event.findOne({
+        where: {
+            id: eventId
+        },
+        include: {
+            model: Group
+        }
+    })
+
+    if (!event) {
+        res.status(404);
+        return res.json({"message": "Event couldn't be found"})
+    }
+
+    const membership = await Membership.findAll({
+        where: {
+            userId: req.user.id,
+            groupId: event.Group.id,
+            status: "co-host"
+        }
+    })
+
+    const attendee = await Attendance.findOne({
+        where: {
+            eventId: eventId,
+            userId: req.user.id,
+            status: "attending"
+        }
+    })
+
+    if (event.Group.organizerId !== req.user.id && membership.length === 0 && !attendee) {
+        res.status(403);
+        return res.json({"message": "Forbidden"})
+    }
+
+    const newImage = await EventImage.create({
+        eventId: eventId,
+        url: url,
+        preview: preview
+    })
+
+    console.log(newImage)
+
+    return res.json({
+        "id": newImage.id,
+        "url": newImage.url,
+        "preview": newImage.preview
+    });
+
+})
 
 router.get("/:eventId", async (req, res) => {
     const { eventId } = req.params;
@@ -27,6 +81,11 @@ router.get("/:eventId", async (req, res) => {
         }
     ]
     })
+
+    if (!event) {
+        res.status(404);
+        res.json({"message": "Event couldn't be found"})
+    }
 
     const attending = await Attendance.count({
         where: {
