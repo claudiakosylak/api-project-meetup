@@ -482,20 +482,22 @@ router.delete("/:eventId", requireAuth, async (req, res) => {
 })
 
 router.get("/", async (req, res) => {
+    console.log("dlkf;ajdflkajs;dflksjdf;aslkdfj")
     const { page, size, name, type, startDate } = req.query;
     const where = {};
     const errors = {};
 
-    if(!page) page = 1;
-    if(!size) size = 1;
+
+    if (!page) page = 1;
+    if (!size) size = 20;
 
     console.log("page", page);
     console.log("size", size);
 
-    if (page < 1) errors.page = "Page must be greater than or equal to 1";
-    if (size < 1) errors.size = "Size must be greater than or equal to 1";
-    if (isNaN(page)) page = 1;
-    if (isNaN(size)) size = 20;
+    // if (page < 1) errors.page = "Page must be greater than or equal to 1";
+    // if (size < 1) errors.size = "Size must be greater than or equal to 1";
+    // if (isNaN(page)) page = 1;
+    // if (isNaN(size)) size = 20;
     // if (typeof name !== "string") errors.name = "Name must be a string";
     // if (type !== "Online" && type !== "In Person") errors.type = "Type must be 'Online' or 'In Person'";
     // if (isNaN(Date.parse(startDate))) errors.startDate = "Start date must be a valid datetime";
@@ -510,8 +512,8 @@ router.get("/", async (req, res) => {
         })
     }
 
-    page = parseInt(page);
-    size = parseInt(size);
+    // page = parseInt(page);
+    // size = parseInt(size);
 
 
     // if (name) where.name = name;
@@ -521,8 +523,8 @@ router.get("/", async (req, res) => {
     const events = await Event.findAll({
         attributes: ["id", "groupId", "venueId", "name", "type", "startDate", "endDate"],
         // where,
-        limit: size,
-        offset: size * (page - 1),
+        // limit: size,
+        // offset: size * (page - 1),
         include: [{
             model: Group,
             attributes: ["id", "name", "city", "state"]
@@ -549,7 +551,6 @@ router.get("/", async (req, res) => {
             }
         })
 
-        console.log("prevImage", prevImage)
         if (prevImage) {
             event.dataValues.previewImage = prevImage.url;
         } else {
@@ -558,7 +559,7 @@ router.get("/", async (req, res) => {
 
     }
 
-    console.log("events:", events);
+    // console.log("events:", events);
 
     return res.json(events);
 })
