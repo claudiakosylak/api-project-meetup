@@ -389,6 +389,63 @@ router.put("/:eventId", requireAuth, async (req, res) => {
 
 })
 
+router.delete("/:eventId/attendance", requireAuth, async (req, res) => {
+    const {eventId} = req.params;
+    const {userId} = req.body;
+    const event = await Event.findOne({
+        where: {
+            id: eventId
+        },
+        include: {
+            model: Group,
+            attributes: ["id", "organizerId"]
+        }
+    })
+
+    if (!event) {
+        res.status(404);
+        return res.json({"message": "Event couldn't be found"})
+    }
+
+    const attendee = await User.findOne({
+        where: {
+            id: userId
+        }
+    })
+
+    if (!attendee) {
+        res.status(400);
+        return res.json({
+            "message": "Validation Error",
+            "errors": {
+              "memberId": "User couldn't be found"
+            }
+        })
+    }
+
+    if (event.Group.organizerId !== req.user.id && userId !== req.user.id) {
+        res.status(403);
+        return res.json({"message": "Forbidden"})
+    }
+
+    const attendance = await Attendance.findOne({
+        where: {
+            userId: userId,
+            eventId: eventId
+        }
+    })
+
+    if (!attendance) {
+        res.status(404);
+        return res.json({"message": "Attendance does not exist for this User"})
+    }
+
+    attendance.destroy()
+
+    return res.json({"message": "Successfully deleted attendance from event"})
+
+})
+
 router.delete("/:eventId", requireAuth, async (req, res) => {
     const { eventId } = req.params;
     const event = await Event.findOne({
