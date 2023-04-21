@@ -427,7 +427,6 @@ router.post("/:groupId/events", requireAuth, async (req, res) => {
     if (!Number.isInteger(capacity)) errors.capacity = "Capacity must be an integer";
     if (!description) errors.description = "Description is required";
 
-    console.log("errors", errors)
     if (startDateUsable <= currentTime) errors.startDate = "Start date must be in the future";
     if (endDateUsable < startDateUsable) errors.endDate = "End date is less than start date";
 
@@ -453,7 +452,6 @@ router.post("/:groupId/events", requireAuth, async (req, res) => {
         endDate: endDateUsable
     })
 
-    console.log(newEvent)
     res.status(201);
     return res.json(newEvent)
 
