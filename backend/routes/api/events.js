@@ -482,8 +482,47 @@ router.delete("/:eventId", requireAuth, async (req, res) => {
 })
 
 router.get("/", async (req, res) => {
+    const { page, size, name, type, startDate } = req.query;
+    const where = {};
+    const errors = {};
+
+    if(!page) page = 1;
+    if(!size) size = 1;
+
+    console.log("page", page);
+    console.log("size", size);
+
+    if (page < 1) errors.page = "Page must be greater than or equal to 1";
+    if (size < 1) errors.size = "Size must be greater than or equal to 1";
+    if (isNaN(page)) page = 1;
+    if (isNaN(size)) size = 20;
+    // if (typeof name !== "string") errors.name = "Name must be a string";
+    // if (type !== "Online" && type !== "In Person") errors.type = "Type must be 'Online' or 'In Person'";
+    // if (isNaN(Date.parse(startDate))) errors.startDate = "Start date must be a valid datetime";
+    // if (page > 10) page = 10;
+    // if (size > 20) size = 20;
+
+    if (Object.keys(errors).length > 0) {
+        res.status(400)
+        return res.json({
+            "message": "Bad Request",
+            errors
+        })
+    }
+
+    page = parseInt(page);
+    size = parseInt(size);
+
+
+    // if (name) where.name = name;
+    // if (type) where.type = type;
+    // if (startDate) where.startDate = startDate;
+
     const events = await Event.findAll({
         attributes: ["id", "groupId", "venueId", "name", "type", "startDate", "endDate"],
+        // where,
+        limit: size,
+        offset: size * (page - 1),
         include: [{
             model: Group,
             attributes: ["id", "name", "city", "state"]
