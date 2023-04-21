@@ -326,9 +326,80 @@ router.post("/:groupId/membership", requireAuth, async (req, res) => {
     })
 
     return res.json({
-        "memberId": newMembership.id,
+        "memberId": req.user.id,
         "status": "pending"
     })
+
+})
+
+router.put("/:groupId/membership", requireAuth, async (req, res) => {
+    const { groupId } = req.params;
+    const { memberId, status } = req.body;
+    const group = await Group.findOne({
+        where: {
+            id: groupId
+        }
+    })
+
+    if (!group) {
+        res.status(404);
+        return res.json({"message": "Group couldn't be found"})
+    }
+
+    const userMembership = await Membership.findOne({
+        where: {
+            groupId: groupId,
+            userId: req.user.id,
+            status: "co-host"
+        }
+    })
+
+    if (group.organizerId !== req.user.id && !userMembership) {
+        let err = new Error("Forbidden");
+        err.title = 'Forbidden';
+        err.errors = { message: 'Forbidden' };
+        res.status(403);
+        return res.json(err.errors)
+    }
+
+    const requestUser = await User.findOne({
+        where: {
+            id: memberId
+        }
+    })
+
+    if (!requestUser) {
+        res.status(400);
+        return res.json({
+            "message": "Validation Error",
+            "errors": {
+                "memberId": "User couldn't be found"
+            }
+        })
+    }
+
+    const changedMembership = await Membership.findOne({
+        where: {
+            groupId: groupId,
+            userId: memberId
+        }
+    })
+
+    if (!changedMembership) {
+        res.status(404);
+        return res.json({"message": "Membership between the user and the group does not exist"})
+    }
+
+    changedMembership.update({
+        status
+    });
+
+    return res.json({
+        "id": changedMembership.id,
+        "groupId": groupId,
+        "memberId": memberId,
+        "status": changedMembership.status
+    });
 
 })
 
