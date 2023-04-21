@@ -98,6 +98,90 @@ router.get("/:eventId", async (req, res) => {
     return res.json(event)
 })
 
+router.put("/:eventId", requireAuth, async (req, res) => {
+    const { eventId } = req.params;
+    const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body;
+    const event = await Event.findOne({
+        where: {
+            id: eventId
+        },
+        include: {
+            model: Group,
+            attributes: ["id", "organizerId"]
+        }
+    })
+
+    if (!event) {
+        res.status(404);
+        return res.json({"message": "Event couldn't be found"})
+    }
+
+    const memberships = await Membership.findAll({
+        where: {
+            groupId: event.Group.id,
+            userId: req.user.id,
+            status: "co-host"
+        }
+    })
+
+    if (event.Group.organizerId !== req.user.id && memberships.length === 0) {
+        res.status(403);
+        return res.json({"message": "Forbidden"})
+    }
+
+    let currentTime = new Date();
+    currentTime = currentTime.toDateString();
+    console.log("currentTime", currentTime)
+
+    let startDateUsable = new Date(startDate).toDateString();
+    let endDateUsable = new Date(endDate).toDateString();
+
+    const errors = {};
+    if (!venueId) errors.venueId = "Venue does not exist";
+    if (!name || name.length < 5) errors.name = "Name must be at least 5 characters";
+    if (type !== "Online" && type !== "In Person") errors.type = "Type must be Online or In Person";
+    if (!Number.isInteger(capacity)) errors.capacity = "Capacity must be an integer";
+    if (!description) errors.description = "Description is required";
+    if (startDateUsable <= currentTime) errors.startDate = "Start date must be in the future";
+    if (endDateUsable < startDateUsable) errors.endDate = "End date is less than start date";
+
+
+    if (Object.keys(errors).length > 0) {
+        res.status(400)
+        return res.json({
+            "message": "Bad Request",
+            errors
+        })
+    }
+
+    event.update({
+        venueId,
+        name,
+        type,
+        capacity,
+        price,
+        description,
+        startDate,
+        endDate
+    })
+
+
+    res.json({
+        "id": event.id,
+        "groupId": event.Group.id,
+        "venueId": event.venueId,
+        "name": event.name,
+        "type": event.type,
+        "capacity": event.capacity,
+        "price": event.price,
+        "description": event.description,
+        "startDate": event.startDate,
+        "endDate": event.endDate
+    })
+
+
+})
+
 router.get("/", async (req, res) => {
     const events = await Event.findAll({
         attributes: ["id", "groupId", "venueId", "name", "type", "startDate", "endDate"],
