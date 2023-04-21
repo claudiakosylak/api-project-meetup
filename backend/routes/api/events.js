@@ -1,10 +1,74 @@
 const express = require('express');
-const { Event, Group, Venue, Attendance, EventImage, Membership } = require('../../db/models');
+const { Event, Group, Venue, Attendance, EventImage, Membership, User } = require('../../db/models');
 
 const { requireAuth } = require('../../utils/auth');
 
 const router = express.Router();
 
+
+router.get("/:eventId/attendees", async (req, res) => {
+    const { eventId } = req.params;
+
+    const event = await Event.findOne({
+        where: {
+            id: eventId
+        },
+        include: {
+            model: Group
+        }
+    })
+
+    // console.log("event", event)
+
+    if (!event) {
+        res.status(404);
+        return res.json({"message": "Event couldn't be found"})
+    }
+
+    const attendees = await Attendance.findAll({
+        where: {
+            eventId: eventId
+        },
+        include: {
+            model: User
+        }
+    })
+
+    console.log("attendees", attendees)
+
+    const userMemb = await Membership.findOne({
+        where: {
+            userId: req.user.id,
+            groupId: event.Group.id,
+            status: "co-host"
+        }
+    })
+
+    console.log("usermemb", userMemb)
+
+    const userAttendReformat = attendees.map(attendance => {
+        return {
+            id: attendance.User.id,
+            firstName: attendance.User.firstName,
+            lastName: attendance.User.lastName,
+            Attendance: {
+                status: attendance.status
+            }
+        }
+    })
+
+    const nonAuthResult = userAttendReformat.filter(user => {
+        return user.Attendance.status !== "pending";
+    })
+
+    if (event.organizerId !== req.user.id && !userMemb) {
+        return res.json({"Attendees": nonAuthResult})
+    }
+
+    return res.json({"Attendees": userAttendReformat})
+
+
+})
 
 router.post("/:eventId/images", requireAuth, async (req, res) => {
     const { eventId } = req.params;
@@ -215,8 +279,6 @@ router.delete("/:eventId", requireAuth, async (req, res) => {
     event.destroy()
 
     return res.json({"message": "Successfully deleted"})
-
-
 })
 
 router.get("/", async (req, res) => {
