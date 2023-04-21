@@ -46,7 +46,7 @@ router.delete("/:imageId", requireAuth, async (req, res) => {
 
     image.destroy()
 
-    return res.json({"message": "Event Image couldn't be found"})
+    return res.json({"message": "Successfully deleted"})
 
 
 })
