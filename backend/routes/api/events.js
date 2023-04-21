@@ -1,5 +1,6 @@
 const express = require('express');
 const { Event, Group, Venue, Attendance, EventImage, Membership, User } = require('../../db/models');
+const { Op } = require('sequelize');
 
 const { requireAuth } = require('../../utils/auth');
 
@@ -44,8 +45,6 @@ router.get("/:eventId/attendees", async (req, res) => {
         }
     })
 
-    console.log("usermemb", userMemb)
-
     const userAttendReformat = attendees.map(attendance => {
         return {
             id: attendance.User.id,
@@ -66,6 +65,70 @@ router.get("/:eventId/attendees", async (req, res) => {
     }
 
     return res.json({"Attendees": userAttendReformat})
+})
+
+router.post("/:eventId/attendance", requireAuth, async (req, res) => {
+    const { eventId } = req.params;
+    const event = await Event.findOne({
+        where: {
+            id: eventId
+        },
+        include: {
+            model: Group,
+            attributes: ["id", "organizerId"]
+        }
+    })
+
+    if (!event) {
+        res.status(404);
+        return res.json({"message": "Event couldn't be found"})
+    }
+
+    const membershipAuth = await Membership.findOne({
+        where: {
+            groupId: event.Group.id,
+            userId: req.user.id,
+            status: {
+                [Op.or]: ["co-host", "member"]
+            }
+        }
+    })
+
+    if (!membershipAuth) {
+        res.status(403);
+        return res.json({"message": "Forbidden"})
+    }
+
+    const userAttendance = await Attendance.findOne({
+        where: {
+            eventId: eventId,
+            userId: req.user.id
+        }
+    })
+
+    if (userAttendance) {
+        if (userAttendance.status === "pending") {
+            res.status(400);
+            return res.json({"message": "Attendance has already been requested"})
+        }
+
+        if (userAttendance.status === "attending" || userAttendance.status === "waitlist") {
+            res.status(400);
+            return res.json({"message": "User is already an attendee of the group"})
+        }
+
+    }
+
+    const newAttendance = await Attendance.create({
+        userId: req.user.id,
+        eventId: eventId,
+        status: "pending"
+    })
+
+    return res.json({
+        "userId": newAttendance.userId,
+        "status": newAttendance.status
+    })
 
 
 })
@@ -121,6 +184,86 @@ router.post("/:eventId/images", requireAuth, async (req, res) => {
         "url": newImage.url,
         "preview": newImage.preview
     });
+
+})
+
+router.put("/:eventId/attendance", requireAuth, async (req, res) => {
+    const { eventId } = req.params;
+    const { userId, status } = req.body;
+    const event = await Event.findOne({
+        where: {
+            id: eventId
+        },
+        include: {
+            model: Group,
+            attributes: ["id", "organizerId"]
+        }
+    })
+
+    if (status === "pending") {
+        res.status(400);
+        return res.json({"message": "Cannot change an attendance status to pending"})
+    }
+
+    if (!event) {
+        res.status(404);
+        return res.json({"message": "Event couldn't be found"})
+    }
+
+    const userMembership = await Membership.findOne({
+        where: {
+            groupId: event.Group.id,
+            userId: req.user.id,
+            status: "co-host"
+        }
+    })
+
+    if (event.Group.organizerId !== req.user.id && !userMembership) {
+        let err = new Error("Forbidden");
+        err.title = 'Forbidden';
+        err.errors = { message: 'Forbidden' };
+        res.status(403);
+        return res.json(err.errors)
+    }
+
+    const requestUser = await User.findOne({
+        where: {
+            id: userId
+        }
+    })
+
+    if (!requestUser) {
+        res.status(400);
+        return res.json({
+            "message": "Validation Error",
+            "errors": {
+                "memberId": "User couldn't be found"
+            }
+        })
+    }
+
+    const changedAttendance = await Attendance.findOne({
+        where: {
+            eventId: eventId,
+            userId: userId
+        }
+    })
+
+    if (!changedAttendance) {
+        res.status(404);
+        return res.json({"message": "Attendance between the user and the event does not exist"})
+    }
+
+    changedAttendance.update({
+        status
+    });
+
+    return res.json({
+        "id": changedAttendance.id,
+        "eventId": eventId,
+        "userId": req.user.id,
+        "status": changedAttendance.status
+    })
 
 })
 
@@ -246,6 +389,63 @@ router.put("/:eventId", requireAuth, async (req, res) => {
 
 })
 
+router.delete("/:eventId/attendance", requireAuth, async (req, res) => {
+    const {eventId} = req.params;
+    const {userId} = req.body;
+    const event = await Event.findOne({
+        where: {
+            id: eventId
+        },
+        include: {
+            model: Group,
+            attributes: ["id", "organizerId"]
+        }
+    })
+
+    if (!event) {
+        res.status(404);
+        return res.json({"message": "Event couldn't be found"})
+    }
+
+    const attendee = await User.findOne({
+        where: {
+            id: userId
+        }
+    })
+
+    if (!attendee) {
+        res.status(400);
+        return res.json({
+            "message": "Validation Error",
+            "errors": {
+              "memberId": "User couldn't be found"
+            }
+        })
+    }
+
+    if (event.Group.organizerId !== req.user.id && userId !== req.user.id) {
+        res.status(403);
+        return res.json({"message": "Forbidden"})
+    }
+
+    const attendance = await Attendance.findOne({
+        where: {
+            userId: userId,
+            eventId: eventId
+        }
+    })
+
+    if (!attendance) {
+        res.status(404);
+        return res.json({"message": "Attendance does not exist for this User"})
+    }
+
+    attendance.destroy()
+
+    return res.json({"message": "Successfully deleted attendance from event"})
+
+})
+
 router.delete("/:eventId", requireAuth, async (req, res) => {
     const { eventId } = req.params;
     const event = await Event.findOne({
@@ -311,8 +511,12 @@ router.get("/", async (req, res) => {
         })
 
         console.log("prevImage", prevImage)
+        if (prevImage) {
+            event.dataValues.previewImage = prevImage.url;
+        } else {
+            event.dataValues.previewImage = null;
+        }
 
-        event.dataValues.previewImage = prevImage.url;
     }
 
     console.log("events:", events);

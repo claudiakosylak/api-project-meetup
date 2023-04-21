@@ -308,7 +308,7 @@ router.post("/:groupId/membership", requireAuth, async (req, res) => {
             return res.json({"message": "Membership has already been requested"})
         }
 
-        if (userMembership.status === "co-host" || userMembership.status === "member" || group.organizerId === req.user.id) {
+        if (userMembership.status === "co-host" || userMembership.status === "member") {
             res.status(400);
             return res.json({"message": "User is already a member of the group"})
         }
