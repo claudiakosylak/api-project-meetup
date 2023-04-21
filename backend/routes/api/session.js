@@ -25,6 +25,7 @@ router.post(
     validateLogin,
     async (req, res, next) => {
       const { credential, password } = req.body;
+      const errors = {};
 
       const user = await User.unscoped().findOne({
         where: {
@@ -39,8 +40,9 @@ router.post(
         const err = new Error('Login failed');
         err.status = 401;
         err.title = 'Login failed';
-        err.errors = { credential: 'The provided credentials were invalid.' };
-        return next(err);
+        err.errors = { message: 'Invalid credentials' };
+        res.status(401);
+        return res.json(err.errors)
       }
 
       const safeUser = {
@@ -86,6 +88,12 @@ router.get(
     }
   );
 
+  router.use((err, req, res, next) => {
+    return res.json({
+      "message": "Bad Request",
+      "errors": err.errors
+    })
+})
 
 
 module.exports = router;
