@@ -28,6 +28,11 @@ router.get("/:eventId", async (req, res) => {
     ]
     })
 
+    if (!event) {
+        res.status(404);
+        res.json({"message": "Event couldn't be found"})
+    }
+
     const attending = await Attendance.count({
         where: {
             eventId: eventId
