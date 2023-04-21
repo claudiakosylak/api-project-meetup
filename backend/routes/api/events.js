@@ -182,6 +182,43 @@ router.put("/:eventId", requireAuth, async (req, res) => {
 
 })
 
+router.delete("/:eventId", requireAuth, async (req, res) => {
+    const { eventId } = req.params;
+    const event = await Event.findOne({
+        where: {
+            id: eventId
+        },
+        include: {
+            model: Group,
+            attributes: ["id", "organizerId"]
+        }
+    })
+
+    if (!event) {
+        res.status(404);
+        return res.json({"message": "Event couldn't be found"})
+    }
+
+    const memberships = await Membership.findAll({
+        where: {
+            groupId: event.Group.id,
+            userId: req.user.id,
+            status: "co-host"
+        }
+    })
+
+    if (event.Group.organizerId !== req.user.id && memberships.length === 0) {
+        res.status(403);
+        return res.json({"message": "Forbidden"})
+    }
+
+    event.destroy()
+
+    return res.json({"message": "Successfully deleted"})
+
+
+})
+
 router.get("/", async (req, res) => {
     const events = await Event.findAll({
         attributes: ["id", "groupId", "venueId", "name", "type", "startDate", "endDate"],
