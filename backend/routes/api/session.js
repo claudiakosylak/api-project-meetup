@@ -25,7 +25,6 @@ router.post(
     validateLogin,
     async (req, res, next) => {
       const { credential, password } = req.body;
-      const errors = {};
 
       const user = await User.unscoped().findOne({
         where: {
@@ -88,12 +87,12 @@ router.get(
     }
   );
 
-  router.use((err, req, res, next) => {
-    return res.json({
-      "message": "Bad Request",
-      "errors": err.errors
-    })
-})
+//   router.use((err, req, res, next) => {
+//     return res.json({
+//       "message": "Bad Request",
+//       "errors": err.errors
+//     })
+// })
 
 
 module.exports = router;
