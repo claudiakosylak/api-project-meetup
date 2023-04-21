@@ -38,10 +38,6 @@ router.get("/:groupId/members", async (req, res) => {
         }
     })
 
-    // const membershipsNonAuth = memberships.filter(membership => {
-    //     return membership.status !== "pending";
-    // })
-
     const userMemb = await Membership.findOne({
         where: {
             userId: req.user.id,
@@ -66,7 +62,7 @@ router.get("/:groupId/members", async (req, res) => {
     })
 
     if (group.organizerId !== req.user.id && !userMemb) {
-        return res.json(nonAuthResult)
+        return res.json({"Members": nonAuthResult})
     }
 
     return res.json({"Members": userMembReformat});
