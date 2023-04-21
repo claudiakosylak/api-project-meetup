@@ -152,45 +152,6 @@ router.get("/:groupId/events", async (req, res) => {
     return res.json({"Events": events})
 });
 
-router.get("/:groupId", async (req, res) => {
-    const { groupId } = req.params;
-    const group = await Group.findOne({
-        where: {
-            id: groupId
-        },
-        include: [{
-            model: GroupImage,
-            attributes: ["id", "url", "preview"]
-        },
-        {
-                model: Venue,
-                attributes: ["id", "groupId", "address", "city", "state", "lat", "lng"]
-        },
-        {
-            model: User,
-            as: "Organizer",
-            attributes: ["id", "firstName", "lastName"]
-        }
-    ],
-        });
-
-    if (!group) {
-        res.status(404);
-        return res.json({"message": "Group couldn't be found"})
-    }
-
-    const members = await Membership.count({
-        where: {
-            groupId: groupId
-        }
-    })
-
-    group.dataValues.numMembers = members;
-
-    return res.json(group)
-
-})
-
 router.get("/current", requireAuth, async (req, res) => {
     const groups = await Group.findAll({
         attributes: ["id", "organizerId", "name", "about", "type", "private", "city", "state", "createdAt", "updatedAt"],
@@ -198,6 +159,8 @@ router.get("/current", requireAuth, async (req, res) => {
             organizerId: req.user.id
         }
     });
+
+    console.log("groups",groups)
 
     const membershipGroups = await Membership.findAll({
         attributes: ["id", "userId", "groupId"],
@@ -245,6 +208,47 @@ router.get("/current", requireAuth, async (req, res) => {
     return res.json({"Groups": groups});
 
 })
+
+router.get("/:groupId", async (req, res) => {
+    const { groupId } = req.params;
+    const group = await Group.findOne({
+        where: {
+            id: groupId
+        },
+        include: [{
+            model: GroupImage,
+            attributes: ["id", "url", "preview"]
+        },
+        {
+                model: Venue,
+                attributes: ["id", "groupId", "address", "city", "state", "lat", "lng"]
+        },
+        {
+            model: User,
+            as: "Organizer",
+            attributes: ["id", "firstName", "lastName"]
+        }
+    ],
+        });
+
+    if (!group) {
+        res.status(404);
+        return res.json({"message": "Group couldn't be found"})
+    }
+
+    const members = await Membership.count({
+        where: {
+            groupId: groupId
+        }
+    })
+
+    group.dataValues.numMembers = members;
+
+    return res.json(group)
+
+})
+
+
 
 router.get("/", async (req, res) => {
     const groups = await Group.findAll({
