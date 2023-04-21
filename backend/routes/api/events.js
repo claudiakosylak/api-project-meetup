@@ -187,6 +187,86 @@ router.post("/:eventId/images", requireAuth, async (req, res) => {
 
 })
 
+router.put("/:eventId/attendance", requireAuth, async (req, res) => {
+    const { eventId } = req.params;
+    const { userId, status } = req.body;
+    const event = await Event.findOne({
+        where: {
+            id: eventId
+        },
+        include: {
+            model: Group,
+            attributes: ["id", "organizerId"]
+        }
+    })
+
+    if (status === "pending") {
+        res.status(400);
+        return res.json({"message": "Cannot change an attendance status to pending"})
+    }
+
+    if (!event) {
+        res.status(404);
+        return res.json({"message": "Event couldn't be found"})
+    }
+
+    const userMembership = await Membership.findOne({
+        where: {
+            groupId: event.Group.id,
+            userId: req.user.id,
+            status: "co-host"
+        }
+    })
+
+    if (event.Group.organizerId !== req.user.id && !userMembership) {
+        let err = new Error("Forbidden");
+        err.title = 'Forbidden';
+        err.errors = { message: 'Forbidden' };
+        res.status(403);
+        return res.json(err.errors)
+    }
+
+    const requestUser = await User.findOne({
+        where: {
+            id: userId
+        }
+    })
+
+    if (!requestUser) {
+        res.status(400);
+        return res.json({
+            "message": "Validation Error",
+            "errors": {
+                "memberId": "User couldn't be found"
+            }
+        })
+    }
+
+    const changedAttendance = await Attendance.findOne({
+        where: {
+            eventId: eventId,
+            userId: userId
+        }
+    })
+
+    if (!changedAttendance) {
+        res.status(404);
+        return res.json({"message": "Attendance between the user and the event does not exist"})
+    }
+
+    changedAttendance.update({
+        status
+    });
+
+    return res.json({
+        "id": changedAttendance.id,
+        "eventId": eventId,
+        "userId": req.user.id,
+        "status": changedAttendance.status
+    })
+
+})
+
 router.get("/:eventId", async (req, res) => {
     const { eventId } = req.params;
     const event = await Event.findOne({
