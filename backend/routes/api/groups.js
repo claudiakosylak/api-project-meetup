@@ -281,6 +281,53 @@ router.get("/", async (req, res) => {
     return res.json({ "Groups": groups});
 });
 
+router.post("/:groupId/membership", requireAuth, async (req, res) => {
+    const { groupId } = req.params;
+    const group = await Group.findOne({
+        where: {
+            id: groupId
+        }
+    })
+
+    if (!group) {
+        res.status(404);
+        return res.json({"message": "Group couldn't be found"})
+    }
+
+    const userMembership = await Membership.findOne({
+        where: {
+            groupId: groupId,
+            userId: req.user.id
+        }
+    })
+
+    console.log("usermembership", userMembership);
+
+    if (userMembership.status === "pending") {
+        res.status(400);
+        return res.json({"message": "Membership has already been requested"})
+    }
+
+    if (userMembership.status === "co-host" || userMembership.status === "member" || group.organizerId === req.user.id) {
+        res.status(400);
+        return res.json({"message": "User is already a member of the group"})
+    }
+
+    const newMembership = await Membership.create({
+        userId: req.user.id,
+        groupId: groupId,
+        status: "pending"
+    })
+
+    console.log(newMembership)
+
+    return res.json({
+        "memberId": newMembership.id,
+        "status": "pending"
+    })
+
+})
+
 router.post("/:groupId/venues", requireAuth, async (req, res) => {
     const {groupId} = req.params;
     const { address, city, state, lat, lng } = req.body;
