@@ -1,5 +1,6 @@
 const express = require('express');
 const { Event, Group, Venue, Attendance, EventImage, Membership, User } = require('../../db/models');
+const { Op } = require('sequelize');
 
 const { requireAuth } = require('../../utils/auth');
 
@@ -44,8 +45,6 @@ router.get("/:eventId/attendees", async (req, res) => {
         }
     })
 
-    console.log("usermemb", userMemb)
-
     const userAttendReformat = attendees.map(attendance => {
         return {
             id: attendance.User.id,
@@ -66,6 +65,70 @@ router.get("/:eventId/attendees", async (req, res) => {
     }
 
     return res.json({"Attendees": userAttendReformat})
+})
+
+router.post("/:eventId/attendance", requireAuth, async (req, res) => {
+    const { eventId } = req.params;
+    const event = await Event.findOne({
+        where: {
+            id: eventId
+        },
+        include: {
+            model: Group,
+            attributes: ["id", "organizerId"]
+        }
+    })
+
+    if (!event) {
+        res.status(404);
+        return res.json({"message": "Event couldn't be found"})
+    }
+
+    const membershipAuth = await Membership.findOne({
+        where: {
+            groupId: event.Group.id,
+            userId: req.user.id,
+            status: {
+                [Op.or]: ["co-host", "member"]
+            }
+        }
+    })
+
+    if (!membershipAuth) {
+        res.status(403);
+        return res.json({"message": "Forbidden"})
+    }
+
+    const userAttendance = await Attendance.findOne({
+        where: {
+            eventId: eventId,
+            userId: req.user.id
+        }
+    })
+
+    if (userAttendance) {
+        if (userAttendance.status === "pending") {
+            res.status(400);
+            return res.json({"message": "Attendance has already been requested"})
+        }
+
+        if (userAttendance.status === "attending" || userAttendance.status === "waitlist") {
+            res.status(400);
+            return res.json({"message": "User is already an attendee of the group"})
+        }
+
+    }
+
+    const newAttendance = await Attendance.create({
+        userId: req.user.id,
+        eventId: eventId,
+        status: "pending"
+    })
+
+    return res.json({
+        "userId": newAttendance.userId,
+        "status": newAttendance.status
+    })
 
 
 })
@@ -311,8 +374,12 @@ router.get("/", async (req, res) => {
         })
 
         console.log("prevImage", prevImage)
+        if (prevImage) {
+            event.dataValues.previewImage = prevImage.url;
+        } else {
+            event.dataValues.previewImage = null;
+        }
 
-        event.dataValues.previewImage = prevImage.url;
     }
 
     console.log("events:", events);
