@@ -15,51 +15,62 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
-// router.get("/:groupId/members", async (req, res) => {
-//     const { groupId } = req.params;
+router.get("/:groupId/members", async (req, res) => {
+    const { groupId } = req.params;
 
-//     const group = await Group.findOne({
-//         where: {
-//             id: groupId
-//         }
-//     });
+    const group = await Group.findOne({
+        where: {
+            id: groupId
+        }
+    });
 
-//     if (!group) {
-//         res.status(404);
-//         return res.json({"message": "Group couldn't be found"})
-//     };
+    if (!group) {
+        res.status(404);
+        return res.json({"message": "Group couldn't be found"})
+    };
 
-//     const memberships = await Membership.findAll({
-//         where: {
-//             groupId: groupId
-//         },
-//         include: {
-//             model: User
-//         }
-//     })
+    const memberships = await Membership.findAll({
+        where: {
+            groupId: groupId
+        },
+        include: {
+            model: User
+        }
+    })
 
-//     console.log("memberships:", memberships)
+    // const membershipsNonAuth = memberships.filter(membership => {
+    //     return membership.status !== "pending";
+    // })
 
-//     const members = memberships.map(membership => {
-//        return membership.User
-//     })
+    const userMemb = await Membership.findOne({
+        where: {
+            userId: req.user.id,
+            groupId: groupId,
+            status: "co-host"
+        }
+    })
 
-//     console.log("members:", members);
+    const userMembReformat = memberships.map(membership => {
+        return {
+            id: membership.User.id,
+            firstName: membership.User.firstName,
+            lastName: membership.User.lastName,
+            Membership: {
+                status: membership.status
+            }
+        }
+    })
 
-//     const authedUsers = members.filter(member => {
-//         return member.status
-//     })
+    const nonAuthResult = userMembReformat.filter(user => {
+        return user.Membership.status !== "pending";
+    })
 
-//     if ((group.organizerId !== req.user.id) && (!userMemberOfGroup.includes(groupId))) {
-//         const nonAuthMembers = members.filter(member => {
-//             return member.Membership.status === "co-host"
-//         })
+    if (group.organizerId !== req.user.id && !userMemb) {
+        return res.json(nonAuthResult)
+    }
 
-//         return res.json({"Members": nonAuthMembers})
-//     }
-
-//     return res.json({"Members": members});
-// })
+    return res.json({"Members": userMembReformat});
+})
 
 router.get("/:groupId/venues", requireAuth, async (req, res) => {
     const { groupId } = req.params;
