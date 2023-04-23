@@ -115,29 +115,27 @@ router.get("/:groupId/events", async (req, res) => {
         }
     });
 
+    console.log("group", currentGroup)
+
     if (!currentGroup) {
         res.status(404);
         return res.json({ "message": "Group couldn't be found"})
     }
 
+
     const events = await Event.findAll({
+        attributes: ["id", "groupId", "venueId", "name", "type", "startDate", "endDate"],
+        include: [{
+            model: Group,
+            attributes: ["id", "name", "city", "state"]
+        }, {
+            model: Venue,
+            attributes: ["id", "city", "state"]
+        }],
         where: {
             groupId: groupId
         }
-    })
-    // const events = await Event.findAll({
-    //     attributes: ["id", "groupId", "venueId", "name", "type", "startDate", "endDate"],
-    //     include: [{
-    //         model: Group,
-    //         attributes: ["id", "name", "city", "state"]
-    //     }, {
-    //         model: Venue,
-    //         attributes: ["id", "city", "state"]
-    //     }],
-    //     where: {
-    //         groupId: groupId
-    //     }
-    // });
+    });
 
     console.log("the events", events)
 
@@ -155,7 +153,9 @@ router.get("/:groupId/events", async (req, res) => {
                 preview: true
             }
         });
-        event.dataValues.previewImage = image.url;
+        if (image) {
+            event.dataValues.previewImage = image.url;
+        } else event.dataValues.previewImage = null;
     };
     return res.json({"Events": events})
 });
