@@ -34,7 +34,11 @@ router.delete("/:imageId", requireAuth, async (req, res) => {
         return res.json({"message": "Forbidden"})
     }
 
-    image.destroy()
+    await GroupImage.destroy({
+        where: {
+            id: imageId
+        }
+    })
     return res.json({"message": "Successfully deleted"})
 })
 

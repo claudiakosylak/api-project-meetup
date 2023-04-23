@@ -440,7 +440,11 @@ router.delete("/:eventId/attendance", requireAuth, async (req, res) => {
         return res.json({"message": "Attendance does not exist for this User"})
     }
 
-    attendance.destroy()
+    await Attendance.destroy({
+        where: {
+            id: attendance.id
+        }
+    })
 
     return res.json({"message": "Successfully deleted attendance from event"})
 
@@ -476,7 +480,11 @@ router.delete("/:eventId", requireAuth, async (req, res) => {
         return res.json({"message": "Forbidden"})
     }
 
-    event.destroy()
+    await Event.destroy({
+        where: {
+            id: eventId
+        }
+    })
 
     return res.json({"message": "Successfully deleted"})
 })
@@ -564,8 +572,6 @@ router.get("/", async (req, res) => {
         }
 
     }
-
-    // console.log("events:", events);
 
     return res.json({"Events": events});
 })
