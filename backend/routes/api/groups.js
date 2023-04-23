@@ -109,29 +109,37 @@ router.get("/:groupId/venues", requireAuth, async (req, res) => {
 
 router.get("/:groupId/events", async (req, res) => {
     const { groupId } = req.params;
-    const currentGroup = await Group.findAll({
+    const currentGroup = await Group.findOne({
         where: {
             id: groupId
         }
     });
 
-    if (currentGroup.length === 0) {
+    if (!currentGroup) {
         res.status(404);
         return res.json({ "message": "Group couldn't be found"})
     }
+
     const events = await Event.findAll({
-        attributes: ["id", "groupId", "venueId", "name", "type", "startDate", "endDate"],
-        include: [{
-            model: Group,
-            attributes: ["id", "name", "city", "state"]
-        }, {
-            model: Venue,
-            attributes: ["id", "city", "state"]
-        }],
         where: {
             groupId: groupId
         }
-    });
+    })
+    // const events = await Event.findAll({
+    //     attributes: ["id", "groupId", "venueId", "name", "type", "startDate", "endDate"],
+    //     include: [{
+    //         model: Group,
+    //         attributes: ["id", "name", "city", "state"]
+    //     }, {
+    //         model: Venue,
+    //         attributes: ["id", "city", "state"]
+    //     }],
+    //     where: {
+    //         groupId: groupId
+    //     }
+    // });
+
+    console.log("the events", events)
 
     for (let event of events) {
         const attendances = await Attendance.count({
