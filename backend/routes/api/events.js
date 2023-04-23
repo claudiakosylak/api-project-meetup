@@ -338,11 +338,11 @@ router.put("/:eventId", requireAuth, async (req, res) => {
     }
 
     let currentTime = new Date();
-    currentTime = currentTime.toDateString();
+    currentTime = currentTime;
     console.log("currentTime", currentTime)
 
-    let startDateUsable = new Date(startDate).toDateString();
-    let endDateUsable = new Date(endDate).toDateString();
+    let startDateUsable = new Date(startDate);
+    let endDateUsable = new Date(endDate);
 
     const errors = {};
     if (!venueId) errors.venueId = "Venue does not exist";
