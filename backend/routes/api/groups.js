@@ -84,15 +84,12 @@ router.get("/:groupId/venues", requireAuth, async (req, res) => {
     const memberships = await Membership.findAll({
         where: {
             userId: req.user.id,
+            groupId: groupId,
             status: "co-host"
         }
     })
 
-    const groups = memberships.map(membership => {
-        return membership.groupId
-    })
-
-    if ((group.organizerId !== req.user.id) && (!groups.includes(groupId))) {
+    if ((group.organizerId !== req.user.id) && !memberships) {
         res.status(403);
         return res.json({"message": "Forbidden"})
     }
