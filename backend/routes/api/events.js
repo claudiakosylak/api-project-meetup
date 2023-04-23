@@ -269,6 +269,7 @@ router.put("/:eventId/attendance", requireAuth, async (req, res) => {
 
 router.get("/:eventId", async (req, res) => {
     const { eventId } = req.params;
+
     const event = await Event.findOne({
         where: {
             id: eventId
@@ -285,9 +286,9 @@ router.get("/:eventId", async (req, res) => {
         {
             model: EventImage,
             attributes: ["id", "url", "preview"]
-        }
-    ]
+        }]
     })
+
 
     if (!event) {
         res.status(404);
