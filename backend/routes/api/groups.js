@@ -115,8 +115,6 @@ router.get("/:groupId/events", async (req, res) => {
         }
     });
 
-    console.log("group", currentGroup)
-
     if (!currentGroup) {
         res.status(404);
         return res.json({ "message": "Group couldn't be found"})
@@ -136,8 +134,6 @@ router.get("/:groupId/events", async (req, res) => {
             groupId: groupId
         }
     });
-
-    console.log("the events", events)
 
     for (let event of events) {
         const attendances = await Attendance.count({
@@ -439,21 +435,12 @@ router.post("/:groupId/venues", requireAuth, async (req, res) => {
         return res.json(err.errors)
     }
 
-    const newVenue = await Venue.create({
-        groupId: groupId,
-        address: address,
-        city: city,
-        state: state,
-        lat: lat,
-        lng: lng
-    });
-
     const errors = {};
     if (!address) errors.address = "Street address is required";
     if (!city) errors.city = "City is required";
     if (!state) errors.state = "State is required";
-    if (isNaN(lat)) errors.lat = "Latitude is not valid";
-    if (isNaN(lng)) errors.lng = "Longitude is not valid";
+    if (isNaN(lat) || lat < -90 || lat > 90) errors.lat = "Latitude is not valid";
+    if (isNaN(lng) || lng < -180 || lng > 180) errors.lng = "Longitude is not valid";
 
 
 
@@ -464,6 +451,15 @@ router.post("/:groupId/venues", requireAuth, async (req, res) => {
             errors
         })
     }
+    const newVenue = await Venue.create({
+        groupId: groupId,
+        address: address,
+        city: city,
+        state: state,
+        lat: lat,
+        lng: lng
+    });
+
 
     return res.json({
         "id": newVenue.id,
