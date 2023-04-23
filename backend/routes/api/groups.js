@@ -543,17 +543,21 @@ router.post("/:groupId/events", requireAuth, async (req, res) => {
 
 
     let currentTime = new Date();
-    currentTime = currentTime.toDateString();
+
+    currentTime = currentTime
     console.log("currentTime", currentTime)
 
-    let startDateUsable = new Date(startDate).toDateString();
-    let endDateUsable = new Date(endDate).toDateString();
+    let startDateUsable = new Date(startDate)
+    let endDateUsable = new Date(endDate);
+
+    console.log("startdateusable", startDateUsable)
 
     const errors = {};
     if (!venue) errors.venueId = "Venue does not exist";
     if (name.length < 5) errors.name = "Name must be at least 5 characters";
     if (type !== "Online" && type !== "In Person") errors.type = "Type must be Online or In Person";
     if (!Number.isInteger(capacity)) errors.capacity = "Capacity must be an integer";
+    if (!price || price < 0 || isNaN(price)) errors.price = "Price is invalid";
     if (!description) errors.description = "Description is required";
 
     if (startDateUsable <= currentTime) errors.startDate = "Start date must be in the future";

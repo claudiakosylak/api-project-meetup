@@ -269,6 +269,7 @@ router.put("/:eventId/attendance", requireAuth, async (req, res) => {
 
 router.get("/:eventId", async (req, res) => {
     const { eventId } = req.params;
+
     const event = await Event.findOne({
         where: {
             id: eventId
@@ -285,9 +286,9 @@ router.get("/:eventId", async (req, res) => {
         {
             model: EventImage,
             attributes: ["id", "url", "preview"]
-        }
-    ]
+        }]
     })
+
 
     if (!event) {
         res.status(404);
@@ -337,11 +338,11 @@ router.put("/:eventId", requireAuth, async (req, res) => {
     }
 
     let currentTime = new Date();
-    currentTime = currentTime.toDateString();
+    currentTime = currentTime;
     console.log("currentTime", currentTime)
 
-    let startDateUsable = new Date(startDate).toDateString();
-    let endDateUsable = new Date(endDate).toDateString();
+    let startDateUsable = new Date(startDate);
+    let endDateUsable = new Date(endDate);
 
     const errors = {};
     if (!venueId) errors.venueId = "Venue does not exist";
