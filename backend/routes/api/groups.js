@@ -109,16 +109,20 @@ router.get("/:groupId/venues", requireAuth, async (req, res) => {
 
 router.get("/:groupId/events", async (req, res) => {
     const { groupId } = req.params;
-    const currentGroup = await Group.findAll({
+    const currentGroup = await Group.findOne({
         where: {
             id: groupId
         }
     });
 
-    if (currentGroup.length === 0) {
+    console.log("group", currentGroup)
+
+    if (!currentGroup) {
         res.status(404);
         return res.json({ "message": "Group couldn't be found"})
     }
+
+
     const events = await Event.findAll({
         attributes: ["id", "groupId", "venueId", "name", "type", "startDate", "endDate"],
         include: [{
@@ -132,6 +136,8 @@ router.get("/:groupId/events", async (req, res) => {
             groupId: groupId
         }
     });
+
+    console.log("the events", events)
 
     for (let event of events) {
         const attendances = await Attendance.count({
@@ -147,7 +153,9 @@ router.get("/:groupId/events", async (req, res) => {
                 preview: true
             }
         });
-        event.dataValues.previewImage = image.url;
+        if (image) {
+            event.dataValues.previewImage = image.url;
+        } else event.dataValues.previewImage = null;
     };
     return res.json({"Events": events})
 });

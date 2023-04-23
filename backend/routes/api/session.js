@@ -1,4 +1,4 @@
-const express = require('express')
+const express = require('express');
 const { Op } = require('sequelize');
 const bcrypt = require('bcryptjs');
 
@@ -39,9 +39,8 @@ router.post(
         const err = new Error('Login failed');
         err.status = 401;
         err.title = 'Login failed';
-        err.errors = { message: 'Invalid credentials' };
-        res.status(401);
-        return res.json(err.errors)
+        err.errors = { credential: 'Invalid credentials' };
+        return next(err);
       }
 
       const safeUser = {
@@ -86,13 +85,6 @@ router.get(
       } else return res.json({ user: null });
     }
   );
-
-//   router.use((err, req, res, next) => {
-//     return res.json({
-//       "message": "Bad Request",
-//       "errors": err.errors
-//     })
-// })
 
 
 module.exports = router;
