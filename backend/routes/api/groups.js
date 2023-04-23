@@ -168,8 +168,6 @@ router.get("/current", requireAuth, async (req, res) => {
         }
     });
 
-    console.log("groups",groups)
-
     const membershipGroups = await Membership.findAll({
         attributes: ["id", "userId", "groupId"],
         where: {
@@ -180,13 +178,12 @@ router.get("/current", requireAuth, async (req, res) => {
         }
     });
 
-    const membGroup = membershipGroups.map(membership => {
-        return membership.dataValues.Group
-    });
+    if (membershipGroups.length > 0) {
+        for (let membership of membershipGroups) {
+            groups.push(membership.Group)
+        }
+    }
 
-    if (membGroup.length > 1) {
-        groups.concat(membGroup);
-    };
 
     for (let group of groups) {
         let id = group.id;
