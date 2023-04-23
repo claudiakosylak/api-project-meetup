@@ -525,8 +525,6 @@ router.post("/:groupId/events", requireAuth, async (req, res) => {
         return res.json({"message": "Group couldn't be found"})
     }
 
-    console.log("test", "hi")
-
     const userMembership = await Membership.findOne({
         where: {
             groupId: groupId,
@@ -728,7 +726,11 @@ router.delete("/:groupId/membership", requireAuth, async (req, res) => {
         return res.json({"message": "Membership does not exist for this User"})
     }
 
-    membership.destroy()
+    await Membership.destroy({
+        where: {
+            id: membership.id
+        }
+    })
 
     return res.json({"message": "Successfully deleted membership from group"})
 
@@ -752,7 +754,12 @@ router.delete("/:groupId", requireAuth, async (req, res) => {
         return res.json({"message": "Forbidden"})
     }
 
-    group.destroy();
+
+    await Group.destroy({
+        where: {
+            id: groupId
+        }
+    })
     return res.json({"message": "Successfully deleted"})
 })
 
