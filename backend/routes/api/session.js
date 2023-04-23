@@ -86,12 +86,5 @@ router.get(
     }
   );
 
-//   router.use((err, req, res, next) => {
-//     return res.json({
-//       "message": "Bad Request",
-//       "errors": err.errors
-//     })
-// })
-
 
 module.exports = router;
