@@ -365,6 +365,18 @@ router.put("/:groupId/membership", requireAuth, async (req, res) => {
         })
     }
 
+    const changedMembership = await Membership.findOne({
+        where: {
+            groupId: groupId,
+            userId: memberId
+        }
+    })
+
+    if (!changedMembership) {
+        res.status(404);
+        return res.json({"message": "Membership between the user and the group does not exist"})
+    }
+
 
     const userMembership = await Membership.findOne({
         where: {
@@ -388,19 +400,6 @@ router.put("/:groupId/membership", requireAuth, async (req, res) => {
         err.errors = { message: 'Forbidden' };
         res.status(403);
         return res.json(err.errors)
-    }
-
-
-    const changedMembership = await Membership.findOne({
-        where: {
-            groupId: groupId,
-            userId: memberId
-        }
-    })
-
-    if (!changedMembership) {
-        res.status(404);
-        return res.json({"message": "Membership between the user and the group does not exist"})
     }
 
     changedMembership.update({

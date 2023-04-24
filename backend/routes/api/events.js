@@ -433,7 +433,7 @@ router.delete("/:eventId/attendance", requireAuth, async (req, res) => {
 
     if (event.Group.organizerId !== req.user.id && userId !== req.user.id) {
         res.status(403);
-        return res.json({"message": "Forbidden"})
+        return res.json({"message": "Only the User or organizer may delete an Attendance"})
     }
 
     const attendance = await Attendance.findOne({
