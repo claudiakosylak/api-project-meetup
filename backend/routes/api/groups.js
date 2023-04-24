@@ -765,6 +765,8 @@ router.delete("/:groupId", requireAuth, async (req, res) => {
         }
     })
 
+    console.log("group", group)
+
     if (!group) {
         res.status(404);
         return res.json({"message": "Group couldn't be found"})

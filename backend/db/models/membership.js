@@ -27,7 +27,10 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true
     },
     userId: DataTypes.INTEGER,
-    groupId: DataTypes.INTEGER,
+    groupId: {
+      type: DataTypes.INTEGER,
+      onDelete: "cascade"
+    },
     status: DataTypes.ENUM("co-host", "member", "pending")
   }, {
     sequelize,

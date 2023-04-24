@@ -33,7 +33,10 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true
     },
     venueId: DataTypes.INTEGER,
-    groupId: DataTypes.INTEGER,
+    groupId: {
+      type: DataTypes.INTEGER,
+      onDelete: "cascade"
+    },
     name: DataTypes.STRING,
     description: DataTypes.TEXT,
     type: DataTypes.ENUM("Online", "In Person"),

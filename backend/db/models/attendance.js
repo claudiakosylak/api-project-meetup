@@ -30,7 +30,9 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true
     },
-    eventId: DataTypes.INTEGER,
+    eventId: {
+      type: DataTypes.INTEGER
+    },
     userId: DataTypes.INTEGER,
     status: DataTypes.ENUM("attending", "waitlist", "pending")
   }, {
