@@ -349,6 +349,21 @@ router.put("/:groupId/membership", requireAuth, async (req, res) => {
         return res.json({"message": "Group couldn't be found"})
     }
 
+    const requestUser = await User.findOne({
+        where: {
+            id: memberId
+        }
+    })
+
+    if (!requestUser) {
+        res.status(400);
+        return res.json({
+            "message": "Validation Error",
+            "errors": {
+                "memberId": "User couldn't be found"
+            }
+        })
+    }
 
 
     const userMembership = await Membership.findOne({
@@ -375,21 +390,6 @@ router.put("/:groupId/membership", requireAuth, async (req, res) => {
         return res.json(err.errors)
     }
 
-    const requestUser = await User.findOne({
-        where: {
-            id: memberId
-        }
-    })
-
-    if (!requestUser) {
-        res.status(400);
-        return res.json({
-            "message": "Validation Error",
-            "errors": {
-                "memberId": "User couldn't be found"
-            }
-        })
-    }
 
     const changedMembership = await Membership.findOne({
         where: {
