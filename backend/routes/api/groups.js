@@ -339,10 +339,17 @@ router.put("/:groupId/membership", requireAuth, async (req, res) => {
         }
     })
 
+    if (status === "pending") {
+        res.status(400);
+        return res.json({"message": "Cannot change a membership status to pending"})
+    }
+
     if (!group) {
         res.status(404);
         return res.json({"message": "Group couldn't be found"})
     }
+
+
 
     const userMembership = await Membership.findOne({
         where: {
@@ -353,6 +360,14 @@ router.put("/:groupId/membership", requireAuth, async (req, res) => {
     })
 
     if (group.organizerId !== req.user.id && !userMembership) {
+        let err = new Error("Forbidden");
+        err.title = 'Forbidden';
+        err.errors = { message: 'Forbidden' };
+        res.status(403);
+        return res.json(err.errors)
+    }
+
+    if (group.organizerId !== req.user.id && status === "co-host") {
         let err = new Error("Forbidden");
         err.title = 'Forbidden';
         err.errors = { message: 'Forbidden' };
