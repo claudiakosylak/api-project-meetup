@@ -498,7 +498,6 @@ router.delete("/:eventId", requireAuth, async (req, res) => {
 })
 
 router.get("/", async (req, res) => {
-    console.log("dlkf;ajdflkajs;dflksjdf;aslkdfj")
     let { page, size, name, type, startDate } = req.query;
     const where = {};
     const errors = {};
@@ -516,12 +515,7 @@ router.get("/", async (req, res) => {
     if (isNaN(size)) size = 20;
     if (name && typeof name !== "string") errors.name = "Name must be a string";
     if (type && type !== "Online" && type !== "In Person") errors.type = "Type must be 'Online' or 'In Person'";
-
-
     if (startDate && isNaN(Date.parse(startDate))) errors.startDate = "Start date must be a valid datetime";
-
-    console.log("errors", errors);
-
 
     if (page > 10) page = 10;
     if (size > 20) size = 20;
