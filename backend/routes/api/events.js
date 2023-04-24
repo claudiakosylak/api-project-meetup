@@ -290,6 +290,7 @@ router.get("/:eventId", async (req, res) => {
     })
 
 
+
     if (!event) {
         res.status(404);
         res.json({"message": "Event couldn't be found"})
@@ -308,6 +309,8 @@ router.get("/:eventId", async (req, res) => {
 
 router.put("/:eventId", requireAuth, async (req, res) => {
     const { eventId } = req.params;
+
+    console.log("eventId", eventId)
     const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body;
     const event = await Event.findOne({
         where: {
@@ -318,6 +321,9 @@ router.put("/:eventId", requireAuth, async (req, res) => {
             attributes: ["id", "organizerId"]
         }
     })
+
+
+    console.log("event", event)
 
     if (!event) {
         res.status(404);
@@ -349,6 +355,7 @@ router.put("/:eventId", requireAuth, async (req, res) => {
     if (!name || name.length < 5) errors.name = "Name must be at least 5 characters";
     if (type !== "Online" && type !== "In Person") errors.type = "Type must be Online or In Person";
     if (!Number.isInteger(capacity)) errors.capacity = "Capacity must be an integer";
+    if (!price || price < 0 || isNaN(price)) errors.price = "Price is invalid";
     if (!description) errors.description = "Description is required";
     if (startDateUsable <= currentTime) errors.startDate = "Start date must be in the future";
     if (endDateUsable < startDateUsable) errors.endDate = "End date is less than start date";

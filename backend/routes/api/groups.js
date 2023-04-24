@@ -585,7 +585,6 @@ router.post("/:groupId/events", requireAuth, async (req, res) => {
         endDate: endDateUsable
     })
 
-    res.status(201);
     return res.json({
         "id": newEvent.id,
         "venueId": newEvent.venueId,
