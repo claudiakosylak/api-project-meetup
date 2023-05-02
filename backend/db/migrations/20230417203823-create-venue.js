@@ -22,7 +22,8 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: "Groups"
-        }
+        },
+        onDelete: "cascade"
       },
       address: {
         type: Sequelize.STRING
