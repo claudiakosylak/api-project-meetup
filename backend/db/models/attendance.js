@@ -13,7 +13,8 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Attendance.belongsTo(
         models.Event, {
-          foreignKey: "eventId"
+          foreignKey: "eventId",
+          onDelete: "CASCADE"
         }
       )
       Attendance.belongsTo(
