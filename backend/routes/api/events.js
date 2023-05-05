@@ -19,8 +19,6 @@ router.get("/:eventId/attendees", async (req, res) => {
         }
     })
 
-    // console.log("event", event)
-
     if (!event) {
         res.status(404);
         return res.json({"message": "Event couldn't be found"})
@@ -34,8 +32,6 @@ router.get("/:eventId/attendees", async (req, res) => {
             model: User
         }
     })
-
-    console.log("attendees", attendees)
 
     const userMemb = await Membership.findOne({
         where: {
@@ -177,8 +173,6 @@ router.post("/:eventId/images", requireAuth, async (req, res) => {
         preview: preview
     })
 
-    console.log(newImage)
-
     return res.json({
         "id": newImage.id,
         "url": newImage.url,
@@ -310,7 +304,6 @@ router.get("/:eventId", async (req, res) => {
 router.put("/:eventId", requireAuth, async (req, res) => {
     const { eventId } = req.params;
 
-    console.log("eventId", eventId)
     const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body;
     const event = await Event.findOne({
         where: {
@@ -321,9 +314,6 @@ router.put("/:eventId", requireAuth, async (req, res) => {
             attributes: ["id", "organizerId"]
         }
     })
-
-
-    console.log("event", event)
 
     if (!event) {
         res.status(404);
@@ -345,7 +335,6 @@ router.put("/:eventId", requireAuth, async (req, res) => {
 
     let currentTime = new Date();
     currentTime = currentTime;
-    console.log("currentTime", currentTime)
 
     let startDateUsable = new Date(startDate);
     let endDateUsable = new Date(endDate);
@@ -506,8 +495,6 @@ router.get("/", async (req, res) => {
     if (!page) page = 1;
     if (!size) size = 20;
 
-    console.log("page", page);
-    console.log("size", size);
 
     if (page < 1) errors.page = "Page must be greater than or equal to 1";
     if (size < 1) errors.size = "Size must be greater than or equal to 1";
