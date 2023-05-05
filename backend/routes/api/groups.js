@@ -559,12 +559,9 @@ router.post("/:groupId/events", requireAuth, async (req, res) => {
     let currentTime = new Date();
 
     currentTime = currentTime
-    console.log("currentTime", currentTime)
 
     let startDateUsable = new Date(startDate)
     let endDateUsable = new Date(endDate);
-
-    console.log("startdateusable", startDateUsable)
 
     const errors = {};
     if (!venue) errors.venueId = "Venue does not exist";
@@ -764,8 +761,6 @@ router.delete("/:groupId", requireAuth, async (req, res) => {
             id: groupId
         }
     })
-
-    console.log("group", group)
 
     if (!group) {
         res.status(404);
