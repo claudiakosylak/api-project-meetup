@@ -1,3 +1,19 @@
 .hidden {
-    display: none
+    display: none;
+}
+
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid darkgrey;
+}
+
+.right-nav-links {
+    display: flex;
+    list-style-type: none;
+}
+
+.right-nav-link {
+    text-decoration: none;
 }
