@@ -11,6 +11,7 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
+    console.log("THIS IS THE FRESH PAGE")
   }, [dispatch]);
 
 

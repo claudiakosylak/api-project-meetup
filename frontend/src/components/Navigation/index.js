@@ -1,13 +1,11 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
-import * as sessionActions from '../../store/session';
 import './Navigation.css';
 
 function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
-  const dispatch = useDispatch();
 
   const logout = (e) => {
     e.preventDefault();
@@ -16,10 +14,10 @@ function Navigation({ isLoaded }){
 
   let sessionLinks;
   if (sessionUser) {
+    console.log("there is a session user")
     sessionLinks = (
       <li>
         <ProfileButton user={sessionUser} />
-        <button onClick={logout}>Log Out</button>
       </li>
     );
   } else {
