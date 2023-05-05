@@ -31,6 +31,7 @@ function SignupFormModal() {
         .then(closeModal)
         .catch(async (res) => {
           const data = await res.json();
+          console.log("THIS DATA IS CAUGHT?: ", data)
           if (data && data.errors) {
             setErrors(data.errors);
           }
