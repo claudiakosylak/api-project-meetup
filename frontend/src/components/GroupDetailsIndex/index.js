@@ -31,6 +31,8 @@ const GroupDetailsIndex = () => {
                 group={group}
             />
             <GroupDetailDescription group={group}/>
+            <h2>Upcoming Events (#)</h2>
+            
         </div>
     )
 }
