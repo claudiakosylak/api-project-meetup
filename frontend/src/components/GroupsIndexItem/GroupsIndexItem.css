@@ -1,0 +1,20 @@
+.groups-index-item-container {
+    display: flex;
+    padding: 10px;
+}
+
+.group-image-placeholder {
+    height: 100px;
+    width: 100px;
+    background-color: red;
+}
+
+.group-index-text-container {
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+}
+
+.under-groups-text-container {
+    display: flex;
+}
