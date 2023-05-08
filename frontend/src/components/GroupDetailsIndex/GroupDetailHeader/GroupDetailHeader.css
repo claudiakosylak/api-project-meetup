@@ -8,3 +8,15 @@
     display: flex;
     margin: 50px 100px 20px 100px;
 }
+
+.back-groups-link {
+    display: flex;
+    gap: 5px;
+}
+
+.group-detail-text-container-details-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-left: 20px;
+}
