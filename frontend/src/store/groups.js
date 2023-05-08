@@ -4,7 +4,6 @@
 const GET_GROUPS = "groups/getGroups";
 const GET_GROUP = "groups/getGroup";
 
-
 //actions here
 
 export const getGroupsAction = groups => ({
@@ -40,6 +39,22 @@ export const getGroupThunk = (groupId) => async dispatch => {
     }
 }
 
+export const createGroupThunk = (group) => async dispatch => {
+    const res = await fetch("/api/groups", {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(group)
+    })
+
+    if (res.ok) {
+        const newGroup = await res.json();
+        await dispatch(getGroupAction(newGroup))
+        return newGroup;
+    } else {
+        const err = await res.json();
+        return err;
+    }
+}
 
 
 // reducer here

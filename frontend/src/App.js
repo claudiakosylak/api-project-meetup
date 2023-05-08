@@ -6,6 +6,7 @@ import Navigation from "./components/Navigation";
 import ReadupIndex from "./components/ReadupIndex";
 import GroupsIndex from "./components/GroupsIndex";
 import GroupDetailsIndex from "./components/GroupDetailsIndex";
+import CreateGroupForm from "./components/CreateGroupForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -23,6 +24,9 @@ function App() {
       {
         isLoaded && (
           <Switch>
+            <Route path="/groups/new">
+              <CreateGroupForm />
+            </Route>
             <Route path="/groups/:groupId">
               <GroupDetailsIndex />
             </Route>

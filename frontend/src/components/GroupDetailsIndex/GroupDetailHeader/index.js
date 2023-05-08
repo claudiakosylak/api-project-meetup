@@ -1,19 +1,11 @@
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import "./GroupDetailHeader.css";
-// import { useState } from "react";
 
-const GroupDetailHeader = ({ group }) => {
+const GroupDetailHeader = ({ group, numberEvents }) => {
 
-    // const [joinClicked, setJoinClicked] = useState(false)
-    console.log("GROUP WITHIN HEADER: ", group)
 
     if (!group.Organizer) return null;
 
-    // const clickJoin = e => {
-    //     e.
-    //     setJoinClicked(true)
-    //     setJoinClicked(false)
-    // }
 
     return (
         <div className="group-header-component-container">
@@ -30,7 +22,7 @@ const GroupDetailHeader = ({ group }) => {
                 <h1>{group.name}</h1>
                 <p>{group.city}, {group.state}</p>
                 <div className="event-public-container">
-                    <p>## Events</p>
+                    <p>{`${numberEvents} Events`}</p>
                     <p>{group.private ? "Private" : "Public"}</p>
                 </div>
                 <p>Organized by {group.Organizer.firstName} {group.Organizer.lastName}</p>

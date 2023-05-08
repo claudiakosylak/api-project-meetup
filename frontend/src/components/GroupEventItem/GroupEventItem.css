@@ -1,0 +1,20 @@
+.main-event-pic-placeholder {
+    width: 100px;
+    height: 100px;
+    background-color: green;
+}
+
+.event-item-top-half {
+    display: flex;
+}
+
+.event-item-container-box {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.event-item-top-half-text {
+    display: flex;
+    flex-direction: column;
+}
