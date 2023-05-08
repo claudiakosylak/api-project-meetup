@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import ReadupIndex from "./components/ReadupIndex";
+import GroupsIndex from "./components/GroupsIndex";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,6 +22,9 @@ function App() {
       {
         isLoaded && (
           <Switch>
+            <Route path="/groups">
+              <GroupsIndex />
+            </Route>
             <Route exact path="/">
               <ReadupIndex />
             </Route>
