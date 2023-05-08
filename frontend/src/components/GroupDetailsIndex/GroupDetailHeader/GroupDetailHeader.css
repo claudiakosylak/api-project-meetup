@@ -1,0 +1,10 @@
+.group-image-placeholder-details-page {
+    height: 200px;
+    width: 300px;
+    background-color: blue;
+}
+
+.group-header-component-container {
+    display: flex;
+    margin: 50px 100px 20px 100px;
+}

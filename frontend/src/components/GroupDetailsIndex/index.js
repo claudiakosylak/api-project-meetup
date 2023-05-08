@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useParams } from "react-router-dom";
 import { getGroupThunk } from "../../store/groups";
+import GroupDetailHeader from "./GroupDetailHeader";
+
 
 const GroupDetailsIndex = () => {
 
@@ -16,7 +18,9 @@ const GroupDetailsIndex = () => {
 
     return (
         <div className="group-details-page-container">
-            <h1>{group.name}</h1>
+            <GroupDetailHeader
+                group={group}
+            />
         </div>
     )
 }
