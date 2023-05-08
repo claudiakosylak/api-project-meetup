@@ -31,9 +31,7 @@ const groupsReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_GROUPS:
             const groupsState = { ...state };
-            console.log("ACTION GROUPS IN REDUCER: ", action.groups)
-            action.groups.forEach(group => {
-                console.log("THIS IS GROUP IN FOREACH: ", group)
+            action.groups.Groups.forEach(group => {
                 groupsState[group.id] = group;
             });
             return groupsState;
