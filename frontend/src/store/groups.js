@@ -2,12 +2,18 @@
 //action variables here
 
 const GET_GROUPS = "groups/getGroups";
+const GET_GROUP = "groups/getGroup";
 
 //actions here
 
-const getGroupsAction = groups => ({
+export const getGroupsAction = groups => ({
     type: GET_GROUPS,
     groups
+})
+
+export const getGroupAction = group => ({
+    type: GET_GROUP,
+    group
 })
 
 
@@ -21,6 +27,17 @@ export const getGroupsThunk = () => async (dispatch) => {
     }
 }
 
+export const getGroupThunk = (groupId) => async dispatch => {
+    const res = await fetch(`/api/groups/${groupId}`);
+    if (res.ok) {
+        const group = await res.json();
+        dispatch(getGroupAction(group))
+        return group;
+    } else {
+        const error = await res.json();
+        return error;
+    }
+}
 
 // reducer here
 
@@ -35,6 +52,10 @@ const groupsReducer = (state = initialState, action) => {
                 groupsState[group.id] = group;
             });
             return groupsState;
+        case GET_GROUP:
+            const newState = {...state};
+            newState[action.group.id] = action.group;
+            return newState;
         default:
             return state;
     }
