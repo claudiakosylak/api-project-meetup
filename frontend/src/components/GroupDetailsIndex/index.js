@@ -3,6 +3,10 @@ import {useDispatch, useSelector} from "react-redux";
 import {useParams } from "react-router-dom";
 import { getGroupThunk } from "../../store/groups";
 import GroupDetailHeader from "./GroupDetailHeader";
+import "./GroupDetailsIndex.css";
+import GroupDetailDescription from "./GroupDetailDescription";
+import { getGroupEventsThunk } from "../../store/events";
+import GroupEventItem from "../GroupEventItem";
 
 
 const GroupDetailsIndex = () => {
@@ -11,6 +15,16 @@ const GroupDetailsIndex = () => {
     const {groupId} = useParams();
     console.log("THIS IS GROUPID: ", groupId)
     const group = useSelector(state => state.groups[groupId])
+    const eventsObj = useSelector(state => state.events)
+    const events = Object.values(eventsObj)
+
+    console.log("THIS IS EVENTS ARRAY: ", events)
+
+    // if (eventsObj === {}) {
+    //     events = [];
+    // } else {
+    //     events = Object.values(eventsObj)
+    // }
     // console.log("THIS IS THE STATE GROUPS: ", groups)
     // const group = groups[groupId];
 
@@ -21,6 +35,10 @@ const GroupDetailsIndex = () => {
         dispatch(getGroupThunk(groupId));
     }, [dispatch, groupId])
 
+    useEffect(() => {
+        dispatch(getGroupEventsThunk(groupId))
+    }, [dispatch, groupId])
+
     if (!group) return null;
 
     return (
@@ -28,6 +46,14 @@ const GroupDetailsIndex = () => {
             <GroupDetailHeader
                 group={group}
             />
+            <GroupDetailDescription group={group}/>
+            <h2>Upcoming Events (#)</h2>
+            <ul className="group-events-list-container">
+                {events.map(event => (
+                    <GroupEventItem event={event} key={event.id} />
+                ))}
+            </ul>
+
         </div>
     )
 }
