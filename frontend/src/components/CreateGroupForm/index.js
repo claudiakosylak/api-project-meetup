@@ -10,6 +10,13 @@ const CreateGroupForm = () => {
     const [privateStatus, setPrivateStatus] = useState(false);
     const [location, setLocation] = useState("");
     const [imageUrl, setImageUrl] = useState("");
+    const [errors, setErrors] = useState({});
+    const [hasSubmitted, setHasSubmitted] = useState(false);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+    }
 
     return (
         <form>
