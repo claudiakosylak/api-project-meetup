@@ -3,6 +3,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {useParams } from "react-router-dom";
 import { getGroupThunk } from "../../store/groups";
 import GroupDetailHeader from "./GroupDetailHeader";
+import "./GroupDetailsIndex.css";
+import GroupDetailDescription from "./GroupDetailDescription";
 
 
 const GroupDetailsIndex = () => {
@@ -28,6 +30,7 @@ const GroupDetailsIndex = () => {
             <GroupDetailHeader
                 group={group}
             />
+            <GroupDetailDescription group={group}/>
         </div>
     )
 }
