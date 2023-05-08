@@ -9,12 +9,19 @@ const GroupDetailsIndex = () => {
 
     const dispatch = useDispatch();
     const {groupId} = useParams();
-    const groups = useSelector(state => state.groups)
-    const group = groups[groupId];
+    console.log("THIS IS GROUPID: ", groupId)
+    const group = useSelector(state => state.groups[groupId])
+    // console.log("THIS IS THE STATE GROUPS: ", groups)
+    // const group = groups[groupId];
+
+    console.log("THIS IS THE GROUP: ", group)
 
     useEffect(() => {
+        console.log("THIS IS INSIDE USEEFFECT:", groupId)
         dispatch(getGroupThunk(groupId));
     }, [dispatch, groupId])
+
+    if (!group) return null;
 
     return (
         <div className="group-details-page-container">

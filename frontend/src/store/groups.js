@@ -23,7 +23,7 @@ export const getGroupsThunk = () => async (dispatch) => {
     const res = await fetch("/api/groups");
     const allGroups = await res.json();
     if (res.ok) {
-        dispatch(getGroupsAction(allGroups))
+        await dispatch(getGroupsAction(allGroups))
     }
 }
 
@@ -31,7 +31,7 @@ export const getGroupThunk = (groupId) => async dispatch => {
     const res = await fetch(`/api/groups/${groupId}`);
     if (res.ok) {
         const group = await res.json();
-        dispatch(getGroupAction(group))
+        await dispatch(getGroupAction(group))
         return group;
     } else {
         const error = await res.json();
