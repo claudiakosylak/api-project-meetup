@@ -11,6 +11,7 @@ export const getGroupEventsAction = events => ({
 
 
 export const getGroupEventsThunk = (groupId) => async dispatch => {
+    console.log("THE GROUPID IN THUNK: ", groupId)
     const res = await fetch(`/api/groups/${groupId}/events`);
     if (res.ok) {
         const events = await res.json();
@@ -27,11 +28,14 @@ const initialState = {};
 const eventsReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_GROUP_EVENTS:
-        const eventState = {...state};
-        action.events.Events.forEach(event => {
-            eventState[event.id] = event;
-        })
-        return eventState;
+            console.log("ACTION EVENTS IN REDUCER: ", action.events)
+            const eventState = { };
+            action.events.Events.forEach(event => {
+                eventState[event.id] = event;
+            })
+            return eventState;
+        default:
+        return state;
     }
 }
 
