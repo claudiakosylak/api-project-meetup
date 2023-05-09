@@ -1,0 +1,41 @@
+.signup-modal-wrapper {
+    width: 400px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.signup-modal-wrapper > h1 {
+    font-size: 25px;
+    margin: 10px;
+}
+
+.signup-modal-wrapper > form {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    align-items: center;
+}
+
+.signup-modal-wrapper > form > label {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    width: 100%;
+}
+
+.signup-modal-wrapper > form > label > input {
+    width: 100%;
+    height: 25px;
+    background-color: lightblue;
+}
+
+.signup-submit-button {
+    width: 100%;
+    height: 40px;
+    margin-top: 10px;
+    box-shadow: 5px 5px black;
+    background-color: #FFA384;
+    color: white;
+}
