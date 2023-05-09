@@ -1,6 +1,6 @@
 .signup-modal-wrapper {
     width: 400px;
-    height: 400px;
+    height: 420px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -21,7 +21,7 @@
 .signup-modal-wrapper > form > label {
     display: flex;
     flex-direction: column;
-    font-size: 12px;
+    font-size: 15px;
     width: 100%;
 }
 
@@ -35,7 +35,24 @@
     width: 100%;
     height: 40px;
     margin-top: 10px;
-    box-shadow: 5px 5px black;
+    box-shadow: 3px 3px black;
     background-color: #FFA384;
     color: white;
+    margin-bottom: 20px;
+    border: 2px solid black;
+}
+
+.signup-submit-button:hover {
+    cursor: pointer;
+}
+
+.disabled-signup-button {
+    width: 100%;
+    height: 40px;
+    margin-top: 10px;
+    box-shadow: 3px 3px black;
+    border: 2px solid black;
+    background-color: lightgrey;
+    color: black;
+    margin-bottom: 20px;
 }

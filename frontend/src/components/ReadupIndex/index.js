@@ -4,10 +4,14 @@ import "./ReadupIndex.css";
 import seeGroupsImage from "./images/eco-green-high-five.png";
 import findEventImage from "./images/man-and-woman.png";
 import startGroupImage from "./images/group-of-friends.png";
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
+import SignupFormModal from '../SignupFormModal';
 
 
 function ReadupIndex() {
+    const sessionUser = useSelector(state => state.session.user);
     return (
         <div className="home-wrapper">
             <div className="introduction-wrapper">
@@ -33,16 +37,34 @@ function ReadupIndex() {
                 </div>
                 <div className="home-bottom-section">
                     <img src={findEventImage} alt="Man and woman with book" className="home-bottom-images"></img>
-                    <h4 className="home-bottom-header">Find an event</h4>
+                    <h4 className="home-bottom-header"><Link to="/events" className="home-bottom-link">Find an event</Link></h4>
                     <p className="home-bottom-description">This is a description of what will happen if you click here to look</p>
                 </div>
                 <div className="home-bottom-section">
                     <img src={startGroupImage} alt="Group of friends" className="home-bottom-images"></img>
-                    <h4 className="home-bottom-header"><Link to="/groups/new" className="home-bottom-link">Start a new group</Link></h4>
+                    <h4 className="home-bottom-header">
+                        {sessionUser ? (
+                            <Link to="/groups/new" className="home-bottom-link">Start a new group</Link>
+                        ) : (
+                            <span className="logged-out-make-group-link">Start a new group</span>
+                        )}
+                    </h4>
                     <p className="home-bottom-description">This is a description of what will happen if you click here to look</p>
                 </div>
             </div>
-            <button className="join-readup-button">Join ReadUp</button>
+            {!sessionUser && (
+                <div className="join-readup-button">
+                    <OpenModalMenuItem
+                        itemText="Join ReadUp"
+                        modalComponent={<SignupFormModal />}
+
+                    />
+                </div>
+                // <button className="join-readup-button">Join ReadUp</button>
+            )}
+            {sessionUser && (
+                <div className="footer-space"></div>
+            )}
         </div>
     )
 }
