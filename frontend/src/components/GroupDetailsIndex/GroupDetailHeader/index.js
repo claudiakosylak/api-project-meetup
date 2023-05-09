@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import "./GroupDetailHeader.css";
 
-const GroupDetailHeader = ({ group, numberEvents }) => {
+const GroupDetailHeader = ({ group, numberEvents, user }) => {
 
 
     if (!group.Organizer) return null;
@@ -29,8 +29,8 @@ const GroupDetailHeader = ({ group, numberEvents }) => {
                     <p>Organized by {group.Organizer.firstName} {group.Organizer.lastName}</p>
 
                 </div>
+                
                 <button className="join-group-button"
-                // onClick={alert("Feature Coming Soon...")}
                 >Join this group</button>
             </div>
         </div>

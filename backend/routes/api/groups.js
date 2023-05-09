@@ -17,12 +17,15 @@ const router = express.Router();
 
 router.get("/:groupId/members", async (req, res) => {
     const { groupId } = req.params;
+    console.log("THIS IS GROUPID: ", groupId)
 
     const group = await Group.findOne({
         where: {
             id: groupId
         }
     });
+
+    console.log("THIS IS THE GROUP: ", group)
 
     if (!group) {
         res.status(404);
@@ -37,6 +40,8 @@ router.get("/:groupId/members", async (req, res) => {
             model: User
         }
     })
+
+    console.log("THIS IS MEMBERSHIPS: ", memberships)
 
     const userMemb = await Membership.findOne({
         where: {
