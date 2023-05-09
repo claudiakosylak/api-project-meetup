@@ -28,7 +28,10 @@ const CreateGroupForm = () => {
         e.preventDefault();
         setHasSubmitted(true);
         const errorsArray = Object.values(errors)
-        if (errorsArray.length) return alert(`${errors}`)
+        if (errorsArray.length) {
+            console.log(errors)
+            return errors;
+        }
         const locationArray = location.split(", ");
         const city = locationArray[0];
         const state = locationArray[1];
@@ -40,11 +43,16 @@ const CreateGroupForm = () => {
             city,
             state
         };
+        console.log("THE CITY: ", city, "THE STATE: ", state)
 
         const newGroup = await dispatch(createGroupThunk(groupInfo))
 
         setName("");
         setAbout("");
+        setType("In Person");
+        setPrivateStatus(false);
+        setLocation("");
+        setImageUrl("");
         setHasSubmitted(false);
     }
 
@@ -63,6 +71,9 @@ const CreateGroupForm = () => {
                     onChange={(e) => setLocation(e.target.value)}
                     placeholder="city, STATE"
                 />
+                {(hasSubmitted && errors.location) && (
+                    <p className="errors">{errors.location}</p>
+                )}
             </div>
             <div className="form-section">
                 <p className="form-headers">What will your group's name be?</p>
