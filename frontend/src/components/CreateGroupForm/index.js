@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {useDispatch} from "react-redux";
+import { createGroupThunk } from "../../store/groups";
 
 const CreateGroupForm = () => {
-
+    const dispatch = useDispatch()
     const types = ["In Person", "Online"];
 
     const [name, setName] = useState("");
@@ -10,9 +12,44 @@ const CreateGroupForm = () => {
     const [privateStatus, setPrivateStatus] = useState(false);
     const [location, setLocation] = useState("");
     const [imageUrl, setImageUrl] = useState("");
+    const [errors, setErrors] = useState({});
+    const [hasSubmitted, setHasSubmitted] = useState(false);
+
+    useEffect(() => {
+        const errors = {};
+        if (!name.length) errors[name] = "Please enter a valid name";
+        if (about.length < 30) errors[about] = "Please enter a description";
+        if (!location.length) errors[location] = "Please enter a location";
+        if (!imageUrl.length) errors[imageUrl] = "Please enter a valid image URL";
+        setErrors(errors)
+    }, [name, about, location, imageUrl])
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setHasSubmitted(true);
+        const errorsArray = Object.values(errors)
+        if (errorsArray.length) return alert(`${errors}`)
+        const locationArray = location.split(", ");
+        const city = locationArray[0];
+        const state = locationArray[1];
+        const groupInfo = {
+            name,
+            about,
+            type,
+            private: privateStatus,
+            city,
+            state
+        };
+
+        const newGroup = await dispatch(createGroupThunk(groupInfo))
+
+        setName("");
+        setAbout("");
+        setHasSubmitted(false);
+    }
 
     return (
-        <form>
+        <form onSubmit={handleSubmit}>
             <div className="form-section">
                 <h2>BECOME AN ORGANIZER</h2>
                 <p className="form-headers">We'll walk you through a few steps to build your local community</p>
