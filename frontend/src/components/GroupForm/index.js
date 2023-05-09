@@ -1,18 +1,22 @@
 import { useEffect, useState } from "react";
 import {useDispatch} from "react-redux";
-import { createGroupThunk } from "../../store/groups";
+import { createGroupThunk, updateGroupThunk } from "../../store/groups";
 import {useHistory} from "react-router-dom";
 
-const GroupForm = () => {
+const GroupForm = ({group, formType}) => {
     const dispatch = useDispatch()
     const types = ["In Person", "Online"];
     const history = useHistory();
+    let groupLocation = "";
+    if (group.city && group.state) {
+        groupLocation = `${group.city}, ${group.state}`;
+    }
 
-    const [name, setName] = useState("");
-    const [about, setAbout] = useState("");
-    const [type, setType] = useState("In Person");
-    const [privateStatus, setPrivateStatus] = useState(false);
-    const [location, setLocation] = useState("");
+    const [name, setName] = useState(group?.name);
+    const [about, setAbout] = useState(group?.about);
+    const [type, setType] = useState(group.type ? group.type : "In Person");
+    const [privateStatus, setPrivateStatus] = useState(group.private ? group.private : false);
+    const [location, setLocation] = useState(groupLocation ? groupLocation : "");
     const [imageUrl, setImageUrl] = useState("");
     const [errors, setErrors] = useState({});
     const [hasSubmitted, setHasSubmitted] = useState(false);
@@ -38,6 +42,7 @@ const GroupForm = () => {
         const city = locationArray[0];
         const state = locationArray[1];
         const groupInfo = {
+            ...group,
             name,
             about,
             type,
@@ -47,9 +52,26 @@ const GroupForm = () => {
         };
         console.log("THE CITY: ", city, "THE STATE: ", state)
 
-        const newGroup = await dispatch(createGroupThunk(groupInfo))
+        if (formType === "Create Group") {
+            const response = await dispatch(createGroupThunk(groupInfo))
+            if (response.errors) {
+                setErrors(response.errors)
+                return errors;
+            } else {
+                history.push(`/groups/${response.id}`)
+            }
+        }
 
-        history.push(`/groups/${newGroup.id}`)
+        if (formType === "Update Group") {
+            const response = await dispatch(updateGroupThunk(groupInfo))
+            if (response.errors) {
+                setErrors(response.errors)
+                return errors;
+            } else {
+                history.push(`/groups/${response.id}`)
+            }
+        }
+
 
         setName("");
         setAbout("");
