@@ -36,12 +36,32 @@
     width: 90%;
     height: 40px;
     margin-top: 10px;
-    box-shadow: 5px 5px black;
+    box-shadow: 3px 3px black;
     background-color: #FFA384;
     color: white;
+    border: 2px solid black;
+}
+
+.modal-login-button:hover {
+    cursor: pointer;
 }
 
 .demo-user-login-link {
     margin: 30px;
     text-decoration: underline;
+}
+
+.demo-user-login-link:hover {
+    cursor: pointer;
+}
+
+.disabled-login-button {
+    width: 90%;
+    height: 40px;
+    margin-top: 10px;
+    box-shadow: 3px 3px black;
+    border: 2px solid black;
+    background-color: lightgrey;
+    color: black;
+    margin-bottom: 20px;
 }

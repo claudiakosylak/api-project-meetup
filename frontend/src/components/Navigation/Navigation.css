@@ -23,6 +23,9 @@
     margin-right: 10px;
 }
 
+.right-nav-link:hover {
+    cursor: pointer;
+}
 .user-button {
     background-color: white;
     border: none;
