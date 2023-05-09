@@ -70,3 +70,8 @@
     display: flex;
     gap: 15px;
 }
+
+.event-details-bottom-section {
+    background-color: lightgrey;
+    height: 300px;
+}

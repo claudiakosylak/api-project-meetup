@@ -63,6 +63,10 @@ const EventDetailsIndex = () => {
                     </div>
                 </div>
             </div>
+            <div className="event-details-bottom-section">
+                <h3>Details</h3>
+                <p>{event.description}</p>
+            </div>
         </div >
     )
 }

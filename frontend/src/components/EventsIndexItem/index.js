@@ -8,13 +8,14 @@ import { getEventThunk } from "../../store/events";
 
 
 const EventsIndexItem = ({ event }) => {
-    const eventId = event.id;
     const dispatch = useDispatch();
-    const fullEvent = useSelector(state => state.events[eventId])
+    const fullEvent = useSelector(state => state.events[event.id])
 
     useEffect(() => {
-        dispatch(getEventThunk(eventId))
-    }, [dispatch, eventId])
+        dispatch(getEventThunk(event.id))
+    }, [dispatch, event])
+
+    if (!fullEvent.description) return null;
     return (
         <Link to={`/events/${event.id}`} className="events-index-item-container">
             <div className="event-index-top">
