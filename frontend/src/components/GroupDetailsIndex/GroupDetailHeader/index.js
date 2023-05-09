@@ -19,13 +19,14 @@ const GroupDetailHeader = ({ group, numberEvents }) => {
             </div>
             <div className="group-detail-text-container-details-page">
                 <div className="group-detail-text-top">
-                <h1>{group.name}</h1>
-                <p>{group.city}, {group.state}</p>
-                <div className="event-public-container">
-                    <p>{`${numberEvents} Events`}</p>
-                    <p>{group.private ? "Private" : "Public"}</p>
-                </div>
-                <p>Organized by {group.Organizer.firstName} {group.Organizer.lastName}</p>
+                    <h1>{group.name}</h1>
+                    <p>{group.city}, {group.state}</p>
+                    <div className="event-public-container">
+                        <p>{`${numberEvents} Events`}</p>
+                        <p>•</p>
+                        <p>{group.private ? "Private" : "Public"}</p>
+                    </div>
+                    <p>Organized by {group.Organizer.firstName} {group.Organizer.lastName}</p>
 
                 </div>
                 <button className="join-group-button"

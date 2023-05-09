@@ -1,6 +1,6 @@
 .group-image-placeholder-details-page {
-    height: 200px;
-    width: 300px;
+    height: 250px;
+    width:420px;
     background-color: blue;
 }
 
@@ -12,6 +12,7 @@
 .back-groups-link {
     display: flex;
     gap: 5px;
+    margin-bottom: 5px;
 }
 
 .group-detail-text-container-details-page {
@@ -19,4 +20,16 @@
     flex-direction: column;
     justify-content: space-between;
     padding-left: 20px;
+    padding-top: 20px;
+}
+
+.group-detail-text-top {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.event-public-container {
+    display: flex;
+    gap: 5px;
 }

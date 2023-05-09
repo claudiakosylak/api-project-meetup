@@ -1,4 +1,4 @@
-
+import { csrfFetch } from "./csrf";
 //action variables here
 
 const GET_GROUPS = "groups/getGroups";
@@ -40,7 +40,7 @@ export const getGroupThunk = (groupId) => async dispatch => {
 }
 
 export const createGroupThunk = (group) => async dispatch => {
-    const res = await fetch("/api/groups", {
+    const res = await csrfFetch("/api/groups", {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(group)
@@ -52,6 +52,7 @@ export const createGroupThunk = (group) => async dispatch => {
         return newGroup;
     } else {
         const err = await res.json();
+        console.log(err)
         return err;
     }
 }
