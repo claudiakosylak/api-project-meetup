@@ -10,6 +10,77 @@
 }
 
 .reading-clip-art {
-    width: 400px;
-    height: 300px;
+    width: 450px;
+    height: 320px;
+}
+
+.introduction-headline {
+    font-weight:700;
+    font-size: 35px;
+    margin-bottom: 20px;
+}
+
+.introduction-text {
+    margin-right: 20px;
+}
+
+.how-readup-works-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.how-readup-works-title {
+    font-size: 25px;
+}
+
+.how-readup-works-wrapper > p {
+    width: 25%;
+    text-align: center;
+}
+
+.home-bottom-images {
+    height: 150px;
+    width: 150px;
+}
+
+.home-bottom-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    gap: 50px;
+}
+
+.home-bottom-section {
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+    text-align: center;
+}
+
+.home-bottom-header {
+    margin-top: 20px;
+    color: black;
+}
+
+.home-bottom-link {
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+}
+
+.home-bottom-section > p {
+    width: 150px;
+}
+
+.join-readup-button {
+    margin: 20px 0px 50px 0px;
+    width: 140px;
+    align-self: center;
+    background-color: #FFA384;
+    color: white;
+    padding: 10px;
+    border: none;
+    box-shadow: 5px 5px black;
 }
