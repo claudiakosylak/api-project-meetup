@@ -15,9 +15,14 @@ function Navigation({ isLoaded }) {
                 {/* {!sessionUser ? (
 
                 )} */}
-                <li className="right-nav-link">
-                    <NavLink exact to="/" style={{textDecoration: 'none'}}>Home</NavLink>
-                </li>
+                {sessionUser && (
+                    <li className="right-nav-link">
+                        <NavLink to="/groups/new" style={{textDecoration: 'none'}}>
+                        Start a new group
+
+                        </NavLink>
+                        </li>
+                )}
                 {isLoaded && (
                     <li>
                         <ProfileButton user={sessionUser} />
