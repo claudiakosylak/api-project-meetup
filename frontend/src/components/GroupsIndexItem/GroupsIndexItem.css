@@ -2,7 +2,8 @@
     display: flex;
     padding: 10px 0px;
     border-top: 2px solid lightgrey;
-    border-bottom: 2px solid lightgrey;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .group-image-placeholder {
@@ -29,9 +30,13 @@
 
 .group-index-about {
     width: 350px;
+    color: black;
 }
 
 .group-list-header {
     text-decoration: none;
     color: black;
+}
+.list-location {
+    color: darkgrey;
 }

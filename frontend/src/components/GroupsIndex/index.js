@@ -11,14 +11,13 @@ function GroupsIndex() {
     const groupsObj = useSelector(state => state.groups);
     const groups = Object.values(groupsObj);
     const dispatch = useDispatch();
-    const ulRef = useRef();
 
 
     useEffect(() => {
         dispatch(getGroupsThunk())
     }, [dispatch])
 
-    
+
 
     return (
         <div className="groups-wrapper">

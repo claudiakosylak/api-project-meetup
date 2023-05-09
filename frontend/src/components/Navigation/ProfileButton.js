@@ -60,7 +60,8 @@ function ProfileButton({ user }) {
 
           </div>
           <div className="middle-dropdown">
-            <Link to="/groups" className="dropdown-groups-link">View groups</Link>
+            <Link to="/groups" className="dropdown-groups-link">View groups</Link><br />
+            <Link to="/events" className="dropdown-groups-link">View events</Link>
           </div>
             <li>
               <button onClick={logout}>Log Out</button>

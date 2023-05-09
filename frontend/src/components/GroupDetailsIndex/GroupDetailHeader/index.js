@@ -6,6 +6,10 @@ const GroupDetailHeader = ({ group, numberEvents, user }) => {
 
     if (!group.Organizer) return null;
 
+    const joinComingSoon = (e) => {
+        return alert("Feature coming soon!")
+    }
+
     return (
         <div className="group-header-component-container">
             <div className="group-left-container">
@@ -40,12 +44,10 @@ const GroupDetailHeader = ({ group, numberEvents, user }) => {
                 {(user && user.id !== group.Organizer.id) && (
 
                     <button className="join-group-button"
+                    onClick={joinComingSoon}
                     >Join this group</button>
                 )}
 
-                {/* {(!user || user.id !== group.Organizer.id) && (
-
-                )} */}
             </div>
         </div>
     )

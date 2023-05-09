@@ -18,7 +18,7 @@ function EventsIndex() {
         <div className="groups-wrapper">
         <nav className="groups-nav">
             <Link to="/events" className="groups-nav-item active-group-event-tab">Events</Link>
-            <Link to="/groups" className="groups-nav-item">Groups</Link>
+            <Link to="/groups" className="groups-nav-item inactive-group-event-tab">Groups</Link>
         </nav>
         <p className="groups-subheader">Events in ReadUp</p>
         <ul className="groups-index-list-container">
