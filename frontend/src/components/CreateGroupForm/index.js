@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import {useDispatch} from "react-redux";
 import { createGroupThunk } from "../../store/groups";
+import {useHistory} from "react-router-dom";
 
 const CreateGroupForm = () => {
     const dispatch = useDispatch()
     const types = ["In Person", "Online"];
+    const history = useHistory();
 
     const [name, setName] = useState("");
     const [about, setAbout] = useState("");
@@ -46,6 +48,8 @@ const CreateGroupForm = () => {
         console.log("THE CITY: ", city, "THE STATE: ", state)
 
         const newGroup = await dispatch(createGroupThunk(groupInfo))
+
+        history.push(`/groups/${newGroup.id}`)
 
         setName("");
         setAbout("");
