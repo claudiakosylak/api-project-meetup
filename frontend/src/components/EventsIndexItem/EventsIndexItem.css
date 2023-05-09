@@ -1,0 +1,22 @@
+.event-index-text-container {
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+}
+
+.event-index-top {
+    display: flex;
+}
+
+.events-index-item-container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0px;
+    border-top: 2px solid lightgrey;
+    border-bottom: 2px solid lightgrey;
+}
+
+.event-index-bottom {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
