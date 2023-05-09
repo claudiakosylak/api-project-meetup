@@ -36,7 +36,9 @@
     width: 90%;
     height: 40px;
     margin-top: 10px;
-    box-shadow: 5px 5px darkgrey;
+    box-shadow: 5px 5px black;
+    background-color: #FFA384;
+    color: white;
 }
 
 .demo-user-login-link {
