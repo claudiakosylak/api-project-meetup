@@ -6,7 +6,6 @@ const GroupDetailHeader = ({ group, numberEvents, user }) => {
 
     if (!group.Organizer) return null;
 
-
     return (
         <div className="group-header-component-container">
             <div className="group-left-container">
@@ -29,9 +28,22 @@ const GroupDetailHeader = ({ group, numberEvents, user }) => {
                     <p>Organized by {group.Organizer.firstName} {group.Organizer.lastName}</p>
 
                 </div>
-                
-                <button className="join-group-button"
-                >Join this group</button>
+
+                {(user.id === group.Organizer.id) ? (
+                    <div className="admin-group-buttons">
+                        <button>Create event</button>
+                        <button>Update</button>
+                        <button>Delete</button>
+                    </div>
+                ) : (
+
+                    <button className="join-group-button"
+                    >Join this group</button>
+                )}
+
+                {/* {(!user || user.id !== group.Organizer.id) && (
+
+                )} */}
             </div>
         </div>
     )

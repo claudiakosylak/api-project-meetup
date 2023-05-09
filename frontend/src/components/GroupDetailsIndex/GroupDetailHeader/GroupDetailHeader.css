@@ -33,3 +33,13 @@
     display: flex;
     gap: 5px;
 }
+
+.admin-group-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.admin-group-buttons > button {
+    padding: 5px;
+    box-shadow: 3px 3px black;
+}
