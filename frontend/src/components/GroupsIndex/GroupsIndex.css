@@ -3,6 +3,7 @@
     flex-direction: column;
     align-items: flex-start;
     margin: 50px 15rem;
+    border-bottom: 2px solid lightgrey;
 }
 
 .groups-nav {
@@ -24,4 +25,9 @@
 
 .active-group-event-tab {
     text-decoration: underline;
+    color: teal;
+}
+
+.inactive-group-event-tab {
+    color: darkgrey;
 }

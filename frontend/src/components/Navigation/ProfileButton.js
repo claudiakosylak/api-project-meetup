@@ -5,14 +5,13 @@ import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
-
-  console.log("THE INITIAL SHOW MENU STATE: ", showMenu)
 
   const openMenu = () => {
     if (showMenu) return;
@@ -56,9 +55,13 @@ function ProfileButton({ user }) {
         {user ? (
           <>
           <div className="top-of-dropdown">
-            <li>Hello,{user.firstName}</li>
+            <li>Hello, {user.firstName}</li>
             <li>{user.email}</li>
 
+          </div>
+          <div className="middle-dropdown">
+            <Link to="/groups" className="dropdown-groups-link">View groups</Link><br />
+            <Link to="/events" className="dropdown-groups-link">View events</Link>
           </div>
             <li>
               <button onClick={logout}>Log Out</button>
