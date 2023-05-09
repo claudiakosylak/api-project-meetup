@@ -32,11 +32,12 @@ const GroupDetailHeader = ({ group, numberEvents, user }) => {
                 {(user && user.id === group.Organizer.id) && (
                     <div className="admin-group-buttons">
                         <button>Create event</button>
-                        <button>Update</button>
+                        <Link to={`/groups/${group.id}/edit`}><button>Update</button></Link>
+
                         <button>Delete</button>
                     </div>
-                ) }
-                { (user && user.id !== group.Organizer.id) && (
+                )}
+                {(user && user.id !== group.Organizer.id) && (
 
                     <button className="join-group-button"
                     >Join this group</button>

@@ -8,6 +8,7 @@ import GroupsIndex from "./components/GroupsIndex";
 import GroupDetailsIndex from "./components/GroupDetailsIndex";
 import CreateGroupForm from "./components/CreateGroupForm";
 import EventsIndex from "./components/EventsIndex";
+import UpdateGroupForm from "./components/UpdateGroupForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,6 +28,9 @@ function App() {
           <Switch>
             <Route path="/groups/new">
               <CreateGroupForm />
+            </Route>
+            <Route path="/groups/:groupId/edit">
+              <UpdateGroupForm />
             </Route>
             <Route path="/groups/:groupId">
               <GroupDetailsIndex />

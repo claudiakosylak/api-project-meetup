@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 
 const GET_GROUPS = "groups/getGroups";
 const GET_GROUP = "groups/getGroup";
+const UPDATE_GROUP = "groups/updateGroup";
 
 //actions here
 
@@ -13,6 +14,11 @@ export const getGroupsAction = groups => ({
 
 export const getGroupAction = group => ({
     type: GET_GROUP,
+    group
+})
+
+export const updateGroupAction = group => ({
+    type: UPDATE_GROUP,
     group
 })
 
@@ -57,7 +63,21 @@ export const createGroupThunk = (group) => async dispatch => {
     }
 }
 
-
+export const updateGroupThunk = (groupId, group) => async dispatch => {
+    const res = await csrfFetch(`/api/groups/${groupId}`, {
+        method: "PUT",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(group)
+    })
+    if (res.ok) {
+        const updatedGroup = await res.json();
+        dispatch(updateGroupAction(updatedGroup))
+        return updatedGroup;
+    } else {
+        const err = await res.json()
+        return err;
+    }
+}
 // reducer here
 
 
@@ -75,6 +95,10 @@ const groupsReducer = (state = initialState, action) => {
             const newState = {...state};
             newState[action.group.id] = action.group;
             return newState;
+        case UPDATE_GROUP:
+            const updateGroupState = {...state}
+            updateGroupState[action.group.id] = action.group;
+            return updateGroupState;
         default:
             return state;
     }
