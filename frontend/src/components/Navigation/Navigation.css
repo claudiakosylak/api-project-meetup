@@ -2,7 +2,25 @@
     display: none;
 }
 
+.profile-dropdown {
+    position: fixed;
+    right: 20px;
+    border: 2px solid black;
+    background-color: white;
+    list-style-type: none;
+    top: 60px;
+}
 
+.profile-dropdown > li> button {
+    background: none;
+    font-size: 15px;
+    padding: 5px 0 5px 10px;
+    border: none;
+}
+
+.profile-dropdown > li> button:hover {
+    cursor: pointer;
+}
 .top-bar {
     display: flex;
     justify-content: space-between;
@@ -31,7 +49,16 @@
     border: none;
 }
 
+.user-button:hover {
+    cursor: pointer;
+}
+
 .fa-user-circle {
     font-size: 35px;
     color: #FFA384;
+}
+
+.top-of-dropdown {
+    border-bottom: 2px solid black;
+    padding: 10px;
 }

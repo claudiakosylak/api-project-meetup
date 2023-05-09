@@ -65,3 +65,12 @@
     color: black;
     margin-bottom: 20px;
 }
+
+.modal-errors {
+    color: red;
+    font-size: 19px;
+    align-self: flex-start;
+    font-weight: 700;
+    margin-left: 20px;
+    margin-top: 5px; 
+}
