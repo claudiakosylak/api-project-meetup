@@ -57,6 +57,7 @@ function ReadupIndex() {
                     <OpenModalMenuItem
                         itemText="Join ReadUp"
                         modalComponent={<SignupFormModal />}
+
                     />
                 </div>
                 // <button className="join-readup-button">Join ReadUp</button>
