@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom/cjs/react-router-dom.min"
+import { Link } from "react-router-dom";
 import "./GroupsIndexItem.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getGroupEventsThunk } from "../../store/events";
@@ -9,7 +9,6 @@ import { useEffect } from "react";
 const GroupsIndexItem = ({group}) => {
     const eventsObj = useSelector(state => state.events)
     const events = Object.values(eventsObj)
-    console.log(`EVENTS FOR GROUP # ${group.id}: ${events}`)
     const dispatch = useDispatch();
 
     useEffect(() => {

@@ -7,6 +7,7 @@ import ReadupIndex from "./components/ReadupIndex";
 import GroupsIndex from "./components/GroupsIndex";
 import GroupDetailsIndex from "./components/GroupDetailsIndex";
 import CreateGroupForm from "./components/CreateGroupForm";
+import EventsIndex from "./components/EventsIndex";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,6 +30,9 @@ function App() {
             </Route>
             <Route path="/groups/:groupId">
               <GroupDetailsIndex />
+            </Route>
+            <Route path="/events">
+              <EventsIndex />
             </Route>
             <Route path="/groups">
               <GroupsIndex />
