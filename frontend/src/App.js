@@ -9,6 +9,7 @@ import GroupDetailsIndex from "./components/GroupDetailsIndex";
 import CreateGroupForm from "./components/CreateGroupForm";
 import EventsIndex from "./components/EventsIndex";
 import UpdateGroupForm from "./components/UpdateGroupForm";
+import EventDetailsIndex from "./components/EventDetailsIndex";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,6 +35,9 @@ function App() {
             </Route>
             <Route path="/groups/:groupId">
               <GroupDetailsIndex />
+            </Route>
+            <Route path="/events/:eventId">
+              <EventDetailsIndex />
             </Route>
             <Route path="/events">
               <EventsIndex />

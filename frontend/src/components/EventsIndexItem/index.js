@@ -14,7 +14,7 @@ const EventsIndexItem = ({ event }) => {
 
     useEffect(() => {
         dispatch(getEventThunk(eventId))
-    }, [dispatch])
+    }, [dispatch, eventId])
     return (
         <Link to={`/events/${event.id}`} className="events-index-item-container">
             <div className="event-index-top">
@@ -30,7 +30,7 @@ const EventsIndexItem = ({ event }) => {
             <div className="event-index-bottom">
                 {fullEvent.description}
             </div>
-            </Link >
+        </Link >
     )
 }
 
