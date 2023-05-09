@@ -1,4 +1,6 @@
 import React from 'react';
+import readingClipArt from "./reading-clip-art.jpg";
+import "./ReadupIndex.css";
 
 
 
@@ -14,7 +16,7 @@ function ReadupIndex() {
                     Lorem ipsum dolor sit amet. Qui impedit repellendus aut quibusdam ducimus et error deleniti non tempora temporibus ut quis magnam et deleniti distinctio non praesentium iste. Est tempore maxime id omnis dolorem quo harum repellendus est nulla accusantium id veritatis deleniti qui beatae illum! A eligendi maxime aut ullam asperiores est voluptas sint.
                     </p>
                 </div>
-                <img src="https://images.immediate.co.uk/production/volatile/sites/3/2022/10/MV5BOGZmYjkxMDItNmQ3ZC00YzdlLThjMDktYWJkOGZiOWU1NmY0XkEyXkFqcGdeQXVyMTA3MzQ4MTcw.V1-f69daeb.jpg?resize=768,574"></img>
+                <img src={readingClipArt} alt="Boy reading a book" className="reading-clip-art"></img>
             </div>
         </div>
     )

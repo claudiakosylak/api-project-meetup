@@ -1,0 +1,15 @@
+.home-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.introduction-wrapper {
+    display: flex;
+    margin: 50px 150px 30px 150px;
+}
+
+.reading-clip-art {
+    width: 400px;
+    height: 300px;
+}
