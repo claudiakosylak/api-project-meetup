@@ -24,4 +24,9 @@
 
 .active-group-event-tab {
     text-decoration: underline;
+    color: teal;
+}
+
+.inactive-group-event-tab {
+    color: darkgrey;
 }

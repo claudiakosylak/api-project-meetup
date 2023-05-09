@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getGroupsThunk } from "../../store/groups";
 import GroupsIndexItem from "../GroupsIndexItem";
@@ -11,17 +11,19 @@ function GroupsIndex() {
     const groupsObj = useSelector(state => state.groups);
     const groups = Object.values(groupsObj);
     const dispatch = useDispatch();
+    const ulRef = useRef();
 
 
     useEffect(() => {
         dispatch(getGroupsThunk())
     }, [dispatch])
 
+    
 
     return (
         <div className="groups-wrapper">
             <nav className="groups-nav">
-                <Link to="/events" className="groups-nav-item">Events</Link>
+                <Link to="/events" className="groups-nav-item inactive-group-event-tab">Events</Link>
                 <Link to="/groups" className="groups-nav-item active-group-event-tab">Groups</Link>
             </nav>
             <p className="groups-subheader">Groups in ReadUp</p>
