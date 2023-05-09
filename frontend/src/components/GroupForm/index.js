@@ -50,7 +50,7 @@ const GroupForm = ({group, formType}) => {
             city,
             state
         };
-        console.log("THE CITY: ", city, "THE STATE: ", state)
+        console.log("THIS IS THE GROUP INFO: ", groupInfo)
 
         if (formType === "Create Group") {
             const response = await dispatch(createGroupThunk(groupInfo))
@@ -63,7 +63,8 @@ const GroupForm = ({group, formType}) => {
         }
 
         if (formType === "Update Group") {
-            const response = await dispatch(updateGroupThunk(groupInfo))
+            const response = await dispatch(updateGroupThunk(group.id, groupInfo))
+            console.log("UPDATE RESPONSE: ", response)
             if (response.errors) {
                 setErrors(response.errors)
                 return errors;
