@@ -13,9 +13,9 @@ const EventsIndexItem = ({ event }) => {
 
     useEffect(() => {
         dispatch(getEventThunk(event.id))
-    }, [dispatch, event])
+    }, [dispatch, event.id])
 
-    if (!fullEvent.description) return null;
+    // if (!fullEvent.description) return null;
     return (
         <Link to={`/events/${event.id}`} className="events-index-item-container">
             <div className="event-index-top">
