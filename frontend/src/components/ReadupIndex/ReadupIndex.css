@@ -66,8 +66,12 @@
 
 .home-bottom-link {
     text-decoration: none;
-    color: black;
+    color: teal;
     font-size: 18px;
+}
+
+.home-bottom-link:hover {
+    text-decoration: underline;
 }
 
 .home-bottom-section > p {
@@ -82,5 +86,22 @@
     color: white;
     padding: 10px;
     border: none;
-    box-shadow: 5px 5px black;
+    box-shadow: 3px 3px black;
+    font-size: 17px;
+    border: 2px solid black;
+    text-align: center;
+}
+
+.join-readup-button:hover {
+    cursor: pointer;
+}
+
+.logged-out-make-group-link {
+    font-size: 18px;
+    color: darkgrey;
+}
+
+
+.footer-space {
+    height: 50px;
 }
