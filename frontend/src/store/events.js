@@ -1,9 +1,14 @@
 //action variables here
 
 const GET_GROUP_EVENTS = "events/getGroupEvents";
-const GET_EVENT = "events/getEvent"
+const GET_EVENT = "events/getEvent";
+const GET_EVENTS = "events/getEvents";
 
 //actions here
+export const getEventsAction = events => ({
+    type: GET_EVENTS,
+    events
+})
 
 export const getGroupEventsAction = events => ({
     type: GET_GROUP_EVENTS,
@@ -16,7 +21,13 @@ export const getEventAction = event => ({
 })
 
 //thunks here
-
+export const getEventsThunk = () => async (dispatch) => {
+    const res = await fetch("/api/events");
+    const allEvents = await res.json();
+    if (res.ok) {
+        await dispatch(getEventsAction(allEvents))
+    }
+}
 
 export const getGroupEventsThunk = (groupId) => async dispatch => {
     const res = await fetch(`/api/groups/${groupId}/events`);
@@ -46,6 +57,12 @@ const initialState = {};
 
 const eventsReducer = (state = initialState, action) => {
     switch (action.type) {
+        case GET_EVENTS:
+            const eventsState = {...state};
+            action.events.Events.forEach(event => {
+                eventsState[event.id] = event;
+            })
+            return eventsState;
         case GET_GROUP_EVENTS:
             const eventState = { };
             action.events.Events.forEach(event => {

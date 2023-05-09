@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import "./GroupDetailHeader.css";
 
-const GroupDetailHeader = ({ group, numberEvents }) => {
+const GroupDetailHeader = ({ group, numberEvents, user }) => {
 
 
     if (!group.Organizer) return null;
-
 
     return (
         <div className="group-header-component-container">
@@ -29,9 +28,23 @@ const GroupDetailHeader = ({ group, numberEvents }) => {
                     <p>Organized by {group.Organizer.firstName} {group.Organizer.lastName}</p>
 
                 </div>
-                <button className="join-group-button"
-                // onClick={alert("Feature Coming Soon...")}
-                >Join this group</button>
+
+                {(user && user.id === group.Organizer.id) && (
+                    <div className="admin-group-buttons">
+                        <button>Create event</button>
+                        <button>Update</button>
+                        <button>Delete</button>
+                    </div>
+                ) }
+                { (user && user.id !== group.Organizer.id) && (
+
+                    <button className="join-group-button"
+                    >Join this group</button>
+                )}
+
+                {/* {(!user || user.id !== group.Organizer.id) && (
+
+                )} */}
             </div>
         </div>
     )

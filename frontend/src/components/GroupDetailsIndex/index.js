@@ -33,6 +33,7 @@ const GroupDetailsIndex = () => {
             <GroupDetailHeader
                 group={group}
                 numberEvents={numberEvents}
+                user={sessionUser}
             />
             <GroupDetailDescription group={group}/>
             <h2>Upcoming Events: {numberEvents}</h2>

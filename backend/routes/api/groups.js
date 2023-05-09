@@ -17,12 +17,15 @@ const router = express.Router();
 
 router.get("/:groupId/members", async (req, res) => {
     const { groupId } = req.params;
+    console.log("THIS IS GROUPID: ", groupId)
 
     const group = await Group.findOne({
         where: {
             id: groupId
         }
     });
+
+    console.log("THIS IS THE GROUP: ", group)
 
     if (!group) {
         res.status(404);
@@ -38,14 +41,7 @@ router.get("/:groupId/members", async (req, res) => {
         }
     })
 
-    const userMemb = await Membership.findOne({
-        where: {
-            userId: req.user.id,
-            groupId: groupId,
-            status: "co-host"
-        }
-    })
-
+    console.log("THIS IS MEMBERSHIPS: ", memberships)
     const userMembReformat = memberships.map(membership => {
         return {
             id: membership.User.id,
@@ -56,14 +52,29 @@ router.get("/:groupId/members", async (req, res) => {
             }
         }
     })
-
     const nonAuthResult = userMembReformat.filter(user => {
         return user.Membership.status !== "pending";
     })
 
-    if (group.organizerId !== req.user.id && !userMemb) {
+    if (req.user) {
+        const userMemb = await Membership.findOne({
+            where: {
+                userId: req.user.id,
+                groupId: groupId,
+                status: "co-host"
+            }
+        })
+
+        if (group.organizerId !== req.user.id && !userMemb) {
+            return res.json({"Members": nonAuthResult})
+        }
+    }
+
+    if (!req.user) {
         return res.json({"Members": nonAuthResult})
     }
+
+
 
     return res.json({"Members": userMembReformat});
 })
