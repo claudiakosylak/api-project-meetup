@@ -15,9 +15,20 @@
 .right-nav-links {
     display: flex;
     list-style-type: none;
+    align-items: center;
 }
 
 .right-nav-link {
     text-decoration: none;
     margin-right: 10px;
+}
+
+.user-button {
+    background-color: white;
+    border: none;
+}
+
+.fa-user-circle {
+    font-size: 35px;
+    color: #FFA384;
 }
