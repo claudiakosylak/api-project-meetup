@@ -3,9 +3,6 @@ import "./GroupsIndexItem.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getGroupEventsThunk } from "../../store/events";
 import { useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import { useRef } from "react";
-
 
 
 const GroupsIndexItem = ({ group }) => {
@@ -18,11 +15,13 @@ const GroupsIndexItem = ({ group }) => {
         dispatch(getGroupEventsThunk(group.id))
     }, [dispatch, group.id])
 
-    if (!events) return null;
+    console.log(`Group ${group.id} preview image is`, group.previewImage)
+
+    // if (!events) return null;
 
     return (
             <Link to={`/groups/${group.id}`} className="groups-index-item-container">
-                <div className="group-image-placeholder"></div>
+                <img src={group.previewImage} className="group-image-placeholder"></img>
                 <div className="group-index-text-container">
                     <h2 className="group-list-header">{group.name}</h2>
                     <p className="list-location">{group.city}, {group.state}</p>
