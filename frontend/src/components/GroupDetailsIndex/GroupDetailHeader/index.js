@@ -5,8 +5,10 @@ import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
 
 const GroupDetailHeader = ({ group, numberEvents, user }) => {
 
-
     if (!group.Organizer) return null;
+
+    const groupPreviewImage = group.GroupImages.find(image => image.preview = true)
+    console.log("THE PREVIEW IMAGE: ", groupPreviewImage)
 
     const joinComingSoon = (e) => {
         return alert("Feature coming soon!")
@@ -19,7 +21,7 @@ const GroupDetailHeader = ({ group, numberEvents, user }) => {
 
                     <p>{"<"}</p><Link to="/groups">Groups</Link>
                 </div>
-                <div ><img src={group.GroupImages[0].url} className="group-image-placeholder-details-page" alt="Main group image"></img></div>
+                <div ><img src={groupPreviewImage.url} className="group-image-placeholder-details-page" alt="Main group image"></img></div>
 
             </div>
             <div className="group-detail-text-container-details-page">

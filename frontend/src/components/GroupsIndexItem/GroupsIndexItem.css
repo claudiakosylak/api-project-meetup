@@ -4,12 +4,14 @@
     border-top: 2px solid lightgrey;
     text-decoration: none;
     cursor: pointer;
+    height: 150px;
 }
 
 .group-image-placeholder {
-    height: 100px;
-    width: 150px;
+    height: 125px;
+    width: 180px;
     background-color: red;
+    margin-right: 5px;
 }
 
 .group-index-text-container {

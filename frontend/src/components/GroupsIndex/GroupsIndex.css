@@ -2,8 +2,12 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin: 50px 15rem;
     border-bottom: 2px solid lightgrey;
+}
+
+.groups-wrapper-wrapper {
+    display: flex;
+    justify-content: center;
 }
 
 .groups-nav {

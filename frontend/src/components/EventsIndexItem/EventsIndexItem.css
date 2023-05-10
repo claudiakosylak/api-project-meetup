@@ -13,6 +13,7 @@
     flex-direction: column;
     padding: 10px 0px;
     border-top: 2px solid lightgrey;
+    text-decoration: none;
 }
 
 .event-index-bottom {
