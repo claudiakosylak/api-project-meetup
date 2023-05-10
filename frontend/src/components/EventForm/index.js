@@ -42,12 +42,14 @@ const EventForm = ({ event, formType, group }) => {
             price,
             startDate,
             endDate,
-            venue: 1,
-            capacity: 10
+            // venue: 1,
+            // capacity: 10
         };
 
+        console.log("THIS IS THE EVENT INFO: ", eventInfo)
+
         if (formType === "Create Event") {
-            const response = await dispatch(createEventThunk(eventInfo))
+            const response = await dispatch(createEventThunk(eventInfo, group.id))
             if (response.errors) {
                 setErrors(response.errors)
                 return errors;
