@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 
 function GroupsIndex() {
-    const groupsObj = useSelector(state => state.groups);
+    const groupsObj = useSelector(state => state.groups.allGroups);
     const groups = Object.values(groupsObj);
     const dispatch = useDispatch();
 
@@ -17,7 +17,7 @@ function GroupsIndex() {
         dispatch(getGroupsThunk())
     }, [dispatch])
 
-
+    if (!groups) return null;
 
     return (
         <div className="groups-wrapper">

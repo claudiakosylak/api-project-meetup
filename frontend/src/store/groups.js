@@ -81,23 +81,23 @@ export const updateGroupThunk = (groupId, group) => async dispatch => {
 // reducer here
 
 
-const initialState = {};
+const initialState = {allGroups: {}, currentGroup: {}};
 
 const groupsReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_GROUPS:
             const groupsState = { ...state };
             action.groups.Groups.forEach(group => {
-                groupsState[group.id] = group;
+                groupsState.allGroups[group.id] = group;
             });
             return groupsState;
         case GET_GROUP:
             const newState = {...state};
-            newState[action.group.id] = action.group;
+            newState.currentGroup = action.group;
             return newState;
         case UPDATE_GROUP:
             const updateGroupState = {...state}
-            updateGroupState[action.group.id] = action.group;
+            updateGroupState.allGroups[action.group.id] = action.group;
             return updateGroupState;
         default:
             return state;
