@@ -104,6 +104,7 @@ const EventForm = ({ event, formType, group }) => {
                     type="datetime-local"
                     value={startDate}
                     onChange={(e) => setStartDate(e.target.value)}
+                    placeholder="MM/DD/YYYY, HH/mm AM"
                 />
                 <p className="form-text">When does your event end?</p>
                 <input className="form-dates"

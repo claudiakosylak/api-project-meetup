@@ -16,6 +16,8 @@ const UpdateGroupForm = () => {
 
     if (!group) return(null);
 
+    console.log("UPDATE GROUP PRELOAD: ", group)
+
     return (
 
             <GroupForm
