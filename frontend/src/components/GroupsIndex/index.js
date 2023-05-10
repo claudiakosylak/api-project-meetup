@@ -4,6 +4,7 @@ import { getGroupsThunk } from "../../store/groups";
 import GroupsIndexItem from "../GroupsIndexItem";
 import "./GroupsIndex.css";
 import { Link } from "react-router-dom";
+import { getEventsThunk } from "../../store/events";
 
 
 
@@ -11,9 +12,12 @@ function GroupsIndex() {
     const groupsObj = useSelector(state => state.groups.allGroups);
     const groups = Object.values(groupsObj);
     const dispatch = useDispatch();
+    const eventsObj = useSelector(state => state.events.allEvents)
+    const events = Object.values(eventsObj);
 
     useEffect(() => {
         dispatch(getGroupsThunk())
+        dispatch(getEventsThunk())
     }, [dispatch])
 
     return (
@@ -29,6 +33,7 @@ function GroupsIndex() {
                 {groups?.map((group) => (
                     <GroupsIndexItem
                         group={group}
+                        events={events}
                         key={group.id}
                     />
                 ))}

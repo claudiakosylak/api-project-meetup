@@ -5,17 +5,13 @@ import { getGroupEventsThunk } from "../../store/events";
 import { useEffect } from "react";
 
 
-const GroupsIndexItem = ({ group }) => {
-    const eventsObj = useSelector(state => state.events.currentGroupEvents)
-    const events = Object.values(eventsObj)
-    const dispatch = useDispatch();
+const GroupsIndexItem = ({ group, events }) => {
 
+    const groupEvents = events.filter(event => event.groupId === group.id);
+    // useEffect(() => {
+    //     dispatch(getGroupEventsThunk(group.id))
+    // }, [dispatch, group.id])
 
-    useEffect(() => {
-        dispatch(getGroupEventsThunk(group.id))
-    }, [dispatch, group.id])
-
-    console.log(`Group ${group.id} preview image is`, group.previewImage)
 
     // if (!events) return null;
 
@@ -30,7 +26,7 @@ const GroupsIndexItem = ({ group }) => {
                     (group.about.slice(0, 97)) + "..." : (group.about)
                 }</p>
                     <div className="under-groups-text-container">
-                        <p>{events.length} Events</p>
+                        <p>{groupEvents.length} Events</p>
                         <p>•</p>
                         <p>{group.private ? "Private" : "Public"}</p>
                     </div>
