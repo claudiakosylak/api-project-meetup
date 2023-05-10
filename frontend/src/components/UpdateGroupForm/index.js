@@ -8,7 +8,7 @@ import { getGroupThunk } from "../../store/groups";
 const UpdateGroupForm = () => {
     const dispatch = useDispatch();
     const {groupId} = useParams();
-    const group = useSelector(state => state.groups[groupId]);
+    const group = useSelector(state => state.groups.currentGroup);
 
     useEffect(() => {
         dispatch(getGroupThunk(groupId))

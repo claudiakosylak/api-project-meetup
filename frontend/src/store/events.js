@@ -3,6 +3,7 @@
 const GET_GROUP_EVENTS = "events/getGroupEvents";
 const GET_EVENT = "events/getEvent";
 const GET_EVENTS = "events/getEvents";
+const CREATE_EVENT = "events/createEvent";
 
 //actions here
 export const getEventsAction = events => ({
@@ -20,11 +21,13 @@ export const getEventAction = event => ({
     event
 })
 
+
 //thunks here
 export const getEventsThunk = () => async (dispatch) => {
     const res = await fetch("/api/events");
-    const allEvents = await res.json();
     if (res.ok) {
+        const allEvents = await res.json();
+        console.log("EVENTS IN THUNK", allEvents)
         await dispatch(getEventsAction(allEvents))
     }
 }
@@ -53,25 +56,25 @@ export const getEventThunk = (eventId) => async dispatch => {
     }
 }
 
-const initialState = {};
+const initialState = {allEvents: {}, currentEvent: {}, currentGroupEvents: {}};
 
 const eventsReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_EVENTS:
-            const eventsState = {...state};
+            const eventsState = {...state, allEvents: {}, currentEvent: {}, currentGroupEvents: {}};
             action.events.Events.forEach(event => {
-                eventsState[event.id] = event;
+                eventsState.allEvents[event.id] = event;
             })
             return eventsState;
         case GET_GROUP_EVENTS:
-            const eventState = { };
+            const eventState = {...state, allEvents: {}, currentEvent: {}, currentGroupEvents: {}};
             action.events.Events.forEach(event => {
-                eventState[event.id] = event;
+                eventState.currentGroupEvents[event.id] = event;
             })
             return eventState;
         case GET_EVENT:
-            const newState = {...state}
-            newState[action.event.id] = action.event;
+            const newState = {...state, allEvents: {}, currentEvent: {}, currentGroupEvents: {}}
+            newState.currentEvent = action.event;
             return newState;
         default:
         return state;

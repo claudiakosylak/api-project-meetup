@@ -9,7 +9,7 @@ import { useRef } from "react";
 
 
 const GroupsIndexItem = ({ group }) => {
-    const eventsObj = useSelector(state => state.events)
+    const eventsObj = useSelector(state => state.events.currentGroupEvents)
     const events = Object.values(eventsObj)
     const dispatch = useDispatch();
 
@@ -17,6 +17,8 @@ const GroupsIndexItem = ({ group }) => {
     useEffect(() => {
         dispatch(getGroupEventsThunk(group.id))
     }, [dispatch, group.id])
+
+    if (!events) return null;
 
     return (
             <Link to={`/groups/${group.id}`} className="groups-index-item-container">

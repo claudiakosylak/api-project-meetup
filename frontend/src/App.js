@@ -9,6 +9,8 @@ import GroupDetailsIndex from "./components/GroupDetailsIndex";
 import CreateGroupForm from "./components/CreateGroupForm";
 import EventsIndex from "./components/EventsIndex";
 import UpdateGroupForm from "./components/UpdateGroupForm";
+import EventDetailsIndex from "./components/EventDetailsIndex";
+import CreateEventForm from"./components/CreateEventForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -26,14 +28,20 @@ function App() {
       {
         isLoaded && (
           <Switch>
-            <Route path="/groups/new">
+            <Route exact path="/groups/new">
               <CreateGroupForm />
             </Route>
+            {/* <Route path="/groups/:groupId/events/new">
+              <CreateEventForm />
+            </Route> */}
             <Route path="/groups/:groupId/edit">
               <UpdateGroupForm />
             </Route>
             <Route path="/groups/:groupId">
               <GroupDetailsIndex />
+            </Route>
+            <Route path="/events/:eventId">
+              <EventDetailsIndex />
             </Route>
             <Route path="/events">
               <EventsIndex />

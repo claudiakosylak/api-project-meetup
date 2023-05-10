@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import "./GroupDetailHeader.css";
+import DeleteGroupModal from "../../DeleteGroupModal";
+import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
 
 const GroupDetailHeader = ({ group, numberEvents, user }) => {
 
@@ -38,7 +40,10 @@ const GroupDetailHeader = ({ group, numberEvents, user }) => {
                         <button>Create event</button>
                         <Link to={`/groups/${group.id}/edit`}><button>Update</button></Link>
 
-                        <button>Delete</button>
+                        <OpenModalMenuItem
+                            itemText="Delete"
+                            modalComponent={<DeleteGroupModal groupId={group.id}/>}
+                        />
                     </div>
                 )}
                 {(user && user.id !== group.Organizer.id) && (
