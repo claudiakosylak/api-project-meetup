@@ -12,12 +12,15 @@ function GroupsIndex() {
     const groups = Object.values(groupsObj);
     const dispatch = useDispatch();
 
-
     useEffect(() => {
         dispatch(getGroupsThunk())
     }, [dispatch])
 
+    console.log("THIS IS GROUPS: ", groups)
+    console.log("THIS IS GROUPS OBJ: ", groupsObj)
+
     if (!groups) return null;
+    if (!groupsObj) return null;
 
     return (
         <div className="groups-wrapper">
@@ -27,7 +30,7 @@ function GroupsIndex() {
             </nav>
             <p className="groups-subheader">Groups in ReadUp</p>
             <ul className="groups-index-list-container">
-                {groups.map((group) => (
+                {groups?.map((group) => (
                     <GroupsIndexItem
                         group={group}
                         key={group.id}

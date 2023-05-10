@@ -97,7 +97,7 @@ const groupsReducer = (state = initialState, action) => {
             return newState;
         case UPDATE_GROUP:
             const updateGroupState = {...state}
-            updateGroupState.allGroups[action.group.id] = action.group;
+            updateGroupState.currentGroup = action.group;
             return updateGroupState;
         default:
             return state;

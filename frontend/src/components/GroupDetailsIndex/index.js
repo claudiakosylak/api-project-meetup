@@ -13,7 +13,7 @@ const GroupDetailsIndex = () => {
     const sessionUser = useSelector(state => state.session.user);
     const dispatch = useDispatch();
     const {groupId} = useParams();
-    const group = useSelector(state => state.groups[groupId])
+    const group = useSelector(state => state.groups.currentGroup)
     const eventsObj = useSelector(state => state.events)
     const events = Object.values(eventsObj)
     const numberEvents = events.length;
