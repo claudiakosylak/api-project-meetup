@@ -13,7 +13,7 @@ const EventsIndexItem = ({ event }) => {
     return (
         <Link to={`/events/${event.id}`} className="events-index-item-container">
             <div className="event-index-top">
-                <div className="group-image-placeholder"></div>
+                <img className="group-image-placeholder" src={event.previewImage}></img>
                 <div className="event-index-text-container">
                     <div className="under-groups-text-container"><p>{event.startDate}</p>
                     </div>
