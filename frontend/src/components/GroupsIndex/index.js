@@ -19,8 +19,8 @@ function GroupsIndex() {
     console.log("THIS IS GROUPS: ", groups)
     console.log("THIS IS GROUPS OBJ: ", groupsObj)
 
-    if (!groups) return null;
-    if (!groupsObj) return null;
+    // if (!groups) return null;
+    // if (!groupsObj) return null;
 
     return (
         <div className="groups-wrapper">

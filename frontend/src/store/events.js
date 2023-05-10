@@ -3,6 +3,7 @@
 const GET_GROUP_EVENTS = "events/getGroupEvents";
 const GET_EVENT = "events/getEvent";
 const GET_EVENTS = "events/getEvents";
+const CREATE_EVENT = "events/createEvent";
 
 //actions here
 export const getEventsAction = events => ({
@@ -19,6 +20,7 @@ export const getEventAction = event => ({
     type: GET_EVENT,
     event
 })
+
 
 //thunks here
 export const getEventsThunk = () => async (dispatch) => {
@@ -59,19 +61,19 @@ const initialState = {allEvents: {}, currentEvent: {}, currentGroupEvents: {}};
 const eventsReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_EVENTS:
-            const eventsState = {...state};
+            const eventsState = {...state, allEvents: {}, currentEvent: {}, currentGroupEvents: {}};
             action.events.Events.forEach(event => {
                 eventsState.allEvents[event.id] = event;
             })
             return eventsState;
         case GET_GROUP_EVENTS:
-            const eventState = {...state };
+            const eventState = {...state, allEvents: {}, currentEvent: {}, currentGroupEvents: {}};
             action.events.Events.forEach(event => {
                 eventState.currentGroupEvents[event.id] = event;
             })
             return eventState;
         case GET_EVENT:
-            const newState = {...state}
+            const newState = {...state, allEvents: {}, currentEvent: {}, currentGroupEvents: {}}
             newState.currentEvent = action.event;
             return newState;
         default:

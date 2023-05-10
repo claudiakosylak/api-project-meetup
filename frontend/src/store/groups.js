@@ -116,21 +116,21 @@ const initialState = {allGroups: {}, currentGroup: {}};
 const groupsReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_GROUPS:
-            const groupsState = { ...state };
+            const groupsState = { ...state, allGroups: {}, currentGroup: {} };
             action.groups.Groups.forEach(group => {
                 groupsState.allGroups[group.id] = group;
             });
             return groupsState;
         case GET_GROUP:
-            const newState = {...state};
+            const newState = {...state, allGroups: {}, currentGroup: {}};
             newState.currentGroup = action.group;
             return newState;
         case UPDATE_GROUP:
-            const updateGroupState = {...state}
+            const updateGroupState = {...state, allGroups: {...state.allGroups}, currentGroup: {...state.currentGroup}}
             updateGroupState.currentGroup = action.group;
             return updateGroupState;
         case DELETE_GROUP:
-            const deletedState = {...state};
+            const deletedState = {...state, allGroups: {...state.allGroups}, currentGroup: {...state.currentGroup}};
             delete deletedState.allGroups[action.groupId];
             return deletedState;
         default:

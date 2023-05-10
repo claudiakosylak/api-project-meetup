@@ -24,14 +24,8 @@ const GroupDetailsIndex = () => {
 
     useEffect(() => {
         dispatch(getGroupThunk(groupId));
-    }, [dispatch, groupId])
-
-    useEffect(() => {
         dispatch(getGroupEventsThunk(groupId))
     }, [dispatch, groupId])
-
-    if (!group) return null;
-    if (!events) return null;
 
     return (
         <div className="group-details-page-container">

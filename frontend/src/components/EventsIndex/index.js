@@ -14,9 +14,6 @@ function EventsIndex() {
         dispatch(getEventsThunk())
     }, [dispatch])
 
-    if (!events) return null;
-    if(!eventsObj) return null;
-
     console.log("THIS IS EVENTSOBJ: ", eventsObj)
     console.log("THIS IS EVENTS: ", events)
 

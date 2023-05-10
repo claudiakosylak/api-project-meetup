@@ -31,6 +31,8 @@ const GroupForm = ({ group, formType }) => {
         setErrors(errors)
     }, [name, about, location, imageUrl])
 
+    console.log("THIS IS PRIVATE: ", privateStatus, typeof privateStatus)
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setHasSubmitted(true);
@@ -186,7 +188,7 @@ const GroupForm = ({ group, formType }) => {
                     <p className="form-text">Is this group private or public?</p>
                     <select className="form-dropdowns"
                         value={privateStatus}
-                        onChange={(e) => setPrivateStatus(e.target.value)}
+                        onChange={(e) => setPrivateStatus(e.target.value === "true")}
                     >
                         <option value="" disabled>(select one)</option>
                         <option value={false}>Public</option>

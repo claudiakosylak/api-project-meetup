@@ -8,14 +8,8 @@ import { getEventThunk } from "../../store/events";
 
 
 const EventsIndexItem = ({ event }) => {
-    const dispatch = useDispatch();
-    const fullEvent = useSelector(state => state.events.currentEvent)
 
-    useEffect(() => {
-        dispatch(getEventThunk(event.id))
-    }, [dispatch, event.id])
 
-if (!event.description) return null;
     return (
         <Link to={`/events/${event.id}`} className="events-index-item-container">
             <div className="event-index-top">
@@ -24,12 +18,8 @@ if (!event.description) return null;
                     <div className="under-groups-text-container"><p>{event.startDate}</p>
                     </div>
                     <h2 className="group-list-header">{event.name}</h2>
-                    <p>{event.city}, {event.state}</p>
                     <p className="group-index-about">{event.about}</p>
                 </div>
-            </div>
-            <div className="event-index-bottom">
-                {fullEvent.description}
             </div>
         </Link >
     )
