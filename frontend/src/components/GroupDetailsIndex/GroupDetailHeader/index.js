@@ -37,13 +37,14 @@ const GroupDetailHeader = ({ group, numberEvents, user }) => {
 
                 {(user && user.id === group.Organizer.id) && (
                     <div className="admin-group-buttons">
-                        <Link to={`/groups/${group.id}/events/new`}>Create event</Link>
-                        <Link to={`/groups/${group.id}/edit`}>Update</Link>
+                        <Link to={`/groups/${group.id}/events/new`} className="admin-group-button">Create event</Link>
+                        <Link to={`/groups/${group.id}/edit`} className="admin-group-button">Update</Link>
 
-                        <OpenModalMenuItem
+                        <div className="admin-group-button">
+                            <OpenModalMenuItem
                             itemText="Delete"
                             modalComponent={<DeleteGroupModal className="modal-container-delete" groupId={group.id}/>}
-                        />
+                        /></div>
                     </div>
                 )}
                 {(user && user.id !== group.Organizer.id) && (

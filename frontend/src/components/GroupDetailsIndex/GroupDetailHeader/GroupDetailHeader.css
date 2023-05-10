@@ -39,11 +39,19 @@
     gap: 10px;
 }
 
-.admin-group-buttons > button {
-    padding: 5px;
+.modal-container-delete {
+    border-radius: 20px;
+}
+
+.admin-group-button {
+    background-color: #FFA384;
+    text-decoration: none;
+    color: white;
+    padding: 5px 10px;
+    border: 2px solid black;
     box-shadow: 3px 3px black;
 }
 
-.modal-container-delete {
-    border-radius: 20px;
+.admin-group-button:hover {
+    cursor: pointer;
 }
