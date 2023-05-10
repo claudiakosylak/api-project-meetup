@@ -1,0 +1,26 @@
+.group-description-container {
+    background-color: #E7F2F8;
+    display: flex;
+    justify-content: center;
+}
+.group-description-inner-container {
+    width: 70%;
+    margin-top: 40px;
+}
+
+.organizer {
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+.organizer-description-name {
+    color: darkgrey;
+}
+
+.what-about {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.group-description-paragraph {
+    margin-bottom: 40px;
+}
