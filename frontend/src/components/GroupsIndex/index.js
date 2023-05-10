@@ -17,6 +17,8 @@ function GroupsIndex() {
     }, [dispatch])
 
     return (
+        <div className="groups-wrapper-wrapper">
+
         <div className="groups-wrapper">
             <nav className="groups-nav">
                 <Link to="/events" className="groups-nav-item inactive-group-event-tab">Events</Link>
@@ -31,6 +33,7 @@ function GroupsIndex() {
                     />
                 ))}
             </ul>
+        </div>
         </div>
     )
 }

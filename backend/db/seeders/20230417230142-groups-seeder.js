@@ -17,25 +17,25 @@ module.exports = {
         type: "In Person",
         private: false,
         city: "New York City",
-        state: "New York"
+        state: "NY"
       },
       {
         organizerId: 2,
-        name: "Animal fans",
-        about: "We love animals here",
+        name: "Readers of Westeros",
+        about: "Winter is coming - join us as we play (rather, read about) the Game of Thrones. Will the book series ever be finished? Is House of the Dragon a worthy prequel? Dress up, join us for wine, bring your books, and let's find out!",
         type: "In Person",
         private: false,
         city: "Los Angeles",
-        state: "California"
+        state: "CA"
       },
       {
         organizerId: 3,
-        name: "Business networkers",
-        about: "We like to do business and network.",
+        name: "Non-fiction Addiction",
+        about: "Join us for some reading where we might actually learn about the world we live in rather than live in silly fantasies. We will learn about habits, productivity, business, and other such things.",
         type: "Online",
         private: true,
         city: "Dallas",
-        state: "Texas"
+        state: "TX"
       }
     ], {})
   },
