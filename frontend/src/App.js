@@ -27,7 +27,10 @@ function App() {
       {
         isLoaded && (
           <Switch>
-            <Route path="/groups/new">
+            <Route exact path="/groups/new">
+              <CreateGroupForm />
+            </Route>
+            <Route path="/groups/:groupId/events/new">
               <CreateGroupForm />
             </Route>
             <Route path="/groups/:groupId/edit">

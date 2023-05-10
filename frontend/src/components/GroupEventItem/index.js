@@ -10,7 +10,7 @@ const GroupEventItem = ({event}) => {
 
     const dispatch = useDispatch();
 
-    const fullEvent = useSelector(state => state.events[eventId])
+    const fullEvent = useSelector(state => state.events.currentEvent)
 
     useEffect(() => {
         dispatch(getEventThunk(eventId))
