@@ -54,7 +54,7 @@ export const getEventThunk = (eventId) => async dispatch => {
     }
 }
 
-const initialState = {allEvents: {}, currentEvent: {}};
+const initialState = {allEvents: {}, currentEvent: {}, currentGroupEvents: {}};
 
 const eventsReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -67,7 +67,7 @@ const eventsReducer = (state = initialState, action) => {
         case GET_GROUP_EVENTS:
             const eventState = {...state };
             action.events.Events.forEach(event => {
-                eventState.allEvents[event.id] = event;
+                eventState.currentGroupEvents[event.id] = event;
             })
             return eventState;
         case GET_EVENT:

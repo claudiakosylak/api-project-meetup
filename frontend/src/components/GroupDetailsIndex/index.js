@@ -14,7 +14,7 @@ const GroupDetailsIndex = () => {
     const dispatch = useDispatch();
     const {groupId} = useParams();
     const group = useSelector(state => state.groups.currentGroup)
-    const eventsObj = useSelector(state => state.events.allEvents)
+    const eventsObj = useSelector(state => state.events.currentGroupEvents)
     const events = Object.values(eventsObj)
     const numberEvents = events.length;
 
@@ -31,6 +31,7 @@ const GroupDetailsIndex = () => {
     }, [dispatch, groupId])
 
     if (!group) return null;
+    if (!events) return null;
 
     return (
         <div className="group-details-page-container">
