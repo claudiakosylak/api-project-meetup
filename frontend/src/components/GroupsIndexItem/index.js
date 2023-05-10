@@ -8,12 +8,6 @@ import { useEffect } from "react";
 const GroupsIndexItem = ({ group, events }) => {
 
     const groupEvents = events.filter(event => event.groupId === group.id);
-    // useEffect(() => {
-    //     dispatch(getGroupEventsThunk(group.id))
-    // }, [dispatch, group.id])
-
-
-    // if (!events) return null;
 
     return (
             <Link to={`/groups/${group.id}`} className="groups-index-item-container">
