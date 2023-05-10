@@ -1,0 +1,65 @@
+.group-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 80%;
+}
+
+.group-form-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.form-section > h2 {
+    font-size: 15px;
+    color: teal;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+
+.form-section {
+    border-bottom: 2px solid darkgrey;
+    width: 100%;
+    padding: 10px 0;
+}
+
+.form-headers {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.form-text {
+    font-size: 13px;
+    width: 50%;
+    margin-bottom: 15px;
+}
+
+.form-inputs {
+    background-color: #E7F2F8;
+    width: 30%;
+    border: 2px solid black;
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+.form-description {
+    height: 150px;
+}
+
+.form-dropdowns {
+    background-color: #E7F2F8;
+    color: darkgrey;
+    border: 2px solid black;
+}
+
+.group-form-submit-button {
+    background-color: #FFA384;
+    color: white;
+    margin: 20px 0 50px 0;
+    height: 40px;
+    width: 120px;
+    box-shadow: 3px 3px black;
+    font-size: 17px;
+}
