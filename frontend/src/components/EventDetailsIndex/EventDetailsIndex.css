@@ -33,6 +33,7 @@
     align-items: center;
     justify-content: center;
     gap: 15px;
+    text-decoration: none;
 }
 
 .event-time-details {
