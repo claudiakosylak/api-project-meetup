@@ -18,10 +18,6 @@ const GroupDetailsIndex = () => {
     const events = Object.values(eventsObj)
     const numberEvents = events.length;
 
-    console.log("THIS IS EVENTSOBJ: ", eventsObj)
-    console.log("THIS IS EVENTS", events)
-    console.log("THIS IS NUMB EVENTS", numberEvents)
-
     useEffect(() => {
         dispatch(getGroupThunk(groupId));
         dispatch(getGroupEventsThunk(groupId))

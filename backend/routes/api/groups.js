@@ -17,15 +17,12 @@ const router = express.Router();
 
 router.get("/:groupId/members", async (req, res) => {
     const { groupId } = req.params;
-    console.log("THIS IS GROUPID: ", groupId)
 
     const group = await Group.findOne({
         where: {
             id: groupId
         }
     });
-
-    console.log("THIS IS THE GROUP: ", group)
 
     if (!group) {
         res.status(404);
@@ -40,8 +37,6 @@ router.get("/:groupId/members", async (req, res) => {
             model: User
         }
     })
-
-    console.log("THIS IS MEMBERSHIPS: ", memberships)
     const userMembReformat = memberships.map(membership => {
         return {
             id: membership.User.id,
@@ -531,7 +526,7 @@ router.post("/:groupId/images", requireAuth, async (req, res) => {
 
 router.post("/:groupId/events", requireAuth, async (req, res) => {
     const { groupId } = req.params;
-    const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body;
+    const { name, type, price, description, startDate, endDate } = req.body;
     const group = await Group.findOne({
         where: {
             id: groupId
@@ -559,11 +554,11 @@ router.post("/:groupId/events", requireAuth, async (req, res) => {
         return res.json(err.errors)
     }
 
-    const venue = await Venue.findOne({
-        where: {
-            id: venueId
-        }
-    })
+    // const venue = await Venue.findOne({
+    //     where: {
+    //         id: venueId
+    //     }
+    // })
 
 
 
@@ -575,10 +570,10 @@ router.post("/:groupId/events", requireAuth, async (req, res) => {
     let endDateUsable = new Date(endDate);
 
     const errors = {};
-    if (!venue) errors.venueId = "Venue does not exist";
+    // if (!venue) errors.venueId = "Venue does not exist";
     if (name.length < 5) errors.name = "Name must be at least 5 characters";
     if (type !== "Online" && type !== "In Person") errors.type = "Type must be Online or In Person";
-    if (!Number.isInteger(capacity)) errors.capacity = "Capacity must be an integer";
+    // if (!Number.isInteger(capacity)) errors.capacity = "Capacity must be an integer";
     if (!price || price < 0 || isNaN(price)) errors.price = "Price is invalid";
     if (!description) errors.description = "Description is required";
 
@@ -596,12 +591,12 @@ router.post("/:groupId/events", requireAuth, async (req, res) => {
     }
 
     const newEvent = await Event.create({
-        venueId: venueId,
+        // venueId: venueId,
         groupId: groupId,
         name: name,
         description: description,
         type: type,
-        capacity: capacity,
+        // capacity: capacity,
         price: price,
         startDate: startDateUsable,
         endDate: endDateUsable
@@ -609,12 +604,12 @@ router.post("/:groupId/events", requireAuth, async (req, res) => {
 
     return res.json({
         "id": newEvent.id,
-        "venueId": newEvent.venueId,
+        // "venueId": newEvent.venueId,
         "groupId": newEvent.groupId,
         "name": newEvent.name,
         "description": newEvent.description,
         "type": newEvent.type,
-        "capacity": newEvent.capacity,
+        // "capacity": newEvent.capacity,
         "price": newEvent.price,
         "startDate": newEvent.startDate,
         "endDate": newEvent.endDate
@@ -676,8 +671,6 @@ router.post("/", requireAuth, async (req, res) => {
     const { name, about, type, private, city, state } = req.body;
     const organizer = req.user.id;
 
-    console.log("AM I EVEN HITTING THE BACKEND??")
-
     const errors = {};
     if (name.length > 60) errors.name = "Name must be 60 characters or less";
     if (about.length < 50) errors.about = "About must be 50 characters or more";
@@ -688,7 +681,6 @@ router.post("/", requireAuth, async (req, res) => {
 
     if (Object.keys(errors).length > 0) {
         res.status(400)
-        console.log("THESE ARE THE ERRORS ON BACKEND", errors)
         return res.json({
             "message": "Bad Request",
             errors

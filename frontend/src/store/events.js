@@ -1,3 +1,5 @@
+import { csrfFetch } from "./csrf";
+
 //action variables here
 
 const GET_GROUP_EVENTS = "events/getGroupEvents";
@@ -27,7 +29,6 @@ export const getEventsThunk = () => async (dispatch) => {
     const res = await fetch("/api/events");
     if (res.ok) {
         const allEvents = await res.json();
-        console.log("EVENTS IN THUNK", allEvents)
         await dispatch(getEventsAction(allEvents))
     }
 }
@@ -55,6 +56,25 @@ export const getEventThunk = (eventId) => async dispatch => {
         return error;
     }
 }
+
+export const createEventThunk = (event, groupId) => async dispatch => {
+    const res = await csrfFetch(`/api/groups/${groupId}/events`, {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(event)
+    })
+    if (res.ok) {
+        const newEvent = await res.json();
+        await dispatch(getEventAction(newEvent))
+        return newEvent;
+    } else {
+        const err = await res.json();
+        return err;
+    }
+}
+
+
+//reducer here
 
 const initialState = {allEvents: {}, currentEvent: {}, currentGroupEvents: {}};
 

@@ -12,8 +12,8 @@ module.exports = {
     await queryInterface.bulkInsert(options, [
       {
         organizerId: 1,
-        name: "Lovers of dance",
-        about: "We are the people who really love to dance here.",
+        name: "Harry Potter Book Club",
+        about: "Join our group of muggles as we explore the beautiful wizarding world of Harry Potter!",
         type: "In Person",
         private: false,
         city: "New York City",

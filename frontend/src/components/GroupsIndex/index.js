@@ -16,12 +16,6 @@ function GroupsIndex() {
         dispatch(getGroupsThunk())
     }, [dispatch])
 
-    console.log("THIS IS GROUPS: ", groups)
-    console.log("THIS IS GROUPS OBJ: ", groupsObj)
-
-    // if (!groups) return null;
-    // if (!groupsObj) return null;
-
     return (
         <div className="groups-wrapper">
             <nav className="groups-nav">

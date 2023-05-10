@@ -14,9 +14,6 @@ function EventsIndex() {
         dispatch(getEventsThunk())
     }, [dispatch])
 
-    console.log("THIS IS EVENTSOBJ: ", eventsObj)
-    console.log("THIS IS EVENTS: ", events)
-
     return (
         <div className="groups-wrapper">
         <nav className="groups-nav">

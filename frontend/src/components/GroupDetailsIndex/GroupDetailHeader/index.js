@@ -19,7 +19,7 @@ const GroupDetailHeader = ({ group, numberEvents, user }) => {
 
                     <p>{"<"}</p><Link to="/groups">Groups</Link>
                 </div>
-                <div className="group-image-placeholder-details-page"></div>
+                <div ><img src={group.GroupImages[0].url} className="group-image-placeholder-details-page" alt="Main group image"></img></div>
 
             </div>
             <div className="group-detail-text-container-details-page">
@@ -37,13 +37,14 @@ const GroupDetailHeader = ({ group, numberEvents, user }) => {
 
                 {(user && user.id === group.Organizer.id) && (
                     <div className="admin-group-buttons">
-                        <button>Create event</button>
-                        <Link to={`/groups/${group.id}/edit`}><button>Update</button></Link>
+                        <Link to={`/groups/${group.id}/events/new`} className="admin-group-button">Create event</Link>
+                        <Link to={`/groups/${group.id}/edit`} className="admin-group-button">Update</Link>
 
-                        <OpenModalMenuItem
+                        <div className="admin-group-button">
+                            <OpenModalMenuItem
                             itemText="Delete"
-                            modalComponent={<DeleteGroupModal groupId={group.id}/>}
-                        />
+                            modalComponent={<DeleteGroupModal className="modal-container-delete" groupId={group.id}/>}
+                        /></div>
                     </div>
                 )}
                 {(user && user.id !== group.Organizer.id) && (
