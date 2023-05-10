@@ -196,7 +196,11 @@ const GroupForm = ({ group, formType }) => {
                         placeholder="Image Url"
                     />
                 </div>
-                <button type="submit" className="group-form-submit-button">Create group</button>
+                {formType === "Create Group" ? (
+                    <button type="submit" className="group-form-submit-button">Create group</button>
+                ) : (
+                    <button type="submit" className="group-form-submit-button">Update group</button>
+                )}
             </form>
         </div>
     )

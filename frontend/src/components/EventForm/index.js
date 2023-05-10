@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import {useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { createEventThunk } from "../../store/events";
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-const EventForm = ({event, formType, group}) => {
+const EventForm = ({ event, formType, group }) => {
     const dispatch = useDispatch()
     const history = useHistory();
 
@@ -68,8 +68,55 @@ const EventForm = ({event, formType, group}) => {
         <form onSubmit={handleSubmit}>
             <div className="form-section">
                 <h2>Create an event for {group.name}</h2>
-             </div>
-            <button type="submit">Create Event</button>
+                <p className="form-text">What is the name of your event?</p>
+                <input className="form-inputs"
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Event name"
+                />
+            </div>
+            <div className="form-section">
+                <p className="form-text">Is this an in person or online event?</p>
+                <select className="form-dropdowns"
+                    value={type}
+                    onChange={(e) => setType(e.target.value)}
+                >
+                    <option value="" disabled>(select one)</option>
+                    <option value="In Person">In Person</option>
+                    <option value="Online">Online</option>
+                </select>
+                <br />
+                <p className="form-text">What is the price for your event?</p>
+                <input className="form-price"
+                    type="number"
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                />
+            </div>
+            <div className="form-section">
+                <p className="form-text">When does your event start?</p>
+                <input className="form-dates"
+                    type="datetime-local"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                />
+                <p className="form-text">When does your event end?</p>
+                <input className="form-dates"
+                    type="datetime-local"
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
+                />
+            </div>
+            <div className="form-section">
+                <p className="form-text">Please describe your event:</p>
+                <textarea className="form-inputs form-description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="Please include at least 30 characters"
+                />
+            </div>
+            <button type="submit" className="event-form-submit-button">Create Event</button>
         </form>
     )
 }
