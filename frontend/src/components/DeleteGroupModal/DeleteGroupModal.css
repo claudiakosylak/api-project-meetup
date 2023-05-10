@@ -1,4 +1,37 @@
 .delete-modal-container {
-    height: 300px;
-    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 200px;
+    width: 350px;
+    border-radius: 20px;
+}
+
+.delete-modal-container > h1 {
+    font-size: 25px;
+    margin-top: 15px;
+}
+
+.yes-delete-button {
+    background-color: red;
+    border: 2px solid black;
+    box-shadow: 3px 3px black;
+    color: white;
+    width: 90%;
+    height: 45px;
+}
+
+.no-delete-button {
+    background-color: darkgrey;
+    border: 2px solid black;
+    box-shadow: 3px 3px black;
+    color: white;
+    width: 90%;
+    height: 45px;
+    margin-bottom: 15px;
+}
+
+.delete-buttons:hover {
+    cursor: pointer;
 }

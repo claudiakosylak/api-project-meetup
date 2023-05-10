@@ -42,7 +42,7 @@ const GroupDetailHeader = ({ group, numberEvents, user }) => {
 
                         <OpenModalMenuItem
                             itemText="Delete"
-                            modalComponent={<DeleteGroupModal groupId={group.id}/>}
+                            modalComponent={<DeleteGroupModal className="modal-container-delete" groupId={group.id}/>}
                         />
                     </div>
                 )}
