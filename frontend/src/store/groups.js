@@ -4,6 +4,7 @@ import { csrfFetch } from "./csrf";
 const GET_GROUPS = "groups/getGroups";
 const GET_GROUP = "groups/getGroup";
 const UPDATE_GROUP = "groups/updateGroup";
+const DELETE_GROUP = "groups/deleteGroup";
 
 //actions here
 
@@ -22,6 +23,10 @@ export const updateGroupAction = group => ({
     group
 })
 
+export const deleteGroupAction = groupId => ({
+    type: DELETE_GROUP,
+    groupId
+})
 
 // thunks here
 
@@ -78,6 +83,21 @@ export const updateGroupThunk = (groupId, group) => async dispatch => {
         return err;
     }
 }
+
+export const deleteGroupThunk = groupId => async dispatch => {
+    console.log("THE GROUPID IN THUNK: ", groupId)
+    const res = await csrfFetch(`/api/groups/${groupId}`, {method: "DELETE"})
+    if (res.ok) {
+        const successMessage = await res.json();
+        dispatch(deleteGroupAction(groupId))
+        console.log("SUCCESS MESSAGE: ", successMessage)
+        return successMessage;
+    } else {
+        const err = await res.json();
+        console.log("BAD MESSAGE: ", err)
+        return err;
+    }
+}
 // reducer here
 
 
@@ -99,6 +119,10 @@ const groupsReducer = (state = initialState, action) => {
             const updateGroupState = {...state}
             updateGroupState.currentGroup = action.group;
             return updateGroupState;
+        case DELETE_GROUP:
+            const deletedState = {...state};
+            delete deletedState.allGroups[action.groupId];
+            return deletedState;
         default:
             return state;
     }
