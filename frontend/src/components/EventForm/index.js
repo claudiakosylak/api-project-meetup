@@ -41,7 +41,9 @@ const EventForm = ({ event, formType, group }) => {
             type,
             price,
             startDate,
-            endDate
+            endDate,
+            venue: 1,
+            capacity: 10
         };
 
         if (formType === "Create Event") {
@@ -107,6 +109,15 @@ const EventForm = ({ event, formType, group }) => {
                     value={endDate}
                     onChange={(e) => setEndDate(e.target.value)}
                 />
+            </div>
+            <div className="form-section">
+                <p className="form-text">Please add an image url for your event below:</p>
+                <input className="form-inputs"
+                        type="text"
+                        value={imageUrl}
+                        onChange={(e) => setImageUrl(e.target.value)}
+                        placeholder="Image Url"
+                    />
             </div>
             <div className="form-section">
                 <p className="form-text">Please describe your event:</p>
