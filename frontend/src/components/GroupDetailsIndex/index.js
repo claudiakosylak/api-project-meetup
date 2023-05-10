@@ -14,9 +14,13 @@ const GroupDetailsIndex = () => {
     const dispatch = useDispatch();
     const {groupId} = useParams();
     const group = useSelector(state => state.groups.currentGroup)
-    const eventsObj = useSelector(state => state.events)
+    const eventsObj = useSelector(state => state.events.allEvents)
     const events = Object.values(eventsObj)
     const numberEvents = events.length;
+
+    console.log("THIS IS EVENTSOBJ: ", eventsObj)
+    console.log("THIS IS EVENTS", events)
+    console.log("THIS IS NUMB EVENTS", numberEvents)
 
     useEffect(() => {
         dispatch(getGroupThunk(groupId));
@@ -38,7 +42,7 @@ const GroupDetailsIndex = () => {
             <GroupDetailDescription group={group}/>
             <h2>Upcoming Events: {numberEvents}</h2>
             <ul className="group-events-list-container">
-                {events.map(event => (
+                {events?.map(event => (
                     <GroupEventItem event={event} key={event.id} />
                 ))}
             </ul>

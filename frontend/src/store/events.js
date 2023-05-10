@@ -23,8 +23,9 @@ export const getEventAction = event => ({
 //thunks here
 export const getEventsThunk = () => async (dispatch) => {
     const res = await fetch("/api/events");
-    const allEvents = await res.json();
     if (res.ok) {
+        const allEvents = await res.json();
+        console.log("EVENTS IN THUNK", allEvents)
         await dispatch(getEventsAction(allEvents))
     }
 }
@@ -53,25 +54,25 @@ export const getEventThunk = (eventId) => async dispatch => {
     }
 }
 
-const initialState = {};
+const initialState = {allEvents: {}, currentEvent: {}};
 
 const eventsReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_EVENTS:
             const eventsState = {...state};
             action.events.Events.forEach(event => {
-                eventsState[event.id] = event;
+                eventsState.allEvents[event.id] = event;
             })
             return eventsState;
         case GET_GROUP_EVENTS:
-            const eventState = { };
+            const eventState = {...state };
             action.events.Events.forEach(event => {
-                eventState[event.id] = event;
+                eventState.allEvents[event.id] = event;
             })
             return eventState;
         case GET_EVENT:
             const newState = {...state}
-            newState[action.event.id] = action.event;
+            newState.currentEvent = action.event;
             return newState;
         default:
         return state;

@@ -6,13 +6,19 @@ import { Link } from "react-router-dom";
 import EventsIndexItem from "../EventsIndexItem";
 
 function EventsIndex() {
-    const eventsObj = useSelector(state => state.events);
+    const eventsObj = useSelector(state => state.events.allEvents);
     const events = Object.values(eventsObj);
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getEventsThunk())
     }, [dispatch])
+
+    if (!events) return null;
+    if(!eventsObj) return null;
+
+    console.log("THIS IS EVENTSOBJ: ", eventsObj)
+    console.log("THIS IS EVENTS: ", events)
 
     return (
         <div className="groups-wrapper">
