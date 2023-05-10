@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {useDispatch} from "react-redux";
-import { createEventThunk } from "../../store/groups";
+import { createEventThunk } from "../../store/events";
 import {useHistory} from "react-router-dom";
 
 const EventForm = ({event, formType}) => {

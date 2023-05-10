@@ -55,6 +55,7 @@ const GroupForm = ({ group, formType }) => {
 
         if (formType === "Create Group") {
             const response = await dispatch(createGroupThunk(groupInfo))
+            console.log("THIS IS THE RESPONSE IN CREATE GROUP: ", response)
             if (response.errors) {
                 setErrors(response.errors)
                 return errors;
@@ -115,49 +116,49 @@ const GroupForm = ({ group, formType }) => {
                     )}
                 </div>
                 {formType === "Create Group" ? (
-                    <div className="form-section">
-                        <p className="form-headers">What will your group's name be?</p>
-                        <p className="form-text">Choose a name that will give people a clear idea of what the group will be reading.
-                            <br />Feel free to get creative! You can edit this later if you change your mind.
-                        </p>
-                        <input className="form-inputs"
-                            type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            placeholder="What is your reading group name?"
-                        />
-                    </div>
+                <div className="form-section">
+                    <p className="form-headers">What will your group's name be?</p>
+                    <p className="form-text">Choose a name that will give people a clear idea of what the group will be reading.
+                        <br />Feel free to get creative! You can edit this later if you change your mind.
+                    </p>
+                    <input className="form-inputs"
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="What is your reading group name?"
+                    />
+                </div>
 
                 ) : (
                     <div className="form-section">
-                        <p className="form-headers">What is the name of your group?</p>
-                        <p className="form-text">Choose a name that will give people a clear idea of what the group will be reading.
-                            <br />Feel free to get creative!
-                        </p>
-                        <input className="form-inputs"
-                            type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            placeholder="What is your reading group name?"
-                        />
-                    </div>
+                    <p className="form-headers">What is the name of your group?</p>
+                    <p className="form-text">Choose a name that will give people a clear idea of what the group will be reading.
+                        <br />Feel free to get creative!
+                    </p>
+                    <input className="form-inputs"
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="What is your reading group name?"
+                    />
+                </div>
                 )}
 
                 <div className="form-section">
                     <p className="form-headers">Now describe what your group will be reading</p>
                     {formType === "Create Group" ? (
-                        <p className="form-text">People will see this when we promote your group, but you'll be able to add it later, too.
-                            <br /><br />1. What's the purpose of the group?
-                            <br />2. Who should join?
-                            <br />3. What will you do at your events?
-                        </p>
+                    <p className="form-text">People will see this when we promote your group, but you'll be able to add it later, too.
+                        <br /><br />1. What's the purpose of the group?
+                        <br />2. Who should join?
+                        <br />3. What will you do at your events?
+                    </p>
 
                     ) : (
                         <p className="form-text">People will see this when we promote your group.
-                            <br /><br />1. What's the purpose of the group?
-                            <br />2. Who should join?
-                            <br />3. What will you do at your events?
-                        </p>
+                        <br /><br />1. What's the purpose of the group?
+                        <br />2. Who should join?
+                        <br />3. What will you do at your events?
+                    </p>
                     )}
                     <textarea className="form-inputs form-description"
                         value={about}
@@ -172,7 +173,7 @@ const GroupForm = ({ group, formType }) => {
                         value={type}
                         onChange={(e) => setType(e.target.value)}
                     >
-                        <option value="" disabled>(select one)</option>
+                    <option value="" disabled>(select one)</option>
                         {types.map(type => (
                             <option
                                 key={type}
@@ -191,25 +192,15 @@ const GroupForm = ({ group, formType }) => {
                         <option value={false}>Public</option>
                         <option value={true}>Private</option>
                     </select>
-                    {formType === "Create Group" && (
-                        <>
-                            <p className="form-text">Please add an image url for your group below:</p>
-                            <input className="form-inputs"
-                                type="text"
-                                value={imageUrl}
-                                onChange={(e) => setImageUrl(e.target.value)}
-                                placeholder="Image Url"
-                            />
-
-                        </>
-                    )}
+                    <p className="form-text">Please add an image url for your group below:</p>
+                    <input className="form-inputs"
+                        type="text"
+                        value={imageUrl}
+                        onChange={(e) => setImageUrl(e.target.value)}
+                        placeholder="Image Url"
+                    />
                 </div>
-                {formType === "Create Group" ? (
-
-                    <button type="submit" className="group-form-submit-button">Create group</button>
-                ): (
-                    <button type="submit" className="group-form-submit-button">Update group</button>
-                )}
+                <button type="submit" className="group-form-submit-button">Create group</button>
             </form>
         </div>
     )

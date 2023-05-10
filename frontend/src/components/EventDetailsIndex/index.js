@@ -9,7 +9,7 @@ import { getGroupThunk } from "../../store/groups";
 const EventDetailsIndex = () => {
     const dispatch = useDispatch()
     const { eventId } = useParams();
-    const event = useSelector(state => state.events[eventId])
+    const event = useSelector(state => state.events.currentEvent)
     // const groupId = event.Group.id;
     // const group = useSelector(state => state.groups[event.groupId])
 

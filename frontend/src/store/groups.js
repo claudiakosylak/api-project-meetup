@@ -51,21 +51,29 @@ export const getGroupThunk = (groupId) => async dispatch => {
 }
 
 export const createGroupThunk = (group) => async dispatch => {
-    const res = await csrfFetch("/api/groups", {
-        method: "POST",
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(group)
-    })
+    try {
+        const res = await csrfFetch("/api/groups", {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(group)
+        })
 
-    if (res.ok) {
-        const newGroup = await res.json();
-        await dispatch(getGroupAction(newGroup))
-        return newGroup;
-    } else {
-        const err = await res.json();
-        console.log(err)
-        return err;
+        if (res.ok) {
+            const newGroup = await res.json();
+            console.log("THIS IS RESPONSE OK FROM THUNK: ", newGroup)
+            await dispatch(getGroupAction(newGroup))
+            return newGroup;
+        }
+
+    } catch(err) {
+        console.log("THIS IS THE CATCH ERR: ", err)
     }
+    // else {
+    //     const err = await res.json();
+    //     console.log("THIS IS THE ERROR FROM THUNK: ", err)
+    //     console.log(err)
+    //     return err;
+    // }
 }
 
 export const updateGroupThunk = (groupId, group) => async dispatch => {
@@ -76,10 +84,12 @@ export const updateGroupThunk = (groupId, group) => async dispatch => {
     })
     if (res.ok) {
         const updatedGroup = await res.json();
+        // console.log("OK RESPONSE FROM THUNK: ", updatedGroup)
         dispatch(updateGroupAction(updatedGroup))
         return updatedGroup;
     } else {
         const err = await res.json()
+        // console.log("ERROR FROM THUNK: ", err)
         return err;
     }
 }
