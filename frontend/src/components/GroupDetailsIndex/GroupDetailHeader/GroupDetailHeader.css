@@ -56,3 +56,16 @@
     cursor: pointer;
 }
 
+.join-group-button {
+    background-color: #FFA384;
+    text-decoration: none;
+    color: white;
+    padding: 5px 10px;
+    border: 2px solid black;
+    box-shadow: 3px 3px black;
+    width: 200px;
+    height: 45px;
+}
+.join-group-button:hover {
+    cursor: pointer;
+}

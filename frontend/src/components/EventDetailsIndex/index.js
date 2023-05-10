@@ -10,14 +10,25 @@ const EventDetailsIndex = () => {
     const dispatch = useDispatch()
     const { eventId } = useParams();
     const event = useSelector(state => state.events.currentEvent)
+    const group = useSelector(state => state.groups.currentGroup)
+
+    console.log("THE EVENT, ", event)
+
+    console.log("THE GROUPID: ", event.groupId)
 
     useEffect(() => {
         dispatch(getEventThunk(eventId))
+        dispatch(getGroupThunk(event.groupId))
     }, [dispatch, eventId])
 
-    if (!event) return null;
+    // if (!event) return null;
 
+    if (!event.EventImages) return null;
+    // if (!group) return null;
 
+    console.log("group preview image", group.previewImage)
+
+    const eventPreviewImage = event.EventImages.find(image => image.preview === true)
 
     return (
         <div className="event-details-page-container">
@@ -27,13 +38,13 @@ const EventDetailsIndex = () => {
                 <p>Organized by:</p>
             </div>
             <div className="event-details-middle-section">
-                <div className="event-details-page-image-placeholder"></div>
+                <img className="event-details-page-image-placeholder" src={eventPreviewImage.url}></img>
                 <div className="event-details-right-info">
                     <Link to={`/groups/${event.groupId}`} className="event-group-chunk">
-                        <div className="event-group-image-placeholder"></div>
+                        <img className="event-group-image-placeholder" src={group.previewImage}></img>
                         <div className="event-group-info-text">
-                            <p>Group name placeholder</p>
-                            <p>Group status placeholder</p>
+                            <p>{event.Group.name}</p>
+                            <p>{event.Group.private ? "Private" : "Public"}</p>
                         </div>
                     </Link>
                     <div className="event-micro-details">
