@@ -37,8 +37,8 @@ const GroupDetailHeader = ({ group, numberEvents, user }) => {
 
                 {(user && user.id === group.Organizer.id) && (
                     <div className="admin-group-buttons">
-                        <button>Create event</button>
-                        <Link to={`/groups/${group.id}/edit`}><button>Update</button></Link>
+                        <Link to={`/groups/${group.id}/events/new`}>Create event</Link>
+                        <Link to={`/groups/${group.id}/edit`}>Update</Link>
 
                         <OpenModalMenuItem
                             itemText="Delete"

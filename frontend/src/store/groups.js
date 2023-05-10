@@ -63,16 +63,14 @@ export const createGroupThunk = (group) => async dispatch => {
             await dispatch(getGroupAction(newGroup))
             return newGroup;
         }
+        else {
+            const err = await res.json();
+            return err;
+        }
 
     } catch(err) {
         console.log("THIS IS THE CATCH ERR: ", err)
     }
-    // else {
-    //     const err = await res.json();
-    //     console.log("THIS IS THE ERROR FROM THUNK: ", err)
-    //     console.log(err)
-    //     return err;
-    // }
 }
 
 export const updateGroupThunk = (groupId, group) => async dispatch => {
