@@ -15,9 +15,9 @@ const EventDetailsIndex = () => {
         dispatch(getEventThunk(eventId))
     }, [dispatch, eventId])
 
-    if (!event) return null;
+    // if (!event) return null;
 
-
+    const eventPreviewImage = event.EventImages.find(image => image.preview === true)
 
     return (
         <div className="event-details-page-container">
@@ -27,7 +27,7 @@ const EventDetailsIndex = () => {
                 <p>Organized by:</p>
             </div>
             <div className="event-details-middle-section">
-                <div className="event-details-page-image-placeholder"></div>
+                <img className="event-details-page-image-placeholder" src={eventPreviewImage.url}></img>
                 <div className="event-details-right-info">
                     <Link to={`/groups/${event.groupId}`} className="event-group-chunk">
                         <div className="event-group-image-placeholder"></div>
