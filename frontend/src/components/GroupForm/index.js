@@ -31,14 +31,11 @@ const GroupForm = ({ group, formType }) => {
         setErrors(errors)
     }, [name, about, location, imageUrl])
 
-    console.log("THIS IS PRIVATE: ", privateStatus, typeof privateStatus)
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         setHasSubmitted(true);
         const errorsArray = Object.values(errors)
         if (errorsArray.length) {
-            console.log(errors)
             return errors;
         }
         const locationArray = location.split(", ");
@@ -53,11 +50,9 @@ const GroupForm = ({ group, formType }) => {
             city,
             state
         };
-        console.log("THIS IS THE GROUP INFO: ", groupInfo)
 
         if (formType === "Create Group") {
             const response = await dispatch(createGroupThunk(groupInfo))
-            console.log("THIS IS THE RESPONSE IN CREATE GROUP: ", response)
             if (response.errors) {
                 setErrors(response.errors)
                 return errors;
@@ -68,7 +63,6 @@ const GroupForm = ({ group, formType }) => {
 
         if (formType === "Update Group") {
             const response = await dispatch(updateGroupThunk(group.id, groupInfo))
-            console.log("UPDATE RESPONSE: ", response)
             if (response.errors) {
                 setErrors(response.errors)
                 return errors;

@@ -17,15 +17,12 @@ const router = express.Router();
 
 router.get("/:groupId/members", async (req, res) => {
     const { groupId } = req.params;
-    console.log("THIS IS GROUPID: ", groupId)
 
     const group = await Group.findOne({
         where: {
             id: groupId
         }
     });
-
-    console.log("THIS IS THE GROUP: ", group)
 
     if (!group) {
         res.status(404);
@@ -40,8 +37,6 @@ router.get("/:groupId/members", async (req, res) => {
             model: User
         }
     })
-
-    console.log("THIS IS MEMBERSHIPS: ", memberships)
     const userMembReformat = memberships.map(membership => {
         return {
             id: membership.User.id,
@@ -676,8 +671,6 @@ router.post("/", requireAuth, async (req, res) => {
     const { name, about, type, private, city, state } = req.body;
     const organizer = req.user.id;
 
-    console.log("AM I EVEN HITTING THE BACKEND??")
-
     const errors = {};
     if (name.length > 60) errors.name = "Name must be 60 characters or less";
     if (about.length < 50) errors.about = "About must be 50 characters or more";
@@ -688,7 +681,6 @@ router.post("/", requireAuth, async (req, res) => {
 
     if (Object.keys(errors).length > 0) {
         res.status(400)
-        console.log("THESE ARE THE ERRORS ON BACKEND", errors)
         return res.json({
             "message": "Bad Request",
             errors
