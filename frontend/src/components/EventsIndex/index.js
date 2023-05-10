@@ -18,7 +18,7 @@ function EventsIndex() {
     return (
         <div className="events-wrapper-wrapper">
 
-            <div className="groups-wrapper">
+            <div className="events-wrapper">
                 <nav className="groups-nav">
                     <Link to="/events" className="groups-nav-item active-group-event-tab">Events</Link>
                     <Link to="/groups" className="groups-nav-item inactive-group-event-tab">Groups</Link>

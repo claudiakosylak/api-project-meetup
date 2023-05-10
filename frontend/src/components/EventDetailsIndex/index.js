@@ -10,21 +10,13 @@ const EventDetailsIndex = () => {
     const dispatch = useDispatch()
     const { eventId } = useParams();
     const event = useSelector(state => state.events.currentEvent)
-    // const groupId = event.Group.id;
-    // const group = useSelector(state => state.groups[event.groupId])
-
 
     useEffect(() => {
         dispatch(getEventThunk(eventId))
     }, [dispatch, eventId])
 
-    // useEffect(() => {
-    //     dispatch(getGroupThunk(event.groupId))
-    // }, [dispatch, event])
-
     if (!event) return null;
-    // if (!group.Organizer) return null;
-    // if (!event.Group) return null;
+
 
 
     return (

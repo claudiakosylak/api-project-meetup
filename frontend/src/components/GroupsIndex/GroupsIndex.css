@@ -3,6 +3,7 @@
     flex-direction: column;
     align-items: flex-start;
     border-bottom: 2px solid lightgrey;
+    margin-top: 50px;
 }
 
 .groups-wrapper-wrapper {
