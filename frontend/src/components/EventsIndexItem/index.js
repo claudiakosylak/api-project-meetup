@@ -5,9 +5,28 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getEventThunk } from "../../store/events";
 
+export const timeCleaner = prevTime => {
+    let time = prevTime.split(":");
+    time = time.slice(0, 2);
+    let amPM;
+    if (time[0] < 12) {
+        amPM = "AM";
+    } else if (time[0] === 12) {
+        amPM = "PM";
+    } else {
+        time[0]-= 12;
+        amPM = "PM";
+    }
 
+    return `${time[0]}:${time[1]} ${amPM}`;
+}
 
 const EventsIndexItem = ({ event }) => {
+    let splitStartDate = event.startDate.split("T");
+    const startDay = splitStartDate[0];
+    let startTime = splitStartDate[1];
+    const cleanedStartTime = timeCleaner(startTime);
+
 
 
     return (
@@ -15,7 +34,7 @@ const EventsIndexItem = ({ event }) => {
             <div className="event-index-top">
                 <img className="group-image-placeholder" src={event.previewImage}></img>
                 <div className="event-index-text-container">
-                    <div className="under-groups-text-container"><p>{event.startDate}</p>
+                    <div className="under-groups-text-container"><p>{startDay} • {cleanedStartTime}</p>
                     </div>
                     <h2 className="group-list-header">{event.name}</h2>
                     <p className="group-index-about">{event.about}</p>

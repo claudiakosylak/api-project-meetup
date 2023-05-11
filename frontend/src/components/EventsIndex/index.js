@@ -6,10 +6,23 @@ import { Link } from "react-router-dom";
 import EventsIndexItem from "../EventsIndexItem";
 import "./EventsIndex.css";
 
+
+export const sortEvents = events => {
+    return events.sort((a, b) => {
+        return Date.now(a.startDate) - Date.now(b.startDate);
+    })
+}
+
 function EventsIndex() {
     const eventsObj = useSelector(state => state.events.allEvents);
     const events = Object.values(eventsObj);
     const dispatch = useDispatch();
+    let currentTime = new Date();
+    currentTime = Date.now(currentTime)
+    console.log("CURRENT TIME PARSED ", currentTime)
+
+    const sortedEvents = sortEvents(events);
+
 
     useEffect(() => {
         dispatch(getEventsThunk())
@@ -25,7 +38,7 @@ function EventsIndex() {
                 </nav>
                 <p className="groups-subheader">Events in ReadUp</p>
                 <ul className="groups-index-list-container">
-                    {events.map((event) => (
+                    {sortedEvents.map((event) => (
                         <EventsIndexItem
                             event={event}
                             key={event.id}
