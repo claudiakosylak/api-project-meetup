@@ -13,10 +13,13 @@ const GroupForm = ({ group, formType }) => {
         groupLocation = `${group.city}, ${group.state}`;
     }
 
-    const [name, setName] = useState(group?.name);
-    const [about, setAbout] = useState(group?.about);
+    console.log("PREPOPULATED GROUP INFO: ", group)
+
+    const [name, setName] = useState(group.name ? group.name : "");
+    const [about, setAbout] = useState(group.about ? group.about : "");
     const [type, setType] = useState(group.type ? group.type : "");
-    const [privateStatus, setPrivateStatus] = useState(group.private ? group.private : "");
+    const [privateStatus, setPrivateStatus] = useState((group.private === true) ? "true"
+                                                        : (group.private === false) ? "false" : "");
     const [location, setLocation] = useState(groupLocation ? groupLocation : "");
     const [imageUrl, setImageUrl] = useState("");
     const [errors, setErrors] = useState({});
