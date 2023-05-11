@@ -79,7 +79,7 @@ const EventDetailsIndex = () => {
                                 <div className="event-delete-button">
                                     <OpenModalMenuItem
                                         itemText="Delete"
-                                        modalComponent={<DeleteEventModal eventId={eventId}/>}
+                                        modalComponent={<DeleteEventModal event={event} groupId={group.id}/>}
                                     />
                                 </div>
                             )}

@@ -5,14 +5,16 @@ import { deleteEventThunk } from "../../store/events";
 
 
 
-function DeleteEventModal({eventId}) {
+function DeleteEventModal({event, groupId}) {
     const dispatch = useDispatch()
     const {closeModal} = useModal();
     const history = useHistory();
+    // if (!event) return null;
+    // const groupId = event.groupId;
 
-
+    // if (!groupId) return null;
     const handleDelete = () => {
-        return dispatch(deleteEventThunk(eventId)).then(history.push("/events")).then(closeModal);
+        return dispatch(deleteEventThunk(event.id)).then(history.push(`/groups/${groupId}`)).then(closeModal);
     }
 
     return (
