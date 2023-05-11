@@ -8,38 +8,42 @@ import { getGroupThunk } from "../../store/groups";
 import { timeCleaner } from "../EventsIndexItem";
 
 const EventDetailsIndex = () => {
-    const dispatch = useDispatch()
+    const sessionUser = useSelector(state => state.session.user);
+    const dispatch = useDispatch();
     const { eventId } = useParams();
-    const event = useSelector(state => state.events.currentEvent)
-    const group = useSelector(state => state.groups.currentGroup)
+    const event = useSelector(state => state.events.currentEvent);
+    const group = useSelector(state => state.groups.currentGroup);
 
+
+    console.log("THE EVENT, ", event)
+
+    console.log("THE GROUP: ", group)
+
+    useEffect(() => {
+        console.log("EVENT IN USEEFFECT: ", event);
+        dispatch(getEventThunk(eventId)).then((receivedEvent) => dispatch(getGroupThunk(receivedEvent.groupId)));
+    }, [dispatch, eventId])
+
+    // if (Object.keys(event).length === 0) return null;
+    // if (Object.keys(group).length === 0) return null;
+
+    // if (!event) return null;
+    if (!event.id) return null;
+    if (!group.id) return null;
     let splitStartDate = event.startDate.split("T");
     const startDay = splitStartDate[0];
     let startTime = splitStartDate[1];
     const cleanedStartTime = timeCleaner(startTime);
 
-    let splitEndDate = event.endDate.split("T");
+    let splitEndDate = event.endDate?.split("T");
     const endDay = splitEndDate[0];
     let endTime = splitEndDate[1];
     const cleanedEndTime = timeCleaner(endTime);
 
-    console.log("THE EVENT, ", event)
-
-    console.log("THE GROUPID: ", event.groupId)
-
-    useEffect(() => {
-        dispatch(getEventThunk(eventId))
-        dispatch(getGroupThunk(event.groupId))
-    }, [dispatch, eventId])
-
-   
-
-    // if (!event) return null;
-
-    // if (!event.EventImages) return null;
     // if (!group) return null;
 
-    console.log("group preview image", group.previewImage)
+    // console.log("Organizer id:", group?.Organizer?.id)
+    // console.log("session user id: ", sessionUser?.id)
 
     const eventPreviewImage = event.EventImages.find(image => image.preview === true)
 
@@ -48,7 +52,7 @@ const EventDetailsIndex = () => {
             <div className="event-header">
                 <p>{"<"}<Link to="/events">Events</Link></p>
                 <h2 className="event-page-title">{event.name}</h2>
-                {/* <p>Organized by: {group.Organizer.firstName} {group.Organizer.lastName}</p> */}
+                <p>Organized by: {group?.Organizer?.firstName} {group?.Organizer?.lastName}</p>
             </div>
             <div className="event-details-middle-section">
                 <img className="event-details-page-image-placeholder" src={eventPreviewImage.url}></img>
@@ -73,8 +77,11 @@ const EventDetailsIndex = () => {
                             <p>${event.price}</p>
                         </div>
                         <div className="event-location-details">
-                        <i class="fa-sharp fa-solid fa-map-pin"></i>
-                        <p>{event.type}</p>
+                            <i class="fa-sharp fa-solid fa-map-pin"></i>
+                            <p>{event.type}</p>
+                            {(sessionUser && sessionUser.id === group.Organizer.id) && (
+                                <div className="event-delete-button">Delete</div>
+                            )}
                         </div>
                     </div>
                 </div>

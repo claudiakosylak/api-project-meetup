@@ -20,7 +20,7 @@ const GroupDetailsIndex = () => {
 
     useEffect(() => {
         dispatch(getGroupThunk(groupId));
-        dispatch(getGroupEventsThunk(groupId))
+        dispatch(getGroupEventsThunk(groupId));
     }, [dispatch, groupId])
 
     return (
