@@ -24,7 +24,9 @@ const EventDetailsIndex = () => {
         dispatch(getEventThunk(eventId)).then((receivedEvent) => dispatch(getGroupThunk(receivedEvent.groupId)));
     }, [dispatch, eventId])
 
+    if (!eventId) return null;
     if (!event.id) return null;
+    // if (!event.EventImages) return null;
     if (!group.id) return null;
     let splitStartDate = event.startDate.split("T");
     const startDay = splitStartDate[0];
@@ -37,8 +39,8 @@ const EventDetailsIndex = () => {
     const cleanedEndTime = timeCleaner(endTime);
 
 
-    const eventPreviewImage = event.EventImages.find(image => image.preview === true)
-    const groupPreviewImage = group.GroupImages.find(image => image.preview = true)
+    const eventPreviewImage = event?.EventImages?.find(image => image.preview === true)
+    const groupPreviewImage = group?.GroupImages.find(image => image.preview = true)
     return (
         <div className="event-details-page-container">
             <div className="event-header">
@@ -47,13 +49,13 @@ const EventDetailsIndex = () => {
                 <p>Organized by: {group?.Organizer?.firstName} {group?.Organizer?.lastName}</p>
             </div>
             <div className="event-details-middle-section">
-                <img className="event-details-page-image-placeholder" src={eventPreviewImage.url}></img>
+                <img className="event-details-page-image-placeholder" src={eventPreviewImage?.url}></img>
                 <div className="event-details-right-info">
                     <Link to={`/groups/${event.groupId}`} className="event-group-chunk">
-                        <img className="event-group-image-placeholder" src={groupPreviewImage.url}></img>
+                        <img className="event-group-image-placeholder" src={groupPreviewImage?.url}></img>
                         <div className="event-group-info-text">
-                            <p>{event.Group.name}</p>
-                            <p>{event.Group.private ? "Private" : "Public"}</p>
+                            <p>{event?.Group?.name}</p>
+                            <p>{event?.Group?.private ? "Private" : "Public"}</p>
                         </div>
                     </Link>
                     <div className="event-micro-details">

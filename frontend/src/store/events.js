@@ -24,7 +24,7 @@ export const getEventAction = event => ({
 })
 
 export const createEventImageAction = (event, image) => ({
-    TYPE: CREATE_EVENT_IMAGE,
+    type: CREATE_EVENT_IMAGE,
     event,
     image
 })
@@ -119,7 +119,9 @@ const eventsReducer = (state = initialState, action) => {
         case CREATE_EVENT_IMAGE:
             const preCreateState = {...state, allEvents: {}, currentEvent: {}, currentGroupEvents: {}};
             preCreateState.currentEvent = action.event;
-            preCreateState.currentEvent.EventImages[0] = action.image;
+            console.log("ACTION EVENT: ", action.event)
+            console.log("CURRENT EVENT IN REDUCER: ", preCreateState.currentEvent)
+            // preCreateState.currentEvent.EventImages[0] = action.image;
             return preCreateState;
         default:
         return state;
