@@ -121,7 +121,7 @@ const eventsReducer = (state = initialState, action) => {
             preCreateState.currentEvent = action.event;
             console.log("ACTION EVENT: ", action.event)
             console.log("CURRENT EVENT IN REDUCER: ", preCreateState.currentEvent)
-            // preCreateState.currentEvent.EventImages[0] = action.image;
+            preCreateState.currentEvent.EventImages[0] = action.image;
             return preCreateState;
         default:
         return state;

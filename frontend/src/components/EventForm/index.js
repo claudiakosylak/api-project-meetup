@@ -59,6 +59,7 @@ const EventForm = ({ event, formType, group }) => {
 
         if (formType === "Create Event") {
             const response = await dispatch(createEventThunk(eventInfo, group.id))
+            console.log("RESPONSE FROM SUBMIT FORM: ", response)
             dispatch(createEventImageThunk(response, image))
             if (response.errors) {
                 setErrors(response.errors)
