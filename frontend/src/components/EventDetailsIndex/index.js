@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getGroupThunk } from "../../store/groups";
 import { timeCleaner } from "../EventsIndexItem";
+import DeleteEventModal from "../DeleteEventModal";
+import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 
 const EventDetailsIndex = () => {
     const sessionUser = useSelector(state => state.session.user);
@@ -74,7 +76,12 @@ const EventDetailsIndex = () => {
                             <i class="fa-sharp fa-solid fa-map-pin"></i>
                             <p>{event.type}</p>
                             {(sessionUser && sessionUser.id === group.Organizer.id) && (
-                                <div className="event-delete-button">Delete</div>
+                                <div className="event-delete-button">
+                                    <OpenModalMenuItem
+                                        itemText="Delete"
+                                        modalComponent={<DeleteEventModal eventId={eventId}/>}
+                                    />
+                                </div>
                             )}
                         </div>
                     </div>

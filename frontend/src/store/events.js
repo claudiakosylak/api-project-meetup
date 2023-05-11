@@ -6,6 +6,7 @@ const GET_GROUP_EVENTS = "events/getGroupEvents";
 const GET_EVENT = "events/getEvent";
 const GET_EVENTS = "events/getEvents";
 const CREATE_EVENT_IMAGE = "events/createEventImage";
+const DELETE_EVENT = "events/deleteEvent";
 
 //actions here
 export const getEventsAction = events => ({
@@ -27,6 +28,11 @@ export const createEventImageAction = (event, image) => ({
     type: CREATE_EVENT_IMAGE,
     event,
     image
+})
+
+export const deleteEventAction = eventId => ({
+    type: DELETE_EVENT,
+    eventId
 })
 
 //thunks here
@@ -94,6 +100,17 @@ export const createEventImageThunk = (event, image) => async dispatch => {
     }
 }
 
+export const deleteEventThunk = eventId => async dispatch => {
+    const res = await csrfFetch(`/api/events/${eventId}`, {method: "DELETE"})
+    if (res.ok) {
+        const successMessage = await res.json();
+        dispatch(deleteEventAction(eventId))
+        return successMessage;
+    } else {
+        const err = await res.json();
+        return err;
+    }
+}
 //reducer here
 
 const initialState = {allEvents: {}, currentEvent: {}, currentGroupEvents: {}};
@@ -123,7 +140,12 @@ const eventsReducer = (state = initialState, action) => {
             console.log("CURRENT EVENT IN REDUCER: ", preCreateState.currentEvent)
             preCreateState.currentEvent.EventImages[0] = action.image;
             return preCreateState;
-        default:
+        case DELETE_EVENT:
+            const deletedState = {...state, allEvents: {...state.allEvents}, currentEvent: {...state.currentEvent}, currentGroupEvents: {...state.currentGroupEvents} }
+            delete deletedState.allEvents[action.eventId];
+            delete deletedState.currentGroupEvents[action.eventId];
+            return deletedState;
+            default:
         return state;
     }
 }
