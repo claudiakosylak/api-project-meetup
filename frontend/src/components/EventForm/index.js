@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { createEventThunk } from "../../store/events";
+import { createEventImageThunk, createEventThunk } from "../../store/events";
 import { useHistory } from "react-router-dom";
 
 const EventForm = ({ event, formType, group }) => {
@@ -46,10 +46,16 @@ const EventForm = ({ event, formType, group }) => {
             // capacity: 10
         };
 
+        const image = {
+            url: imageUrl,
+            preview: true
+        }
+
         console.log("THIS IS THE EVENT INFO: ", eventInfo)
 
         if (formType === "Create Event") {
             const response = await dispatch(createEventThunk(eventInfo, group.id))
+            dispatch(createEventImageThunk(response, image))
             if (response.errors) {
                 setErrors(response.errors)
                 return errors;
