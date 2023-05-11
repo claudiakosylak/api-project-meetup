@@ -13,13 +13,11 @@ const GroupForm = ({ group, formType }) => {
         groupLocation = `${group.city}, ${group.state}`;
     }
 
-    console.log("PREPOPULATED GROUP INFO: ", group)
-
     const [name, setName] = useState(group.name ? group.name : "");
     const [about, setAbout] = useState(group.about ? group.about : "");
     const [type, setType] = useState(group.type ? group.type : "");
     const [privateStatus, setPrivateStatus] = useState((group.private === true) ? "true"
-                                                        : (group.private === false) ? "false" : "");
+        : (group.private === false) ? "false" : "");
     const [location, setLocation] = useState(groupLocation ? groupLocation : "");
     const [imageUrl, setImageUrl] = useState("");
     const [errors, setErrors] = useState({});
@@ -30,9 +28,9 @@ const GroupForm = ({ group, formType }) => {
         if (!name.length) errors["name"] = "Name is required";
         if (about.length < 30) errors["about"] = "Description must be at least 30 characters long";
         if (!location.length) errors["location"] = "Location is required";
-        if (imageUrl.slice(imageUrl.length - 4) !== ".png" &&
-        imageUrl.slice(imageUrl.length - 4) !== ".jpg" &&
-        imageUrl.slice(imageUrl.length - 5) !== ".jpeg") errors["imageUrl"] = "Image URL must end in .png, .jpg or .jpeg";
+        if (formType === "Create Group" && imageUrl.slice(imageUrl.length - 4) !== ".png" &&
+            imageUrl.slice(imageUrl.length - 4) !== ".jpg" &&
+            imageUrl.slice(imageUrl.length - 5) !== ".jpeg") errors["imageUrl"] = "Image URL must end in .png, .jpg or .jpeg";
         if (!type.length) errors["type"] = "Group type is required";
         if (!privateStatus) errors["privateStatus"] = "Visibility type is required";
         setErrors(errors)
@@ -77,6 +75,7 @@ const GroupForm = ({ group, formType }) => {
         }
 
         if (formType === "Update Group") {
+            groupInfo.private = groupInfo.private === "true";
             const response = await dispatch(updateGroupThunk(group.id, groupInfo))
             if (response.errors) {
                 setErrors(response.errors)
@@ -181,8 +180,8 @@ const GroupForm = ({ group, formType }) => {
                         onChange={(e) => setAbout(e.target.value)}
                         placeholder="Please write at least 30 characters"
                     />
-                          {(hasSubmitted && errors.about) && (
-                            <p className="errors">{errors.about}</p>)}
+                    {(hasSubmitted && errors.about) && (
+                        <p className="errors">{errors.about}</p>)}
                 </div>
                 <div className="form-section">
                     <p className="form-headers">Final steps...</p>
@@ -202,7 +201,7 @@ const GroupForm = ({ group, formType }) => {
                         ))}
                     </select>
                     {(hasSubmitted && errors.type) && (
-                            <p className="errors">{errors.type}</p>)}
+                        <p className="errors">{errors.type}</p>)}
                     <p className="form-text">Is this group private or public?</p>
                     <select className="form-dropdowns"
                         value={privateStatus}
@@ -213,17 +212,20 @@ const GroupForm = ({ group, formType }) => {
                         <option value={true}>Private</option>
                     </select>
                     {(hasSubmitted && errors.privateStatus) && (
-                            <p className="errors">{errors.privateStatus}</p>)}
+                        <p className="errors">{errors.privateStatus}</p>)}
                     <p className="form-text">Please add an image url for your group below:</p>
-                    <input className="form-inputs"
-                        type="text"
-                        value={imageUrl}
-                        onChange={(e) => setImageUrl(e.target.value)}
-                        placeholder="Image Url"
-                    />
-                                        {(hasSubmitted && errors.imageUrl) && (
-                        <p className="errors">{errors.imageUrl}</p>
-                    )}
+                    {formType === "Create Group" && (
+                        <input className="form-inputs"
+                            type="text"
+                            value={imageUrl}
+                            onChange={(e) => setImageUrl(e.target.value)}
+                            placeholder="Image Url"
+                        />
+
+                        )}
+                        {(hasSubmitted && errors.imageUrl && formType === "Create Group") && (
+                            <p className="errors">{errors.imageUrl}</p>
+                        )}
                 </div>
                 {formType === "Create Group" ? (
                     <button type="submit" className="group-form-submit-button">Create group</button>
