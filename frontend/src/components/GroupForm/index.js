@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { createGroupThunk, updateGroupThunk } from "../../store/groups";
+import { createGroupImageThunk, createGroupThunk, updateGroupThunk } from "../../store/groups";
 import { useHistory } from "react-router-dom";
 import "./GroupForm.css";
 
@@ -51,8 +51,14 @@ const GroupForm = ({ group, formType }) => {
             state
         };
 
+        const image = {
+            url: imageUrl,
+            preview: true
+        }
+
         if (formType === "Create Group") {
             const response = await dispatch(createGroupThunk(groupInfo))
+            dispatch(createGroupImageThunk(response, image))
             if (response.errors) {
                 setErrors(response.errors)
                 return errors;

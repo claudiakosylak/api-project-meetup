@@ -5,7 +5,7 @@ const GET_GROUPS = "groups/getGroups";
 const GET_GROUP = "groups/getGroup";
 const UPDATE_GROUP = "groups/updateGroup";
 const DELETE_GROUP = "groups/deleteGroup";
-
+const CREATE_GROUP_IMAGE = "groups/createGroupImage";
 //actions here
 
 export const getGroupsAction = groups => ({
@@ -26,6 +26,12 @@ export const updateGroupAction = group => ({
 export const deleteGroupAction = groupId => ({
     type: DELETE_GROUP,
     groupId
+})
+
+export const createGroupImageAction = (group, image) => ({
+    TYPE: CREATE_GROUP_IMAGE,
+    group,
+    image
 })
 
 // thunks here
@@ -100,6 +106,22 @@ export const deleteGroupThunk = groupId => async dispatch => {
         return err;
     }
 }
+
+export const createGroupImageThunk = (group, image) => async dispatch => {
+    const res = await csrfFetch(`/api/groups/${group.id}/images`, {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(image)
+    })
+    if (res.ok) {
+        const newImage = await res.json();
+        await dispatch(createGroupImageAction(group, newImage))
+        return newImage;
+    } else {
+        const err = await res.json();
+        return err;
+    }
+}
 // reducer here
 
 
@@ -125,6 +147,11 @@ const groupsReducer = (state = initialState, action) => {
             const deletedState = {...state, allGroups: {...state.allGroups}, currentGroup: {...state.currentGroup}};
             delete deletedState.allGroups[action.groupId];
             return deletedState;
+        case CREATE_GROUP_IMAGE:
+            const preCreateState = {...state, allGroups: {}, currentGroup: {}};
+            preCreateState.currentGroup = action.group;
+            preCreateState.currentGroup.GroupImages[0] = action.image;
+            return preCreateState;
         default:
             return state;
     }
