@@ -24,10 +24,6 @@ const EventDetailsIndex = () => {
         dispatch(getEventThunk(eventId)).then((receivedEvent) => dispatch(getGroupThunk(receivedEvent.groupId)));
     }, [dispatch, eventId])
 
-    // if (Object.keys(event).length === 0) return null;
-    // if (Object.keys(group).length === 0) return null;
-
-    // if (!event) return null;
     if (!event.id) return null;
     if (!group.id) return null;
     let splitStartDate = event.startDate.split("T");
@@ -40,13 +36,9 @@ const EventDetailsIndex = () => {
     let endTime = splitEndDate[1];
     const cleanedEndTime = timeCleaner(endTime);
 
-    // if (!group) return null;
-
-    // console.log("Organizer id:", group?.Organizer?.id)
-    // console.log("session user id: ", sessionUser?.id)
 
     const eventPreviewImage = event.EventImages.find(image => image.preview === true)
-
+    const groupPreviewImage = group.GroupImages.find(image => image.preview = true)
     return (
         <div className="event-details-page-container">
             <div className="event-header">
@@ -58,7 +50,7 @@ const EventDetailsIndex = () => {
                 <img className="event-details-page-image-placeholder" src={eventPreviewImage.url}></img>
                 <div className="event-details-right-info">
                     <Link to={`/groups/${event.groupId}`} className="event-group-chunk">
-                        <img className="event-group-image-placeholder" src={group.previewImage}></img>
+                        <img className="event-group-image-placeholder" src={groupPreviewImage.url}></img>
                         <div className="event-group-info-text">
                             <p>{event.Group.name}</p>
                             <p>{event.Group.private ? "Private" : "Public"}</p>
