@@ -5,7 +5,7 @@ import { csrfFetch } from "./csrf";
 const GET_GROUP_EVENTS = "events/getGroupEvents";
 const GET_EVENT = "events/getEvent";
 const GET_EVENTS = "events/getEvents";
-const CREATE_EVENT = "events/createEvent";
+const CREATE_EVENT_IMAGE = "events/createEventImage";
 
 //actions here
 export const getEventsAction = events => ({
@@ -23,6 +23,11 @@ export const getEventAction = event => ({
     event
 })
 
+export const createEventImageAction = (event, image) => ({
+    TYPE: CREATE_EVENT_IMAGE,
+    event,
+    image
+})
 
 //thunks here
 export const getEventsThunk = () => async (dispatch) => {
@@ -73,6 +78,21 @@ export const createEventThunk = (event, groupId) => async dispatch => {
     }
 }
 
+export const createEventImageThunk = (event, image) => async dispatch => {
+    const res = await csrfFetch(`/api/events/${event.id}/images`, {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(image)
+    })
+    if (res.ok) {
+        const newImage = await res.json();
+        await dispatch(createEventImageAction(event, newImage))
+        return newImage;
+    } else {
+        const err = await res.json();
+        return err;
+    }
+}
 
 //reducer here
 
@@ -93,9 +113,14 @@ const eventsReducer = (state = initialState, action) => {
             })
             return eventState;
         case GET_EVENT:
-            const newState = {...state, allEvents: {}, currentEvent: {}, currentGroupEvents: {}}
+            const newState = {...state, allEvents: {}, currentEvent: {}, currentGroupEvents: {}};
             newState.currentEvent = action.event;
             return newState;
+        case CREATE_EVENT_IMAGE:
+            const preCreateState = {...state, allEvents: {}, currentEvent: {}, currentGroupEvents: {}};
+            preCreateState.currentEvent = action.event;
+            preCreateState.currentEvent.EventImages[0] = action.image;
+            return preCreateState;
         default:
         return state;
     }
