@@ -1,6 +1,20 @@
 .event-details-page-container {
     display: flex;
     flex-direction: column;
+    margin-top: 60px;
+}
+.events-caret {
+    display: flex;
+    gap: 5px;
+}
+
+.event-header {
+    width: 75%;
+}
+
+.event-header-wrapper {
+    display: flex;
+    justify-content: center;
 }
 
 .event-details-page-image-placeholder {
@@ -87,4 +101,8 @@
 
 .event-delete-button:hover {
     cursor: pointer;
+}
+
+.event-page-group-title {
+    color: black;
 }
