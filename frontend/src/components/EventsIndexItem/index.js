@@ -37,7 +37,7 @@ const EventsIndexItem = ({ event }) => {
                     <div className="under-groups-text-container"><p>{startDay} • {cleanedStartTime}</p>
                     </div>
                     <h2 className="group-list-header">{event.name}</h2>
-                    <p className="group-index-about">{event.about}</p>
+                    <p className="event-type-text">{event.type}</p>
                 </div>
             </div>
         </Link >

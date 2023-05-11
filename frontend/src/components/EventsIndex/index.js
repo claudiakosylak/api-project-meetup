@@ -7,6 +7,7 @@ import EventsIndexItem from "../EventsIndexItem";
 import "./EventsIndex.css";
 
 
+
 export const sortEvents = events => {
     return events.sort((a, b) => {
         return Date.now(a.startDate) - Date.now(b.startDate);

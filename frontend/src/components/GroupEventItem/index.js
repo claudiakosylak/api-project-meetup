@@ -1,19 +1,21 @@
-import { useDispatch, useSelector } from "react-redux";
-import { getEventThunk } from "../../store/events";
-import { useEffect } from "react";
+import { timeCleaner } from "../EventsIndexItem";
 import "./GroupEventItem.css";
+
 
 
 const GroupEventItem = ({event}) => {
 
-
+    let splitStartDate = event.startDate.split("T");
+    const startDay = splitStartDate[0];
+    let startTime = splitStartDate[1];
+    const cleanedStartTime = timeCleaner(startTime);
 
     return (
         <li className="event-item-container-box">
             <div className="event-item-top-half">
-                <div className="main-event-pic-placeholder"></div>
+                <img className="main-event-pic-placeholder" src={event.previewImage}></img>
                 <div className="event-item-top-half-text">
-                    <p>{event.startDate}</p>
+                    <p>{startDay} • {cleanedStartTime}</p>
                     <h3 className="event-list-title">{event.name}</h3>
                 </div>
             </div>

@@ -5,54 +5,65 @@ import { getEventThunk } from "../../store/events";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getGroupThunk } from "../../store/groups";
+import { timeCleaner } from "../EventsIndexItem";
 
 const EventDetailsIndex = () => {
-    const dispatch = useDispatch()
+    const sessionUser = useSelector(state => state.session.user);
+    const dispatch = useDispatch();
     const { eventId } = useParams();
-    const event = useSelector(state => state.events.currentEvent)
-    const group = useSelector(state => state.groups.currentGroup)
+    const event = useSelector(state => state.events.currentEvent);
+    const group = useSelector(state => state.groups.currentGroup);
+
 
     console.log("THE EVENT, ", event)
 
-    console.log("THE GROUPID: ", event.groupId)
+    console.log("THE GROUP: ", group)
 
     useEffect(() => {
-        dispatch(getEventThunk(eventId))
-        dispatch(getGroupThunk(event.groupId))
+        console.log("EVENT IN USEEFFECT: ", event);
+        dispatch(getEventThunk(eventId)).then((receivedEvent) => dispatch(getGroupThunk(receivedEvent.groupId)));
     }, [dispatch, eventId])
 
-    // if (!event) return null;
+    if (!eventId) return null;
+    if (!event.id) return null;
+    // if (!event.EventImages) return null;
+    if (!group.id) return null;
+    let splitStartDate = event.startDate.split("T");
+    const startDay = splitStartDate[0];
+    let startTime = splitStartDate[1];
+    const cleanedStartTime = timeCleaner(startTime);
 
-    if (!event.EventImages) return null;
-    // if (!group) return null;
+    let splitEndDate = event.endDate?.split("T");
+    const endDay = splitEndDate[0];
+    let endTime = splitEndDate[1];
+    const cleanedEndTime = timeCleaner(endTime);
 
-    console.log("group preview image", group.previewImage)
 
-    const eventPreviewImage = event.EventImages.find(image => image.preview === true)
-
+    const eventPreviewImage = event?.EventImages?.find(image => image.preview === true)
+    const groupPreviewImage = group?.GroupImages.find(image => image.preview = true)
     return (
         <div className="event-details-page-container">
             <div className="event-header">
                 <p>{"<"}<Link to="/events">Events</Link></p>
                 <h2 className="event-page-title">{event.name}</h2>
-                <p>Organized by:</p>
+                <p>Organized by: {group?.Organizer?.firstName} {group?.Organizer?.lastName}</p>
             </div>
             <div className="event-details-middle-section">
-                <img className="event-details-page-image-placeholder" src={eventPreviewImage.url}></img>
+                <img className="event-details-page-image-placeholder" src={eventPreviewImage?.url}></img>
                 <div className="event-details-right-info">
                     <Link to={`/groups/${event.groupId}`} className="event-group-chunk">
-                        <img className="event-group-image-placeholder" src={group.previewImage}></img>
+                        <img className="event-group-image-placeholder" src={groupPreviewImage?.url}></img>
                         <div className="event-group-info-text">
-                            <p>{event.Group.name}</p>
-                            <p>{event.Group.private ? "Private" : "Public"}</p>
+                            <p>{event?.Group?.name}</p>
+                            <p>{event?.Group?.private ? "Private" : "Public"}</p>
                         </div>
                     </Link>
                     <div className="event-micro-details">
                         <div className="event-time-details">
                             <i className="fa-regular fa-clock"></i>
                             <div className="start-end-time">
-                                <p>START {event.startDate}</p>
-                                <p>END {event.endDate}</p>
+                                <p>START {startDay} • {cleanedStartTime}</p>
+                                <p>END {endDay} • {cleanedEndTime}</p>
                             </div>
                         </div>
                         <div className="event-price">
@@ -60,8 +71,11 @@ const EventDetailsIndex = () => {
                             <p>${event.price}</p>
                         </div>
                         <div className="event-location-details">
-                        <i class="fa-sharp fa-solid fa-map-pin"></i>
-                        <p>{event.type}</p>
+                            <i class="fa-sharp fa-solid fa-map-pin"></i>
+                            <p>{event.type}</p>
+                            {(sessionUser && sessionUser.id === group.Organizer.id) && (
+                                <div className="event-delete-button">Delete</div>
+                            )}
                         </div>
                     </div>
                 </div>

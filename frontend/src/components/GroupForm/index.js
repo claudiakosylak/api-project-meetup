@@ -13,10 +13,11 @@ const GroupForm = ({ group, formType }) => {
         groupLocation = `${group.city}, ${group.state}`;
     }
 
-    const [name, setName] = useState(group?.name);
-    const [about, setAbout] = useState(group?.about);
+    const [name, setName] = useState(group.name ? group.name : "");
+    const [about, setAbout] = useState(group.about ? group.about : "");
     const [type, setType] = useState(group.type ? group.type : "");
-    const [privateStatus, setPrivateStatus] = useState(group.private ? group.private : "");
+    const [privateStatus, setPrivateStatus] = useState((group.private === true) ? "true"
+        : (group.private === false) ? "false" : "");
     const [location, setLocation] = useState(groupLocation ? groupLocation : "");
     const [imageUrl, setImageUrl] = useState("");
     const [errors, setErrors] = useState({});
@@ -24,17 +25,23 @@ const GroupForm = ({ group, formType }) => {
 
     useEffect(() => {
         const errors = {};
-        if (!name.length) errors[name] = "Please enter a valid name";
-        if (about.length < 30) errors[about] = "Please enter a description";
-        if (!location.length) errors[location] = "Please enter a location";
-        if (!imageUrl.length) errors[imageUrl] = "Please enter a valid image URL";
+        if (!name.length) errors["name"] = "Name is required";
+        if (about.length < 30) errors["about"] = "Description must be at least 30 characters long";
+        if (!location.length) errors["location"] = "Location is required";
+        if (formType === "Create Group" && imageUrl.slice(imageUrl.length - 4) !== ".png" &&
+            imageUrl.slice(imageUrl.length - 4) !== ".jpg" &&
+            imageUrl.slice(imageUrl.length - 5) !== ".jpeg") errors["imageUrl"] = "Image URL must end in .png, .jpg or .jpeg";
+        if (!type.length) errors["type"] = "Group type is required";
+        if (!privateStatus) errors["privateStatus"] = "Visibility type is required";
         setErrors(errors)
-    }, [name, about, location, imageUrl])
+    }, [name, about, location, imageUrl, type, privateStatus])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setHasSubmitted(true);
-        const errorsArray = Object.values(errors)
+        console.log(errors)
+        const errorsArray = Object.values(errors);
+        console.log(errorsArray)
         if (errorsArray.length) {
             return errors;
         }
@@ -68,6 +75,7 @@ const GroupForm = ({ group, formType }) => {
         }
 
         if (formType === "Update Group") {
+            groupInfo.private = groupInfo.private === "true";
             const response = await dispatch(updateGroupThunk(group.id, groupInfo))
             if (response.errors) {
                 setErrors(response.errors)
@@ -118,55 +126,62 @@ const GroupForm = ({ group, formType }) => {
                     )}
                 </div>
                 {formType === "Create Group" ? (
-                <div className="form-section">
-                    <p className="form-headers">What will your group's name be?</p>
-                    <p className="form-text">Choose a name that will give people a clear idea of what the group will be reading.
-                        <br />Feel free to get creative! You can edit this later if you change your mind.
-                    </p>
-                    <input className="form-inputs"
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        placeholder="What is your reading group name?"
-                    />
-                </div>
+                    <div className="form-section">
+                        <p className="form-headers">What will your group's name be?</p>
+                        <p className="form-text">Choose a name that will give people a clear idea of what the group will be reading.
+                            <br />Feel free to get creative! You can edit this later if you change your mind.
+                        </p>
+                        <input className="form-inputs"
+                            type="text"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            placeholder="What is your reading group name?"
+                        />
+                        {(hasSubmitted && errors.name) && (
+                            <p className="errors">{errors.name}</p>
+                        )}
+                    </div>
 
                 ) : (
                     <div className="form-section">
-                    <p className="form-headers">What is the name of your group?</p>
-                    <p className="form-text">Choose a name that will give people a clear idea of what the group will be reading.
-                        <br />Feel free to get creative!
-                    </p>
-                    <input className="form-inputs"
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        placeholder="What is your reading group name?"
-                    />
-                </div>
+                        <p className="form-headers">What is the name of your group?</p>
+                        <p className="form-text">Choose a name that will give people a clear idea of what the group will be reading.
+                            <br />Feel free to get creative!
+                        </p>
+                        <input className="form-inputs"
+                            type="text"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            placeholder="What is your reading group name?"
+                        />
+                        {(hasSubmitted && errors.name) && (
+                            <p className="errors">{errors.name}</p>)}
+                    </div>
                 )}
 
                 <div className="form-section">
                     <p className="form-headers">Now describe what your group will be reading</p>
                     {formType === "Create Group" ? (
-                    <p className="form-text">People will see this when we promote your group, but you'll be able to add it later, too.
-                        <br /><br />1. What's the purpose of the group?
-                        <br />2. Who should join?
-                        <br />3. What will you do at your events?
-                    </p>
+                        <p className="form-text">People will see this when we promote your group, but you'll be able to add it later, too.
+                            <br /><br />1. What's the purpose of the group?
+                            <br />2. Who should join?
+                            <br />3. What will you do at your events?
+                        </p>
 
                     ) : (
                         <p className="form-text">People will see this when we promote your group.
-                        <br /><br />1. What's the purpose of the group?
-                        <br />2. Who should join?
-                        <br />3. What will you do at your events?
-                    </p>
+                            <br /><br />1. What's the purpose of the group?
+                            <br />2. Who should join?
+                            <br />3. What will you do at your events?
+                        </p>
                     )}
                     <textarea className="form-inputs form-description"
                         value={about}
                         onChange={(e) => setAbout(e.target.value)}
                         placeholder="Please write at least 30 characters"
                     />
+                    {(hasSubmitted && errors.about) && (
+                        <p className="errors">{errors.about}</p>)}
                 </div>
                 <div className="form-section">
                     <p className="form-headers">Final steps...</p>
@@ -175,7 +190,7 @@ const GroupForm = ({ group, formType }) => {
                         value={type}
                         onChange={(e) => setType(e.target.value)}
                     >
-                    <option value="" disabled>(select one)</option>
+                        <option value="" disabled>(select one)</option>
                         {types.map(type => (
                             <option
                                 key={type}
@@ -185,6 +200,8 @@ const GroupForm = ({ group, formType }) => {
                             </option>
                         ))}
                     </select>
+                    {(hasSubmitted && errors.type) && (
+                        <p className="errors">{errors.type}</p>)}
                     <p className="form-text">Is this group private or public?</p>
                     <select className="form-dropdowns"
                         value={privateStatus}
@@ -194,13 +211,21 @@ const GroupForm = ({ group, formType }) => {
                         <option value={false}>Public</option>
                         <option value={true}>Private</option>
                     </select>
+                    {(hasSubmitted && errors.privateStatus) && (
+                        <p className="errors">{errors.privateStatus}</p>)}
                     <p className="form-text">Please add an image url for your group below:</p>
-                    <input className="form-inputs"
-                        type="text"
-                        value={imageUrl}
-                        onChange={(e) => setImageUrl(e.target.value)}
-                        placeholder="Image Url"
-                    />
+                    {formType === "Create Group" && (
+                        <input className="form-inputs"
+                            type="text"
+                            value={imageUrl}
+                            onChange={(e) => setImageUrl(e.target.value)}
+                            placeholder="Image Url"
+                        />
+
+                        )}
+                        {(hasSubmitted && errors.imageUrl && formType === "Create Group") && (
+                            <p className="errors">{errors.imageUrl}</p>
+                        )}
                 </div>
                 {formType === "Create Group" ? (
                     <button type="submit" className="group-form-submit-button">Create group</button>
