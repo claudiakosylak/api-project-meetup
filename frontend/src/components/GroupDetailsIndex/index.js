@@ -31,12 +31,18 @@ const GroupDetailsIndex = () => {
                 user={sessionUser}
             />
             <GroupDetailDescription group={group}/>
-            <h2>Upcoming Events: {numberEvents}</h2>
+            <div className="upcoming-events">
+                <div className="upcoming-events-inner-wrapper">
+
+            <h2>Events: {numberEvents}</h2>
             <ul className="group-events-list-container">
                 {events?.map(event => (
                     <GroupEventItem event={event} key={event.id} />
                 ))}
             </ul>
+                </div>
+
+            </div>
 
         </div>
     )

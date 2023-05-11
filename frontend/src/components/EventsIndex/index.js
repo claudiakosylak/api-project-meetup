@@ -6,13 +6,17 @@ import { Link } from "react-router-dom";
 import EventsIndexItem from "../EventsIndexItem";
 import "./EventsIndex.css";
 
+// export const compareDates = (a, b) => {
+//     return a-b;
+// }
 
-
-export const sortEvents = events => {
-    return events.sort((a, b) => {
-        return Date.now(a.startDate) - Date.now(b.startDate);
-    })
-}
+// export const sortEvents = events => {
+//     return events.sort((a, b) => {
+//         // console.log("A START DATE ", Date.now(a.startDate))
+//         // console.log("B START DATE ", Date.now(b.startDate))
+//         return Date.now(a.startDate) - Date.now(b.startDate);
+//     })
+// }
 
 function EventsIndex() {
     const eventsObj = useSelector(state => state.events.allEvents);
@@ -20,9 +24,23 @@ function EventsIndex() {
     const dispatch = useDispatch();
     let currentTime = new Date();
     currentTime = Date.now(currentTime)
-    console.log("CURRENT TIME PARSED ", currentTime)
+    console.log("UNSORTED EVENTS", events)
+    const sortedEvents = events.sort((a, b) => {
+        const dateA = Date.now(a.startDate)
+        const dateB = Date.now(b.startDate)
+        if (dateA < dateB) {
+            return -1;
+          }
+          if (dateA > dateB) {
+            return 1;
+          }
 
-    const sortedEvents = sortEvents(events);
+          // names must be equal
+          return 0;
+    })
+    console.log("SORTED EVENTS: ", sortedEvents)
+    console.log("THIS IS EVENTS SORTED? ", events)
+
 
 
     useEffect(() => {
