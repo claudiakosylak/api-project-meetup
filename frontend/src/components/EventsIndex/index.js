@@ -26,17 +26,7 @@ function EventsIndex() {
     currentTime = Date.now(currentTime)
     console.log("UNSORTED EVENTS", events)
     const sortedEvents = events.sort((a, b) => {
-        const dateA = Date.now(a.startDate)
-        const dateB = Date.now(b.startDate)
-        if (dateA < dateB) {
-            return -1;
-          }
-          if (dateA > dateB) {
-            return 1;
-          }
-
-          // names must be equal
-          return 0;
+        return new Date(a.startDate) - new Date(b.startDate)
     })
     console.log("SORTED EVENTS: ", sortedEvents)
     console.log("THIS IS EVENTS SORTED? ", events)
