@@ -32,9 +32,11 @@ const EventDetailsIndex = () => {
         dispatch(getGroupThunk(event.groupId))
     }, [dispatch, eventId])
 
+   
+
     // if (!event) return null;
 
-    if (!event.EventImages) return null;
+    // if (!event.EventImages) return null;
     // if (!group) return null;
 
     console.log("group preview image", group.previewImage)
@@ -46,7 +48,7 @@ const EventDetailsIndex = () => {
             <div className="event-header">
                 <p>{"<"}<Link to="/events">Events</Link></p>
                 <h2 className="event-page-title">{event.name}</h2>
-                <p>Organized by:</p>
+                {/* <p>Organized by: {group.Organizer.firstName} {group.Organizer.lastName}</p> */}
             </div>
             <div className="event-details-middle-section">
                 <img className="event-details-page-image-placeholder" src={eventPreviewImage.url}></img>
