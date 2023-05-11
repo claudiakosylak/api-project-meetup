@@ -5,12 +5,23 @@ import { getEventThunk } from "../../store/events";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getGroupThunk } from "../../store/groups";
+import { timeCleaner } from "../EventsIndexItem";
 
 const EventDetailsIndex = () => {
     const dispatch = useDispatch()
     const { eventId } = useParams();
     const event = useSelector(state => state.events.currentEvent)
     const group = useSelector(state => state.groups.currentGroup)
+
+    let splitStartDate = event.startDate.split("T");
+    const startDay = splitStartDate[0];
+    let startTime = splitStartDate[1];
+    const cleanedStartTime = timeCleaner(startTime);
+
+    let splitEndDate = event.endDate.split("T");
+    const endDay = splitEndDate[0];
+    let endTime = splitEndDate[1];
+    const cleanedEndTime = timeCleaner(endTime);
 
     console.log("THE EVENT, ", event)
 
@@ -51,8 +62,8 @@ const EventDetailsIndex = () => {
                         <div className="event-time-details">
                             <i className="fa-regular fa-clock"></i>
                             <div className="start-end-time">
-                                <p>START {event.startDate}</p>
-                                <p>END {event.endDate}</p>
+                                <p>START {startDay} • {cleanedStartTime}</p>
+                                <p>END {endDay} • {cleanedEndTime}</p>
                             </div>
                         </div>
                         <div className="event-price">
