@@ -10,7 +10,8 @@
 .upcoming-events {
     display: flex;
     justify-content: flex-start;
-    margin-left: 100px;
+   padding-left: 150px;
+    background-color: #E7F2F8;
 }
 
 .upcoming-events-inner-wrapper {
@@ -18,4 +19,8 @@
     flex-direction: column;
     justify-content: flex-start;
     width: 600px;
+}
+
+.upcoming-events-inner-wrapper > h2 {
+    margin-bottom: 10px;
 }

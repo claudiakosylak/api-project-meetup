@@ -6,7 +6,7 @@
 
 .group-header-component-container {
     display: flex;
-    margin: 50px 100px 20px 100px;
+    margin: 50px 100px 20px 150px;
 }
 
 .back-groups-link {
@@ -28,10 +28,14 @@
     flex-direction: column;
     gap: 10px;
 }
+.group-detail-text-top > p {
+    color: darkgrey;
+}
 
 .event-public-container {
     display: flex;
     gap: 5px;
+    color: darkgrey;
 }
 
 .admin-group-buttons {
