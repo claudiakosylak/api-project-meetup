@@ -45,10 +45,13 @@ const EventDetailsIndex = () => {
     const groupPreviewImage = group?.GroupImages.find(image => image.preview = true)
     return (
         <div className="event-details-page-container">
+            <div className="event-header-wrapper">
+
             <div className="event-header">
-                <p>{"<"}<Link to="/events">Events</Link></p>
+                <p className="events-caret">{"<"}<Link to="/events">Events</Link></p>
                 <h2 className="event-page-title">{event.name}</h2>
                 <p>Organized by: {group?.Organizer?.firstName} {group?.Organizer?.lastName}</p>
+            </div>
             </div>
             <div className="event-details-middle-section">
                 <img className="event-details-page-image-placeholder" src={eventPreviewImage?.url}></img>
@@ -56,7 +59,7 @@ const EventDetailsIndex = () => {
                     <Link to={`/groups/${event.groupId}`} className="event-group-chunk">
                         <img className="event-group-image-placeholder" src={groupPreviewImage?.url}></img>
                         <div className="event-group-info-text">
-                            <p>{event?.Group?.name}</p>
+                            <p className="event-page-group-title">{event?.Group?.name}</p>
                             <p>{event?.Group?.private ? "Private" : "Public"}</p>
                         </div>
                     </Link>

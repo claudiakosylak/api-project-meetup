@@ -45,12 +45,16 @@ function ProfileButton({ user }) {
 
   return (
     <>
+    <div className="upper-profile-icon-group">
       <button onClick={openMenu} className="user-button">
         <i className="fas fa-user-circle" />
       </button>
-      {showMenu && (
-        <i className="fa-sharp fa-light fa-angle-down"></i>
-      )}
+      {showMenu ? (
+        <p>
+        &#8964;</p>
+      ) : <p>&#8963;</p>}
+
+    </div>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
