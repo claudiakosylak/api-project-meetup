@@ -35,8 +35,9 @@ const EventDetailsIndex = () => {
     const cleanedEndTime = timeCleaner(endTime);
 
 
-    const eventPreviewImage = event?.EventImages?.find(image => image.preview === true)
-    const groupPreviewImage = group?.GroupImages.find(image => image.preview = true)
+    const eventPreviewImage = event?.EventImages?.find(image => image.preview === true);
+    const groupPreviewImage = group?.GroupImages.find(image => image.preview === true);
+
     return (
         <div className="event-details-page-container">
             <div className="event-header-wrapper">
@@ -66,12 +67,15 @@ const EventDetailsIndex = () => {
                             </div>
                         </div>
                         <div className="event-price">
-                            <i className="fa-thin fa-circle-dollar"></i>
-                            <p>${event.price}</p>
+                            <p className="fa-circle-dollar">$</p>
+                            {event.price === 0 ? (
+                                <p>FREE</p>
+                            ):  <p>{event.price}</p>}
+
                         </div>
                         <div className="event-location-details">
                             <i class="fa-sharp fa-solid fa-map-pin"></i>
-                            <p>{event.type}</p>
+                            <p className= "event-type-micro-text">{event.type}</p>
                             {(sessionUser && sessionUser.id === group.Organizer.id) && (
                                 <div className="update-delete-buttons">
 
