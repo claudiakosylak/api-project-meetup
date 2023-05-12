@@ -92,11 +92,11 @@
 }
 
 .event-delete-button {
-    background-color: #FFA384;
     color: white;
     padding: 5px 10px;
     border: 2px solid black;
     box-shadow: 3px 3px black;
+    background-color: darkgrey;
 }
 
 .event-delete-button:hover {
