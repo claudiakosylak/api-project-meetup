@@ -6,20 +6,22 @@
 .events-caret {
     display: flex;
     gap: 5px;
+    margin-bottom: 20px;
 }
 
 .event-header {
-    width: 75%;
+    padding-left: 150px;
 }
 
 .event-header-wrapper {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+    /* padding-left: 150px; */
 }
 
 .event-details-page-image-placeholder {
-    width: 500px;
-    height: 300px;
+    width: 400px;
+    height: 250px;
     background-color: red;
 }
 
@@ -28,22 +30,22 @@
     background-color: #E7F2F8;
     gap: 15px;
    padding-top: 20px;
-   justify-content: center;
+   justify-content: flex-start;
    padding-bottom: 20px;
+   padding-left: 150px;
 }
 
 .event-group-image-placeholder {
-    width: 100px;
-    height: 50px;
+    width: 90px;
+    height: 55px;
     background-color: blue;
 }
 .event-group-chunk {
     display: flex;
-    border: 1px solid lightgrey;
     background-color: white;
     border-radius: 20px;
-    width: 350px;
-    height: 110px;
+    width: 300px;
+    height: 90px;
     align-items: center;
     justify-content: center;
     gap: 15px;
@@ -52,22 +54,26 @@
 
 .event-time-details {
     display: flex;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 .fa-clock,
 .fa-circle-dollar {
-    font-size: 30px;
+    font-size: 20px;
+    color: darkgrey;
 }
 
 .event-micro-details {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     background-color: white;
     border-radius: 20px;
-    height: 175px;
+    height: 145px;
     gap: 15px;
+   padding-left: 20px;
 }
 
 .event-details-right-info {
@@ -76,10 +82,17 @@
     gap: 15px;
 }
 
+.grey-micro {
+    color: darkgrey;
+}
+
 .event-time-details {
     display: flex;
     gap: 10px;
+    font-size: 12px;
 }
+
+
 
 .event-location-details {
     display: flex;
@@ -111,4 +124,17 @@
     display: flex;
     gap: 15px;
     font-size: 15px;
+}
+
+.group-priv {
+    color: darkgrey;
+}
+
+.event-page-title {
+    margin-bottom: 10px;
+}
+
+.event-host {
+    color: darkgrey;
+    padding-bottom: 25px;
 }
