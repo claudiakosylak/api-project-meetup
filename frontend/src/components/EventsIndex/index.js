@@ -11,8 +11,8 @@ export const sortEvents = events => {
     const orderedEvents = events.sort((a, b) => {
         return new Date(a.startDate) - new Date(b.startDate);
     })
-    const pastEvents = events.filter(event => new Date(event.startDate) < currentDate);
-    const upcomingEvents = events.filter(event => new Date(event.startDate) > currentDate);
+    const pastEvents = orderedEvents.filter(event => new Date(event.startDate) < currentDate);
+    const upcomingEvents = orderedEvents.filter(event => new Date(event.startDate) > currentDate);
     const finalEvents =  upcomingEvents.concat(pastEvents);
     return finalEvents;
 }

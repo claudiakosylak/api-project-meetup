@@ -12,6 +12,7 @@
     justify-content: flex-start;
    padding-left: 150px;
     background-color: #E7F2F8;
+    padding-bottom: 50px;
 }
 
 .upcoming-events-inner-wrapper {
@@ -22,5 +23,9 @@
 }
 
 .upcoming-events-inner-wrapper > h2 {
+    margin-bottom: 10px;
+}
+
+.upcoming-events-container > h2 {
     margin-bottom: 10px;
 }
