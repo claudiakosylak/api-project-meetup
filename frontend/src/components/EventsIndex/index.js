@@ -6,36 +6,43 @@ import { Link } from "react-router-dom";
 import EventsIndexItem from "../EventsIndexItem";
 import "./EventsIndex.css";
 
-// export const compareDates = (a, b) => {
-//     return a-b;
-// }
+const sortEvents = events => {
+    const currentDate = new Date();
+    const orderedEvents = events.sort((a, b) => {
+        return new Date(a.startDate) - new Date(b.startDate);
+    })
+    console.log("CURRENT DATE: ", currentDate)
 
-// export const sortEvents = events => {
-//     return events.sort((a, b) => {
-//         // console.log("A START DATE ", Date.now(a.startDate))
-//         // console.log("B START DATE ", Date.now(b.startDate))
-//         return Date.now(a.startDate) - Date.now(b.startDate);
-//     })
-// }
+    const pastEvents = events.filter(event => new Date(event.startDate) < currentDate);
+    console.log("PAST EVENTS: ", pastEvents);
+    const upcomingEvents = events.filter(event => new Date(event.startDate) > currentDate);
+    console.log("UPCOMING EVENTS: ", upcomingEvents)
+    const finalEvents =  upcomingEvents.concat(pastEvents);
+    console.log("FINAL EVENTS: ", finalEvents)
+    return finalEvents;
+}
 
 function EventsIndex() {
     const eventsObj = useSelector(state => state.events.allEvents);
-    const events = Object.values(eventsObj);
     const dispatch = useDispatch();
-    let currentTime = new Date();
-    currentTime = Date.now(currentTime)
-    console.log("UNSORTED EVENTS", events)
-    const sortedEvents = events.sort((a, b) => {
-        return new Date(a.startDate) - new Date(b.startDate)
-    })
-    console.log("SORTED EVENTS: ", sortedEvents)
-    console.log("THIS IS EVENTS SORTED? ", events)
-
-
-
     useEffect(() => {
         dispatch(getEventsThunk())
     }, [dispatch])
+    // if (!eventsObj.id) return null;
+    console.log("EVENTS OBJ: ", eventsObj)
+    const events = Object.values(eventsObj);
+    // let currentTime = new Date();
+    // const sortedEvents = events.sort((a, b) => {
+    //     return new Date(a.startDate) - new Date(b.startDate)
+    // })
+    console.log("EVENTS", events)
+    // const pastEvents = sortedEvents.filter(event => event.startDate < currentTime);
+    // const upcomingEvents = sortedEvents.filter(event => event.startDate > currentTime);
+
+
+
+    let sortedEvents = sortEvents(events);
+    console.log("SORTED EVENTS: ", sortedEvents)
 
     return (
         <div className="events-wrapper-wrapper">
@@ -47,7 +54,7 @@ function EventsIndex() {
                 </nav>
                 <p className="groups-subheader">Events in ReadUp</p>
                 <ul className="groups-index-list-container">
-                    {sortedEvents.map((event) => (
+                    {sortedEvents?.map((event) => (
                         <EventsIndexItem
                             event={event}
                             key={event.id}
