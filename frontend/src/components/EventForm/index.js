@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { createEventImageThunk, createEventThunk } from "../../store/events";
 import { useHistory } from "react-router-dom";
+import "./EventForm.css";
 
 const EventForm = ({ event, formType, group }) => {
     const dispatch = useDispatch()
@@ -80,11 +81,13 @@ const EventForm = ({ event, formType, group }) => {
     }
 
     return (
+        <div className="event-form-wrapper">
+
         <form onSubmit={handleSubmit}>
             <div className="form-section">
-                <h2>Create an event for {group.name}</h2>
+                <h2 id="event-form-title">Create an event for {group.name}</h2>
                 <p className="form-text">What is the name of your event?</p>
-                <input className="form-inputs"
+                <input className="form-inputs-event"
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
@@ -108,11 +111,13 @@ const EventForm = ({ event, formType, group }) => {
                     <p className="errors">{errors.type}</p>
                 )}
                 <br />
+                <br />
                 <p className="form-text">What is the price for your event?</p>
                 <input className="form-price"
                     type="number"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
+                    placeholder="0"
                 />
                 {(hasSubmitted && errors.price) && (
                     <p className="errors">{errors.price}</p>
@@ -129,6 +134,7 @@ const EventForm = ({ event, formType, group }) => {
                            {(hasSubmitted && errors.startDate) && (
                             <p className="errors">{errors.startDate}</p>
                         )}
+                        <br /><br />
                 <p className="form-text">When does your event end?</p>
                 <input className="form-dates"
                     type="datetime-local"
@@ -141,7 +147,7 @@ const EventForm = ({ event, formType, group }) => {
             </div>
             <div className="form-section">
                 <p className="form-text">Please add an image url for your event below:</p>
-                <input className="form-inputs"
+                <input className="form-inputs-event"
                     type="text"
                     value={imageUrl}
                     onChange={(e) => setImageUrl(e.target.value)}
@@ -153,7 +159,7 @@ const EventForm = ({ event, formType, group }) => {
             </div>
             <div className="form-section">
                 <p className="form-text">Please describe your event:</p>
-                <textarea className="form-inputs form-description"
+                <textarea className="form-inputs-event form-description"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     placeholder="Please include at least 30 characters"
@@ -164,6 +170,7 @@ const EventForm = ({ event, formType, group }) => {
             </div>
             <button type="submit" className="event-form-submit-button">Create Event</button>
         </form>
+        </div>
     )
 }
 

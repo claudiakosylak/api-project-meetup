@@ -46,6 +46,10 @@ const GroupDetailsIndex = () => {
             <GroupDetailDescription group={group} />
             <div className="upcoming-events">
                 <div className="upcoming-events-inner-wrapper">
+                    {(numberUpcomingEvents + numberPastEvents) === 0 ? (
+                        <h2>No Upcoming Events</h2>
+                    ) : (
+                        <>
 
                     <h2>Events ({numberUpcomingEvents})</h2>
                     <ul className="group-events-list-container">
@@ -65,6 +69,10 @@ const GroupDetailsIndex = () => {
 
                         )}
                     </ul>
+                        </>
+
+                    )}
+
                 </div>
 
             </div>

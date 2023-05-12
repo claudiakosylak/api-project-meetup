@@ -53,7 +53,6 @@ function SignupFormModal() {
       confirmPassword: "Confirm Password field must be the same as the Password field"
     });
   };
-  console.log("ERRORS FROM BACKEND: ", errors)
 
   return (
 
@@ -62,11 +61,11 @@ function SignupFormModal() {
 
       <h1>Sign Up</h1>
 
-          {errors.firstName && <p>{errors.firstName}</p>}
-          {errors.lastName && <p>{errors.lastName}</p>}
-          {errors.email && <p>{errors.email}</p>}
-          {errors.username && <p>{errors.username}</p>}
-          {errors.password && <p>{errors.password}</p>}
+          {errors.firstName && <p className="errors">{errors.firstName}</p>}
+          {errors.lastName && <p className="errors">{errors.lastName}</p>}
+          {errors.email && <p className="errors">{errors.email}</p>}
+          {errors.username && <p className="errors">{errors.username}</p>}
+          {errors.password && <p className="errors">{errors.password}</p>}
       <form onSubmit={handleSubmit}>
         <label>
           First Name
