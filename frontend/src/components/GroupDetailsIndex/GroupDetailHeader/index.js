@@ -21,7 +21,7 @@ const GroupDetailHeader = ({ group, numberEvents, user }) => {
 
                     <p>{"<"}</p><Link to="/groups">Groups</Link>
                 </div>
-                <div ><img src={groupPreviewImage.url} className="group-image-placeholder-details-page" alt="Main group image"></img></div>
+                <div ><img src={groupPreviewImage.url} className="group-image-placeholder-details-page"></img></div>
 
             </div>
             <div className="group-detail-text-container-details-page">
