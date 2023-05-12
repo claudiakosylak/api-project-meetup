@@ -106,3 +106,9 @@
 .event-page-group-title {
     color: black;
 }
+
+.update-delete-buttons {
+    display: flex;
+    gap: 15px;
+    font-size: 15px;
+}

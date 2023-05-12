@@ -50,7 +50,7 @@ const EventDetailsIndex = () => {
             <div className="event-header">
                 <p className="events-caret">{"<"}<Link to="/events">Events</Link></p>
                 <h2 className="event-page-title">{event.name}</h2>
-                <p>Organized by: {group?.Organizer?.firstName} {group?.Organizer?.lastName}</p>
+                <p>Hosted by: {group?.Organizer?.firstName} {group?.Organizer?.lastName}</p>
             </div>
             </div>
             <div className="event-details-middle-section">
@@ -79,12 +79,19 @@ const EventDetailsIndex = () => {
                             <i class="fa-sharp fa-solid fa-map-pin"></i>
                             <p>{event.type}</p>
                             {(sessionUser && sessionUser.id === group.Organizer.id) && (
+                                <div className="update-delete-buttons">
+
+                                    <button className="event-delete-button">Update</button>
+
                                 <div className="event-delete-button">
                                     <OpenModalMenuItem
                                         itemText="Delete"
                                         modalComponent={<DeleteEventModal event={event} groupId={group.id}/>}
                                     />
                                 </div>
+
+                                </div>
+
                             )}
                         </div>
                     </div>
