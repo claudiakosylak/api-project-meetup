@@ -16,20 +16,14 @@ const EventDetailsIndex = () => {
     const event = useSelector(state => state.events.currentEvent);
     const group = useSelector(state => state.groups.currentGroup);
 
-
-    console.log("THE EVENT, ", event)
-
-    console.log("THE GROUP: ", group)
-
     useEffect(() => {
-        console.log("EVENT IN USEEFFECT: ", event);
         dispatch(getEventThunk(eventId)).then((receivedEvent) => dispatch(getGroupThunk(receivedEvent.groupId)));
     }, [dispatch, eventId])
 
     if (!eventId) return null;
     if (!event.id) return null;
-    // if (!event.EventImages) return null;
     if (!group.id) return null;
+
     let splitStartDate = event.startDate.split("T");
     const startDay = splitStartDate[0];
     let startTime = splitStartDate[1];
@@ -41,8 +35,9 @@ const EventDetailsIndex = () => {
     const cleanedEndTime = timeCleaner(endTime);
 
 
-    const eventPreviewImage = event?.EventImages?.find(image => image.preview === true)
-    const groupPreviewImage = group?.GroupImages.find(image => image.preview = true)
+    const eventPreviewImage = event?.EventImages?.find(image => image.preview === true);
+    const groupPreviewImage = group?.GroupImages.find(image => image.preview === true);
+
     return (
         <div className="event-details-page-container">
             <div className="event-header-wrapper">
@@ -50,7 +45,7 @@ const EventDetailsIndex = () => {
             <div className="event-header">
                 <p className="events-caret">{"<"}<Link to="/events">Events</Link></p>
                 <h2 className="event-page-title">{event.name}</h2>
-                <p>Hosted by: {group?.Organizer?.firstName} {group?.Organizer?.lastName}</p>
+                <p className="event-host">Hosted by: {group?.Organizer?.firstName} {group?.Organizer?.lastName}</p>
             </div>
             </div>
             <div className="event-details-middle-section">
@@ -60,24 +55,27 @@ const EventDetailsIndex = () => {
                         <img className="event-group-image-placeholder" src={groupPreviewImage?.url}></img>
                         <div className="event-group-info-text">
                             <p className="event-page-group-title">{event?.Group?.name}</p>
-                            <p>{event?.Group?.private ? "Private" : "Public"}</p>
+                            <p className="group-priv">{event?.Group?.private ? "Private" : "Public"}</p>
                         </div>
                     </Link>
                     <div className="event-micro-details">
                         <div className="event-time-details">
                             <i className="fa-regular fa-clock"></i>
                             <div className="start-end-time">
-                                <p>START {startDay} • {cleanedStartTime}</p>
-                                <p>END {endDay} • {cleanedEndTime}</p>
+                                <p><span className="grey-micro">START</span> {startDay} • {cleanedStartTime}</p>
+                                <p><span className="grey-micro">END  </span>   {endDay} • {cleanedEndTime}</p>
                             </div>
                         </div>
                         <div className="event-price">
-                            <i className="fa-thin fa-circle-dollar"></i>
-                            <p>${event.price}</p>
+                            <p className="fa-circle-dollar">$</p>
+                            {event.price === 0 ? (
+                                <p>FREE</p>
+                            ):  <p>{event.price}</p>}
+
                         </div>
                         <div className="event-location-details">
                             <i class="fa-sharp fa-solid fa-map-pin"></i>
-                            <p>{event.type}</p>
+                            <p className= "event-type-micro-text">{event.type}</p>
                             {(sessionUser && sessionUser.id === group.Organizer.id) && (
                                 <div className="update-delete-buttons">
 

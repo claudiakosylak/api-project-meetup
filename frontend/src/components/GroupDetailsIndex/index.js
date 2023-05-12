@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { getGroupThunk } from "../../store/groups";
 import GroupDetailHeader from "./GroupDetailHeader";
 import "./GroupDetailsIndex.css";
@@ -21,7 +21,7 @@ export const sortPastUpcomingEvents = events => {
 const GroupDetailsIndex = () => {
     const sessionUser = useSelector(state => state.session.user);
     const dispatch = useDispatch();
-    const {groupId} = useParams();
+    const { groupId } = useParams();
     const group = useSelector(state => state.groups.currentGroup)
     const eventsObj = useSelector(state => state.events.currentGroupEvents)
     const events = Object.values(eventsObj)
@@ -43,25 +43,28 @@ const GroupDetailsIndex = () => {
                 numberEvents={numberUpcomingEvents + numberPastEvents}
                 user={sessionUser}
             />
-            <GroupDetailDescription group={group}/>
+            <GroupDetailDescription group={group} />
             <div className="upcoming-events">
                 <div className="upcoming-events-inner-wrapper">
 
-            <h2>Events ({numberUpcomingEvents})</h2>
-            <ul className="group-events-list-container">
-                <div className="upcoming-events-container">
-                {sortedEvents[0]?.map(event => (
-                    <GroupEventItem event={event} key={event.id} />
-                ))}
+                    <h2>Events ({numberUpcomingEvents})</h2>
+                    <ul className="group-events-list-container">
+                        <div className="upcoming-events-container">
+                            {sortedEvents[0]?.map(event => (
+                                <GroupEventItem event={event} key={event.id} />
+                            ))}
 
-                </div>
-                <div className="upcoming-events-container">
-                    <h2>Past Events ({numberPastEvents})</h2>
-                    {sortedEvents[1]?.map(event => (
-                    <GroupEventItem event={event} key={event.id} />
-                ))}
-                </div>
-            </ul>
+                        </div>
+                        {sortedEvents[1].length && (
+                            <div className="upcoming-events-container">
+                                <h2>Past Events ({numberPastEvents})</h2>
+                                {sortedEvents[1]?.map(event => (
+                                    <GroupEventItem event={event} key={event.id} />
+                                ))}
+                            </div>
+
+                        )}
+                    </ul>
                 </div>
 
             </div>

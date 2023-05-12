@@ -75,4 +75,15 @@
 
 .upper-profile-icon-group {
     display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.upper-profile-icon-group > p {
+    color: darkgrey;
+    font-size: 20px;
+}
+
+.down-caret {
+    margin-bottom: 5px;
 }
