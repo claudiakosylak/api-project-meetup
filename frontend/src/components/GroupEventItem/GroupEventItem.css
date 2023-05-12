@@ -2,6 +2,7 @@
     width: 150px;
     height: 100px;
     background-color: green;
+    margin-left: 15px;
 }
 
 .event-item-top-half {
@@ -11,9 +12,12 @@
 .event-item-container-box {
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 20px 20px 20px 0;
     text-decoration: none;
     color: black;
+    background-color: white;
+    border-radius: 20px;
+    margin-bottom: 15px;
 }
 
 .event-item-top-half-text {
