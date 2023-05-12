@@ -42,7 +42,27 @@ module.exports = {
         price: 5,
         startDate: new Date("2023-07-31T03:24:00"),
         endDate: new Date("2023-08-31T03:24:00")
-      }
+      },
+      {
+        groupId: 3,
+        name: "Own the Day Own Your Life",
+        description: "We're going to be speaking about chapters one through four and how we've been able to implement some of the advice in our lives.",
+        type: "Online",
+        capacity: 100,
+        price: 5,
+        startDate: new Date("2023-01-31T03:24:00"),
+        endDate: new Date("2023-02-31T03:24:00")
+      },
+      {
+        groupId: 2,
+        name: "A Game of Thrones",
+        description: "We're going to begin reading the first book in the series for those who are new. We will discuss the different plotlines and how they deviate from the movies.",
+        type: "Online",
+        capacity: 100,
+        price: 5,
+        startDate: new Date("2022-12-31T03:24:00"),
+        endDate: new Date("2022-12-31T03:25:00")
+      },
     ], {})
   },
 
