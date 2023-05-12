@@ -59,7 +59,7 @@ const GroupDetailsIndex = () => {
                             ))}
 
                         </div>
-                        {sortedEvents[1].length && (
+                        {sortedEvents[1].length > 0 && (
                             <div className="upcoming-events-container">
                                 <h2>Past Events ({numberPastEvents})</h2>
                                 {sortedEvents[1]?.map(event => (
