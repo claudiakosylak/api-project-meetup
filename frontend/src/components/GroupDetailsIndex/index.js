@@ -7,6 +7,7 @@ import "./GroupDetailsIndex.css";
 import GroupDetailDescription from "./GroupDetailDescription";
 import { getGroupEventsThunk } from "../../store/events";
 import GroupEventItem from "../GroupEventItem";
+import { sortEvents } from "../EventsIndex";
 
 
 const GroupDetailsIndex = () => {
@@ -17,6 +18,8 @@ const GroupDetailsIndex = () => {
     const eventsObj = useSelector(state => state.events.currentGroupEvents)
     const events = Object.values(eventsObj)
     const numberEvents = events.length;
+
+    let sortedEvents = sortEvents(events);
 
     useEffect(() => {
         dispatch(getGroupThunk(groupId));
@@ -36,7 +39,7 @@ const GroupDetailsIndex = () => {
 
             <h2>Events: {numberEvents}</h2>
             <ul className="group-events-list-container">
-                {events?.map(event => (
+                {sortedEvents?.map(event => (
                     <GroupEventItem event={event} key={event.id} />
                 ))}
             </ul>

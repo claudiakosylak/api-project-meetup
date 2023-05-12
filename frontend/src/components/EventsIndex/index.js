@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import EventsIndexItem from "../EventsIndexItem";
 import "./EventsIndex.css";
 
-const sortEvents = events => {
+export const sortEvents = events => {
     const currentDate = new Date();
     const orderedEvents = events.sort((a, b) => {
         return new Date(a.startDate) - new Date(b.startDate);
@@ -18,7 +18,7 @@ const sortEvents = events => {
     const upcomingEvents = events.filter(event => new Date(event.startDate) > currentDate);
     console.log("UPCOMING EVENTS: ", upcomingEvents)
     const finalEvents =  upcomingEvents.concat(pastEvents);
-    console.log("FINAL EVENTS: ", finalEvents)
+    console.log("FINAL EVENTS: ", finalEvents);
     return finalEvents;
 }
 
