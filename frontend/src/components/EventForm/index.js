@@ -134,7 +134,7 @@ const EventForm = ({ event, formType, group }) => {
                            {(hasSubmitted && errors.startDate) && (
                             <p className="errors">{errors.startDate}</p>
                         )}
-                        <br /><br />
+                        <br /><br></br>
                 <p className="form-text">When does your event end?</p>
                 <input className="form-dates"
                     type="datetime-local"
