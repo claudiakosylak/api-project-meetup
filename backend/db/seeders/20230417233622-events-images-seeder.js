@@ -40,7 +40,18 @@ module.exports = {
         eventId: 3,
         url: "https://images.unsplash.com/photo-1614813231574-843cb1fb940b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
         preview: false
+      },
+      {
+        eventId: 4,
+        url: "https://images.unsplash.com/photo-1489410342162-b4b300a0bb15?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
+        preview: true
+      },
+      {
+        eventId: 5,
+        url: "https://images.unsplash.com/photo-1570449041836-d29d89a22bc8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+        preview: true
       }
+
     ], {})
   },
 

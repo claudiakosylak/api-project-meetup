@@ -96,7 +96,7 @@ const EventDetailsIndex = () => {
                 </div>
             </div>
             <div className="event-details-bottom-section">
-                <h3>Details</h3>
+                <h3>Description</h3>
                 <p>{event.description}</p>
             </div>
         </div >
