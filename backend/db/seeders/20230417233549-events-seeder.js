@@ -17,7 +17,7 @@ module.exports = {
         description: "What lies in the forbidden section? Bring your most dangerous ideas and curiosities about the wizarding world and we will explore.",
         type: "In Person",
         capacity: 20,
-        price: 20,
+        price: 0,
         startDate: new Date("2023-05-31T03:24:00"),
         endDate: new Date("2023-06-31T03:24:00")
       },
