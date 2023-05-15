@@ -68,7 +68,7 @@ const EventDetailsIndex = () => {
                         </div>
                         <div className="event-price">
                             <p className="fa-circle-dollar">$</p>
-                            {event.price === 0 ? (
+                            {(event.price === 0 || event.price === "0") ? (
                                 <p>FREE</p>
                             ):  <p>{event.price}</p>}
 
