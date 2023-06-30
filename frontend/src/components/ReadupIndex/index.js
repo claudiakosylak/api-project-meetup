@@ -22,10 +22,22 @@ function ReadupIndex() {
                     <p className="introduction-sub-text">
                     Welcome to readUp, the ultimate destination for book lovers and avid readers! Join our vibrant online community and unlock a world of literary connections.
                     </p>
+                    {!sessionUser && (
+                <div className="join-readup-button">
+                    <OpenModalMenuItem
+                        itemText="Join ReadUp"
+                        modalComponent={<SignupFormModal />}
+
+                    />
+                </div>
+                // <button className="join-readup-button">Join ReadUp</button>
+            )}
                 </div>
                 <img src={readingClipArt} alt="Boy reading a book" className="reading-clip-art"></img>
             </div>
             <div className="how-readup-works-wrapper">
+                <br></br>
+                <br></br>
                 <h3 className="how-readup-works-title">How ReadUp works</h3>
                 <p id="how-description">Meet new people who share your literary interests through online and in-person events. It’s free to create an account.</p>
             </div>

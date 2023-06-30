@@ -87,3 +87,7 @@
 .down-caret {
     margin-bottom: 5px;
 }
+
+.fa-angle-up, .fa-angle-down:hover {
+    cursor: pointer;
+}
