@@ -8,17 +8,20 @@ const GroupForm = ({ group, formType }) => {
     const dispatch = useDispatch()
     const types = ["In Person", "Online"];
     const history = useHistory();
-    let groupLocation = "";
-    if (group.city && group.state) {
-        groupLocation = `${group.city}, ${group.state}`;
-    }
+    // let groupLocation = "";
+    // if (group.city && group.state) {
+    //     groupLocation = `${group.city}, ${group.state}`;
+    // }
+    const states = ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"]
 
     const [name, setName] = useState(group.name ? group.name : "");
     const [about, setAbout] = useState(group.about ? group.about : "");
     const [type, setType] = useState(group.type ? group.type : "");
     const [privateStatus, setPrivateStatus] = useState((group.private === true) ? "true"
         : (group.private === false) ? "false" : "");
-    const [location, setLocation] = useState(groupLocation ? groupLocation : "");
+    // const [location, setLocation] = useState(groupLocation ? groupLocation : "");
+    const [city, setCity] = useState(group.city ? group.city : "")
+    const [state, setState] = useState(group.state ? group.state : "")
     const [imageUrl, setImageUrl] = useState("");
     const [errors, setErrors] = useState({});
     const [hasSubmitted, setHasSubmitted] = useState(false);
@@ -26,15 +29,20 @@ const GroupForm = ({ group, formType }) => {
     useEffect(() => {
         const errors = {};
         if (!name.length) errors["name"] = "Name is required";
-        if (about.length < 30) errors["about"] = "Description must be at least 30 characters long";
-        if (!location.length) errors["location"] = "Location is required";
+        if (name.length > 30) errors["name"] = "Name must be under 30 characters long.";
+        if (about.length < 30) errors["about"] = "Description must be at least 30 characters long.";
+        if (about.length > 300) errors["about"] = "Description can be a maximum of 30 characters long."
+        // if (!location.length) errors["location"] = "Location is required";
+        if (!city.length) errors["city"] = "City is required.";
+        if (city.length > 30) errors["city"] = "City length must be less than 30 characters."
+        if (!state.length) errors["state"] = "State is required.";
         if (formType === "Create Group" && imageUrl.slice(imageUrl.length - 4) !== ".png" &&
             imageUrl.slice(imageUrl.length - 4) !== ".jpg" &&
             imageUrl.slice(imageUrl.length - 5) !== ".jpeg") errors["imageUrl"] = "Image URL must end in .png, .jpg or .jpeg";
         if (!type.length) errors["type"] = "Group type is required";
         if (!privateStatus) errors["privateStatus"] = "Visibility type is required";
         setErrors(errors)
-    }, [name, about, location, imageUrl, type, privateStatus])
+    }, [name, about, city, state, imageUrl, type, privateStatus])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -45,9 +53,9 @@ const GroupForm = ({ group, formType }) => {
         if (errorsArray.length) {
             return errors;
         }
-        const locationArray = location.split(", ");
-        const city = locationArray[0];
-        const state = locationArray[1];
+        // const locationArray = location.split(", ");
+        // const city = locationArray[0];
+        // const state = locationArray[1];
         const groupInfo = {
             ...group,
             name,
@@ -90,7 +98,9 @@ const GroupForm = ({ group, formType }) => {
         setAbout("");
         setType("In Person");
         setPrivateStatus(false);
-        setLocation("");
+        // setLocation("");
+        setCity("");
+        setState("");
         setImageUrl("");
         setHasSubmitted(false);
     }
@@ -117,12 +127,25 @@ const GroupForm = ({ group, formType }) => {
                     <p className="form-text">ReadUp groups meet locally, in person and online. We'll connect you with readers in your area, and more can join you online.</p>
                     <input className="location-input form-inputs"
                         type="text"
-                        value={location}
-                        onChange={(e) => setLocation(e.target.value)}
-                        placeholder="city, STATE"
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                        placeholder="City"
                     />
-                    {(hasSubmitted && errors.location) && (
-                        <p className="errors">{errors.location}</p>
+                    <select className="location-input form-inputs"
+                        id="state-input"
+                        value={state}
+                        onChange={(e) => setState(e.target.value)}
+                    >
+                        <option value="" disabled>State</option>
+                        {states.map(state => (
+                            <option key={state} value={state}>{state}</option>
+                        ))}
+                    </select>
+                    {(hasSubmitted && errors.city) && (
+                        <p className="errors">{errors.city}</p>
+                    )}
+                    {(hasSubmitted && errors.state) && (
+                        <p className="errors">{errors.state}</p>
                     )}
                 </div>
                 {formType === "Create Group" ? (
@@ -222,10 +245,10 @@ const GroupForm = ({ group, formType }) => {
                             placeholder="Image Url"
                         />
 
-                        )}
-                        {(hasSubmitted && errors.imageUrl && formType === "Create Group") && (
-                            <p className="errors">{errors.imageUrl}</p>
-                        )}
+                    )}
+                    {(hasSubmitted && errors.imageUrl && formType === "Create Group") && (
+                        <p className="errors">{errors.imageUrl}</p>
+                    )}
                 </div>
                 {formType === "Create Group" ? (
                     <button type="submit" className="group-form-submit-button">Create group</button>

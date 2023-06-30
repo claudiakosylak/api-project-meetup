@@ -50,8 +50,8 @@ function ProfileButton({ user }) {
         <i className="fas fa-user-circle" />
       </button>
       {showMenu ? (
-        <p>&#8963;</p>
-      ) : <p className="down-caret">&#8964;</p>}
+        <i class="fa-solid fa-angle-up"></i>
+      ) :  <i class="fa-solid fa-angle-down"></i>}
 
     </div>
       <ul className={ulClassName} ref={ulRef}>

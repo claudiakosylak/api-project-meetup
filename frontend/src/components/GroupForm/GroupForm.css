@@ -70,3 +70,8 @@
 .errors {
     color: red;
 }
+
+#state-input {
+    width: 90px;
+    margin-left: 20px;
+}

@@ -680,6 +680,7 @@ router.post("/", requireAuth, async (req, res) => {
     if (!state) errors.state = "State is required";
 
     if (Object.keys(errors).length > 0) {
+        console.log("EROR")
         res.status(400)
         return res.json({
             "message": "Bad Request",
