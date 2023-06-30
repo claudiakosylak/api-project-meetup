@@ -17,6 +17,7 @@ const EventForm = ({ event, formType, group }) => {
     const [imageUrl, setImageUrl] = useState("");
     const [errors, setErrors] = useState({});
     const [hasSubmitted, setHasSubmitted] = useState(false);
+    const currentTime = new Date();
 
     useEffect(() => {
         const errors = {};

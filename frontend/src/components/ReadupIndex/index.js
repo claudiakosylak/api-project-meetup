@@ -20,7 +20,7 @@ function ReadupIndex() {
                         The book club platform - <br />Where books become friendships
                     </h2>
                     <p className="introduction-sub-text">
-                        Lorem ipsum dolor sit amet. Qui impedit repellendus aut quibusdam ducimus et error deleniti non tempora temporibus ut quis magnam et deleniti distinctio non praesentium iste. Est tempore maxime id omnis dolorem quo harum repellendus est nulla accusantium id veritatis deleniti qui beatae illum! A eligendi maxime aut ullam asperiores est voluptas sint.
+                    Welcome to readUp, the ultimate destination for book lovers and avid readers! Join our vibrant online community and unlock a world of literary connections.
                     </p>
                 </div>
                 <img src={readingClipArt} alt="Boy reading a book" className="reading-clip-art"></img>
