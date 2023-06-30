@@ -34,6 +34,11 @@
     width: 100%;
 }
 
+#how-description {
+    width: 60%;
+    margin-top: 10px;
+}
+
 .how-readup-works-title {
     font-size: 35px;
 }

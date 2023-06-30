@@ -27,18 +27,18 @@ function ReadupIndex() {
             </div>
             <div className="how-readup-works-wrapper">
                 <h3 className="how-readup-works-title">How ReadUp works</h3>
-                <p>This is a description of how this site works and how you can use it</p>
+                <p id="how-description">Immerse yourself in a diverse collection of book clubs tailored to various genres, interests, and themes. Whether you're a fan of gripping thrillers, timeless classics, thought-provoking non-fiction, or imaginative fantasy, there's a book club waiting for you. Attend an even to engage in lively discussions, exchange recommendations, and uncover hidden gems with like-minded individuals who appreciate the power of a good book.</p>
             </div>
             <div className="home-bottom-wrapper">
                 <div className="home-bottom-section">
                     <img src={seeGroupsImage} alt="high five" className="home-bottom-images"></img>
                     <h4 className="home-bottom-header"><Link to="/groups" className="home-bottom-link">See all groups</Link></h4>
-                    <p className="home-bottom-description">This is a description of what will happen if you click here to look</p>
+                    <p className="home-bottom-description">Read what you love, meet others who love it, find your community. The rest is history!</p>
                 </div>
                 <div className="home-bottom-section">
                     <img src={findEventImage} alt="Man and woman with book" className="home-bottom-images"></img>
                     <h4 className="home-bottom-header"><Link to="/events" className="home-bottom-link">Find an event</Link></h4>
-                    <p className="home-bottom-description">This is a description of what will happen if you click here to look</p>
+                    <p className="home-bottom-description">Events are happening on just about any topic you can think of, from Harry Potter and young adult fiction to self-help and non-fiction.</p>
                 </div>
                 <div className="home-bottom-section">
                     <img src={startGroupImage} alt="Group of friends" className="home-bottom-images"></img>
@@ -49,7 +49,7 @@ function ReadupIndex() {
                             <span className="logged-out-make-group-link">Start a new group</span>
                         )}
                     </h4>
-                    <p className="home-bottom-description">This is a description of what will happen if you click here to look</p>
+                    <p className="home-bottom-description">You don’t have to be an expert to gather people together and explore shared readinginterests.</p>
                 </div>
             </div>
             {!sessionUser && (
