@@ -18,15 +18,21 @@ const EventForm = ({ event, formType, group }) => {
     const [errors, setErrors] = useState({});
     const [hasSubmitted, setHasSubmitted] = useState(false);
     const currentTime = new Date();
+    const startDateCompare = new Date(startDate);
+    const endDateCompare = new Date(endDate);
 
     useEffect(() => {
         const errors = {};
         if (!name.length) errors["name"] = "Name is required";
+        if (name.length > 30) errors["name"] = "Name must be less than 30 characters long"
         if (!type.length) errors["type"] = "Event Type is required";
         if (price === "") errors["price"] = "Price is required";
         if (startDate === "") errors["startDate"] = "Event start is required";
+        if (startDateCompare < currentTime) errors["startDate"] = "Event start date must be in the future";
+        if (endDateCompare < currentTime || endDateCompare < startDateCompare) errors["endDate"] = "Event end date must be after the start date, in the future";
         if (endDate === "") errors["endDate"] = "Event end is required";
         if (description.length < 30) errors["description"] = "Description must be at least 30 characters long";
+        if (description.length > 300) errors["description"] = "Description must be under 300 characters long";
         if (formType === "Create Event" && imageUrl.slice(imageUrl.length - 4) !== ".png" &&
             imageUrl.slice(imageUrl.length - 4) !== ".jpg" &&
             imageUrl.slice(imageUrl.length - 5) !== ".jpeg") errors["imageUrl"] = "Image URL must end in .png, .jpg or .jpeg";
