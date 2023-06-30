@@ -68,7 +68,7 @@ function LoginFormModal() {
           />
         </label>
 
-        <button type="submit" className={buttonDisable ? "disabled-login-button" : "modal-login-button"} disabled={buttonDisable}>Log In</button>
+        <button type="submit" className={buttonDisable ? "disabled-signup-button" : "signup-submit-button"} disabled={buttonDisable}>Log In</button>
       </form>
       <div className="demo-user-login-link" onClick={demoUserLogin}>
         Log in as Demo User
