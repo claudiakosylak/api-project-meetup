@@ -49,10 +49,12 @@ const EventDetailsIndex = () => {
             </div>
             </div>
             <div className="event-details-middle-section">
-                <img className="event-details-page-image-placeholder" src={eventPreviewImage?.url}></img>
+                <img className="event-details-page-image-placeholder" src={eventPreviewImage?.url}
+                onError={e => { e.currentTarget.src = "https://t4.ftcdn.net/jpg/04/00/24/31/360_F_400243185_BOxON3h9avMUX10RsDkt3pJ8iQx72kS3.jpg" }} ></img>
                 <div className="event-details-right-info">
                     <Link to={`/groups/${event.groupId}`} className="event-group-chunk">
-                        <img className="event-group-image-placeholder" src={groupPreviewImage?.url}></img>
+                        <img className="event-group-image-placeholder" src={groupPreviewImage?.url}
+                        onError={e => { e.currentTarget.src = "https://t4.ftcdn.net/jpg/04/00/24/31/360_F_400243185_BOxON3h9avMUX10RsDkt3pJ8iQx72kS3.jpg" }} ></img>
                         <div className="event-group-info-text">
                             <p className="event-page-group-title">{event?.Group?.name}</p>
                             <p className="group-priv">{event?.Group?.private ? "Private" : "Public"}</p>

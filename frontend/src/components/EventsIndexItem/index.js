@@ -32,7 +32,8 @@ const EventsIndexItem = ({ event }) => {
     return (
         <Link to={`/events/${event.id}`} className="events-index-item-container">
             <div className="event-index-top">
-                <img className="group-image-placeholder" src={event.previewImage}></img>
+                <img className="group-image-placeholder" src={event.previewImage}
+                onError={e => { e.currentTarget.src = "https://t4.ftcdn.net/jpg/04/00/24/31/360_F_400243185_BOxON3h9avMUX10RsDkt3pJ8iQx72kS3.jpg" }} ></img>
                 <div className="event-index-text-container">
                     <div className="under-groups-text-container"><p>{startDay} • {cleanedStartTime}</p>
                     </div>
