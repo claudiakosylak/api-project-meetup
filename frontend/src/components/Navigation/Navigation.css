@@ -34,6 +34,7 @@
     display: flex;
     list-style-type: none;
     align-items: center;
+    gap: 10px;
 }
 
 .right-nav-link {
@@ -90,4 +91,23 @@
 
 .fa-angle-up, .fa-angle-down:hover {
     cursor: pointer;
+}
+
+#signup-top-right-button {
+    /* margin: 20px 0px 50px 0px; */
+    width: 100px;
+    background-color: #1699b3;
+    color: white;
+    padding: 7px 0;
+    border: none;
+    font-size: 14px;
+    border: 2px solid black;
+    text-align: center;
+    font-weight: 600;
+    border-radius: 10px;
+}
+
+#signup-top-right-button:hover {
+    cursor: pointer;
+    background-color: #30b0c9;
 }

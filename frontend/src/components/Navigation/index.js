@@ -66,7 +66,7 @@ function Navigation({ isLoaded }) {
                             modalComponent={<LoginFormModal />}
                         />
                     </li>
-                    <li className="right-nav-link">
+                    <li className="right-nav-link" id="signup-top-right-button">
                         <OpenModalMenuItem
                             itemText="Sign Up"
                             onItemClick={closeMenu}
