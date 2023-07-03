@@ -8,5 +8,9 @@
     "sequelize-cli": "npm run --prefix backend sequelize-cli",
     "start": "npm start --prefix backend",
     "build": "npm run build --prefix backend"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1409.0",
+    "boto3": "^0.0.1"
   }
 }
