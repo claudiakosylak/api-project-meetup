@@ -12,6 +12,7 @@
     width: 180px;
     background-color: red;
     margin-right: 5px;
+    object-fit: cover;
 }
 
 .group-index-text-container {
