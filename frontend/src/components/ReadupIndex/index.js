@@ -33,7 +33,8 @@ function ReadupIndex() {
                 // <button className="join-readup-button">Join ReadUp</button>
             )}
                 </div>
-                <img src={readingClipArt} alt="Boy reading a book" className="reading-clip-art"></img>
+                <img src={readingClipArt} alt="Boy reading a book" className="reading-clip-art"
+                onError={e => { e.currentTarget.src = "https://t4.ftcdn.net/jpg/04/00/24/31/360_F_400243185_BOxON3h9avMUX10RsDkt3pJ8iQx72kS3.jpg" }} ></img>
             </div>
             <div className="how-readup-works-wrapper">
                 <br></br>

@@ -5,6 +5,7 @@
     text-decoration: none;
     cursor: pointer;
     height: 150px;
+    width: 100%;
 }
 
 .group-image-placeholder {
@@ -12,13 +13,15 @@
     width: 180px;
     background-color: red;
     margin-right: 5px;
+    object-fit: cover;
 }
 
 .group-index-text-container {
     display: flex;
     flex-direction: column;
-    padding-left: 10px;
+    padding-left: 20px;
     justify-content: space-between;
+    width: 500px;
 }
 
 .under-groups-text-container {
@@ -31,7 +34,7 @@
 }
 
 .group-index-about {
-    width: 350px;
+    width: 100%;
     color: black;
 }
 

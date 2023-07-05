@@ -37,11 +37,17 @@
 }
 
 .form-inputs {
-    background-color: #E7F2F8;
+    background-color: white;
     width: 30%;
-    border: 2px solid black;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
     margin-bottom: 5px;
-    padding: 5px;
+    padding: 10px;
+    height: 40px;
+}
+
+.form-inputs:focus {
+    outline: none;
 }
 
 .form-description {
@@ -49,23 +55,35 @@
 }
 
 .form-dropdowns {
-    background-color: #E7F2F8;
+    background-color: white;
     color: darkgrey;
-    border: 2px solid black;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+    height: 40px;
+}
+
+.form-dropdowns:focus {
+    outline: none;
 }
 
 .group-form-submit-button {
-    background-color: #FFA384;
+    margin: 20px 0px 50px 0px;
+    width: 140px;
+    /* align-self: center; */
+    background-color: #1699b3;
     color: white;
-    margin: 20px 0 50px 0;
-    height: 40px;
-    width: 120px;
-    box-shadow: 3px 3px black;
+    padding: 10px;
+    border: none;
     font-size: 17px;
+    border: 2px solid black;
+    text-align: center;
+    font-weight: 600;
+    border-radius: 10px;
 }
 
 .group-form-submit-button:hover {
     cursor: pointer;
+    background-color: #30b0c9;
 }
 .errors {
     color: red;
@@ -74,4 +92,5 @@
 #state-input {
     width: 90px;
     margin-left: 20px;
+    color: darkgrey;
 }
