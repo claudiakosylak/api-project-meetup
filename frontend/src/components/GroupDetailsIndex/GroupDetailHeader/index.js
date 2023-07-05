@@ -18,7 +18,7 @@ const GroupDetailHeader = ({ group, numberEvents, user }) => {
             <div className="group-left-container">
                 <div className="back-groups-link">
 
-                    <p>{"<"}</p><Link to="/groups">Groups</Link>
+                    <Link to="/groups" id="go-back-groups"><i class="fa-solid fa-angle-left"></i> Groups</Link>
                 </div>
                 <div ><img src={groupPreviewImage.url} className="group-image-placeholder-details-page"
                 onError={e => { e.currentTarget.src = "https://t4.ftcdn.net/jpg/04/00/24/31/360_F_400243185_BOxON3h9avMUX10RsDkt3pJ8iQx72kS3.jpg" }} ></img></div>

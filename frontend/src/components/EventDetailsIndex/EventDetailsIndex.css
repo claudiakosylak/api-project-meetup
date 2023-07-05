@@ -20,36 +20,53 @@
 }
 
 .event-details-page-image-placeholder {
-    width: 400px;
-    height: 250px;
-    background-color: red;
+    width: 40%;
+    height: 100%;
+    border-radius: 10px;
+    object-fit: cover;
 }
 
-.event-details-middle-section {
+.event-details-main-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #E7F2F8;
+    padding-top: 20px;
+    width: 100%;
+}
+
+.event-details-middle-top {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    height: 300px;
+    width: 100%;
+}
+
+/* .event-details-middle-section {
     display: flex;
     background-color: #E7F2F8;
     gap: 15px;
    padding-top: 20px;
    justify-content: flex-start;
    padding-bottom: 20px;
-   padding-left: 150px;
-}
+} */
 
 .event-group-image-placeholder {
     width: 90px;
     height: 55px;
-    background-color: blue;
+    border-radius: 10px;
+    object-fit: cover;
 }
 .event-group-chunk {
     display: flex;
     background-color: white;
     border-radius: 20px;
-    width: 300px;
-    height: 90px;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 15px;
     text-decoration: none;
+    padding: 20px;
 }
 
 .event-time-details {
@@ -96,15 +113,16 @@
     justify-content: center;
     background-color: white;
     border-radius: 20px;
-    height: 145px;
     gap: 15px;
-   padding-left: 20px;
+   padding: 20px;
 }
 
 .event-details-right-info {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    width: 30%;
+    height: 100%;
 }
 
 .grey-micro {
@@ -114,7 +132,7 @@
 .event-time-details {
     display: flex;
     gap: 10px;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 
@@ -128,6 +146,9 @@
     background-color: #E7F2F8;
     height: 300px;
     padding-left: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .event-details-bottom-section > h3 {
@@ -168,4 +189,12 @@
 .event-host {
     color: darkgrey;
     padding-bottom: 25px;
+}
+
+.time-block {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    font-weight: 600;
 }
