@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { timeCleaner } from "../EventsIndexItem";
 import "./GroupEventItem.css";
-
+import { dateTransformer } from "../EventsIndexItem";
+import { cleanedDateString } from "../EventsIndexItem";
 
 
 const GroupEventItem = ({event}) => {
@@ -17,7 +18,7 @@ const GroupEventItem = ({event}) => {
                 <img className="main-event-pic-placeholder" src={event.previewImage}
                 onError={e => { e.currentTarget.src = "https://t4.ftcdn.net/jpg/04/00/24/31/360_F_400243185_BOxON3h9avMUX10RsDkt3pJ8iQx72kS3.jpg" }} ></img>
                 <div className="event-item-top-half-text">
-                    <p>{startDay} • {cleanedStartTime}</p>
+                    <p id="group-event-date">{cleanedDateString(dateTransformer(event.startDate))}</p>
                     <h3 className="event-list-title">{event.name}</h3>
                     <p className="group-event-type">{event.type}</p>
                 </div>

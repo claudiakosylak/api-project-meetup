@@ -10,16 +10,17 @@
 .upcoming-events {
     display: flex;
     justify-content: flex-start;
-   padding-left: 150px;
     background-color: #E7F2F8;
     padding-bottom: 50px;
+    width: 100%;
 }
 
 .upcoming-events-inner-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    width: 600px;
+    align-self: flex-start;
+    width: 100%;
 }
 
 .upcoming-events-inner-wrapper > h2 {
@@ -28,4 +29,13 @@
 
 .upcoming-events-container > h2 {
     margin-bottom: 10px;
+}
+
+.group-details-bottom-half {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    padding: 0 200px;
+    background-color: #E7F2F8;
 }
