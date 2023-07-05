@@ -24,3 +24,7 @@
 .event-type-text {
     color: darkgrey;
 }
+
+#event-start-time-list {
+    font-weight: 600;
+}
