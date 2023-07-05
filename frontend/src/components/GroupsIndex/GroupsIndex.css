@@ -4,6 +4,8 @@
     align-items: flex-start;
     border-bottom: 2px solid lightgrey;
     margin-top: 50px;
+    margin-bottom: 50px;
+    width: 800px;
 }
 
 .groups-wrapper-wrapper {
@@ -35,4 +37,8 @@
 
 .inactive-group-event-tab {
     color: darkgrey;
+}
+
+.groups-index-list-container {
+    width: 100%;
 }
