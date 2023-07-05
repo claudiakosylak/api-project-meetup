@@ -27,8 +27,6 @@ const UpdateGroupForm = () => {
      return null;
     }
 
-    console.log("UPDATE GROUP PRELOAD: ", group)
-
     return (
 
             <GroupForm

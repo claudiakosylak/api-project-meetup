@@ -8,7 +8,6 @@ const GroupDetailHeader = ({ group, numberEvents, user }) => {
     if (!group.Organizer) return null;
 
     const groupPreviewImage = group.GroupImages.find(image => image.preview = true)
-    console.log("THE PREVIEW IMAGE: ", groupPreviewImage)
 
     const joinComingSoon = (e) => {
         return alert("Feature coming soon!")
