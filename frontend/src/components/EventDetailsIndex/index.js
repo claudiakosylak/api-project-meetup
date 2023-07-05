@@ -88,7 +88,7 @@ const EventDetailsIndex = () => {
                                 {(sessionUser && sessionUser.id === group.Organizer.id) && (
                                     <div className="update-delete-buttons">
 
-                                        <button className="event-delete-button">Update</button>
+                                        {/* <button className="event-delete-button">Update</button> */}
 
                                         <div className="event-delete-button">
                                             <OpenModalMenuItem
