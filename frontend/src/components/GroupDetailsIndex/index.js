@@ -43,36 +43,39 @@ const GroupDetailsIndex = () => {
                 numberEvents={numberUpcomingEvents + numberPastEvents}
                 user={sessionUser}
             />
-            <GroupDetailDescription group={group} />
-            <div className="upcoming-events">
-                <div className="upcoming-events-inner-wrapper">
-                    {(numberUpcomingEvents + numberPastEvents) === 0 ? (
-                        <h2>No Upcoming Events</h2>
-                    ) : (
-                        <>
+            <div className="group-details-bottom-half">
 
-                    <h2>Events ({numberUpcomingEvents})</h2>
-                    <ul className="group-events-list-container">
-                        <div className="upcoming-events-container">
-                            {sortedEvents[0]?.map(event => (
-                                <GroupEventItem event={event} key={event.id} />
-                            ))}
+                <GroupDetailDescription group={group} />
+                <div className="upcoming-events">
+                    <div className="upcoming-events-inner-wrapper">
+                        {(numberUpcomingEvents + numberPastEvents) === 0 ? (
+                            <h2>No Upcoming Events</h2>
+                        ) : (
+                            <>
 
-                        </div>
-                        {sortedEvents[1].length > 0 && (
-                            <div className="upcoming-events-container">
-                                <h2>Past Events ({numberPastEvents})</h2>
-                                {sortedEvents[1]?.map(event => (
-                                    <GroupEventItem event={event} key={event.id} />
-                                ))}
-                            </div>
+                                <h2>Upcoming Events ({numberUpcomingEvents})</h2>
+                                <ul className="group-events-list-container">
+                                    <div className="upcoming-events-container">
+                                        {sortedEvents[0]?.map(event => (
+                                            <GroupEventItem event={event} key={event.id} />
+                                        ))}
+
+                                    </div>
+                                    {sortedEvents[1].length > 0 && (
+                                        <div className="upcoming-events-container">
+                                            <h2>Past Events ({numberPastEvents})</h2>
+                                            {sortedEvents[1]?.map(event => (
+                                                <GroupEventItem event={event} key={event.id} />
+                                            ))}
+                                        </div>
+
+                                    )}
+                                </ul>
+                            </>
 
                         )}
-                    </ul>
-                        </>
 
-                    )}
-
+                    </div>
                 </div>
 
             </div>

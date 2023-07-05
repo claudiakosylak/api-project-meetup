@@ -23,12 +23,9 @@ function EventsIndex() {
     useEffect(() => {
         dispatch(getEventsThunk())
     }, [dispatch])
-    console.log("EVENTS OBJ: ", eventsObj)
     const events = Object.values(eventsObj);
-    console.log("EVENTS", events)
 
     let sortedEvents = sortEvents(events);
-    console.log("SORTED EVENTS: ", sortedEvents)
 
     return (
         <div className="events-wrapper-wrapper">

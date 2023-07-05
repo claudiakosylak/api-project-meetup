@@ -47,9 +47,7 @@ const GroupForm = ({ group, formType }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setHasSubmitted(true);
-        console.log(errors)
         const errorsArray = Object.values(errors);
-        console.log(errorsArray)
         if (errorsArray.length) {
             return errors;
         }

@@ -1,8 +1,8 @@
 .main-event-pic-placeholder {
     width: 150px;
     height: 100px;
-    background-color: green;
     margin-left: 15px;
+    border-radius: 10px;
 }
 
 .event-item-top-half {
@@ -18,10 +18,15 @@
     background-color: white;
     border-radius: 20px;
     margin-bottom: 15px;
+    width: 100%;
 }
 
 .event-item-top-half-text {
     display: flex;
     flex-direction: column;
     margin-left: 10px;
+}
+
+#group-event-date {
+    font-weight: 600;
 }
