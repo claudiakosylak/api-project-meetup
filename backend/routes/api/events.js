@@ -261,7 +261,7 @@ router.put("/:eventId/attendance", requireAuth, async (req, res) => {
 
 })
 
-// gets all events the current user is attending 
+// gets all events the current user is attending
 
 router.get("/current", requireAuth, async (req, res) => {
     const attendances = await Attendance.findAll({
@@ -277,6 +277,20 @@ router.get("/current", requireAuth, async (req, res) => {
     const events = attendances.map(attendance => {
         return attendance.Event;
     })
+
+    for (let event of events) {
+        const prevImage = await EventImage.findOne({
+            where: {
+                eventId: event.id,
+                preview: true
+            }
+        })
+        if (prevImage) {
+            event.dataValues.previewImage = prevImage.url;
+        } else {
+            event.dataValues.previewImage = null;
+        }
+    }
 
     return res.json({ "Events": events })
 })
