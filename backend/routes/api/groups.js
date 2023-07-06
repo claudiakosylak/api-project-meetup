@@ -602,6 +602,12 @@ router.post("/:groupId/events", requireAuth, async (req, res) => {
         endDate: endDateUsable
     })
 
+    // const newAttendance = await Attendance.create({
+    //     userId: req.user.id,
+    //     eventId: newEvent.id,
+    //     status: "attending"
+    // })
+
     return res.json({
         "id": newEvent.id,
         // "venueId": newEvent.venueId,
