@@ -88,7 +88,7 @@ const EventForm = ({ event, formType, group }) => {
     return (
         <div className="event-form-wrapper">
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="event-form">
             <div className="form-section">
                 <h2 id="event-form-title">Create an event for {group.name}</h2>
                 <p className="form-text">What is the name of your event?</p>

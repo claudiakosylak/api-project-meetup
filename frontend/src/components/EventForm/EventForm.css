@@ -1,12 +1,15 @@
 .event-form-wrapper {
     display: flex;
     justify-content: center;
+    margin-top: 30px;
 }
 
 
-.event-form-wrapper > form {
-    width: 50%;
-    margin-top: 15px;
+.event-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 80%;
 }
 
 #event-form-title {
@@ -16,40 +19,67 @@
 }
 
 .form-inputs-event {
-    background-color: #E7F2F8;
-    width: 300px;
-    border: 2px solid black;
+    background-color: white;
+    width: 30%;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
     margin-bottom: 5px;
-    padding: 5px;
+    padding: 10px;
+    height: 40px;
+}
+
+.form-inputs-event:focus {
+    outline: none;
 }
 
 .form-price {
-    background-color: #E7F2F8;
+    background-color:white;
     width: 70px;
-    border: 2px solid black;
+    border: 1px solid lightgrey;
     margin-bottom: 5px;
     padding: 5px 0 5px 5px;
     text-align: right;
+    border-radius: 10px;
+}
+
+.form-price:focus {
+    outline: none;
 }
 
 .form-dates {
-    background-color: #E7F2F8;
+    background-color: white;
     width: 180px;
-    border: 2px solid black;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
     margin-bottom: 5px;
     padding: 5px;
 }
 
+.form-dates:focus {
+    outline: none;
+}
+
 .event-form-submit-button {
-    background-color: #FFA384;
+    margin: 20px 0px 50px 0px;
+    width: 140px;
+    /* align-self: center; */
+    background-color: #1699b3;
     color: white;
-    margin: 20px 0 50px 0;
-    height: 40px;
-    width: 120px;
-    box-shadow: 3px 3px black;
+    padding: 10px;
+    border: none;
     font-size: 17px;
+    border: none;
+    text-align: center;
+    font-weight: 600;
+    border-radius: 10px;
 }
 
 .event-form-submit-button:hover {
     cursor: pointer;
+    background-color: #30b0c9;
+}
+
+.form-description {
+    height: 200px;
+    width: 400px;
 }
