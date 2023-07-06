@@ -118,7 +118,7 @@ router.post("/:eventId/attendance", requireAuth, async (req, res) => {
     const newAttendance = await Attendance.create({
         userId: req.user.id,
         eventId: eventId,
-        status: "pending"
+        status: "attending"
     })
 
     return res.json({
@@ -260,6 +260,14 @@ router.put("/:eventId/attendance", requireAuth, async (req, res) => {
     })
 
 })
+
+// router.get("/current", requireAuth, async (req, res) => {
+//     const events = await Event.findAll({
+//         where: {
+
+//         }
+//     })
+// })
 
 router.get("/:eventId", async (req, res) => {
     const { eventId } = req.params;
