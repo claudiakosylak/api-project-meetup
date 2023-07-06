@@ -4,12 +4,13 @@ import { useParams } from "react-router-dom";
 import { getEventThunk } from "../../store/events";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getGroupThunk } from "../../store/groups";
+import { getCurrentUserGroupsThunk, getGroupThunk } from "../../store/groups";
 import { timeCleaner } from "../EventsIndexItem";
 import DeleteEventModal from "../DeleteEventModal";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import { dateTransformer } from "../EventsIndexItem";
 import { cleanedDateString } from "../EventsIndexItem";
+import { getEventAttendeesThunk } from "../../store/attendances";
 
 
 const EventDetailsIndex = () => {
@@ -18,10 +19,34 @@ const EventDetailsIndex = () => {
     const { eventId } = useParams();
     const event = useSelector(state => state.events.currentEvent);
     const group = useSelector(state => state.groups.currentGroup);
+    const attendances = useSelector(state => state.attendees.attendees);
+    const userGroups = useSelector(state => state.groups.currentUserGroups);
+    console.log("ATTENDANCES: ", attendances)
+    console.log("USER GROUPS: ", userGroups)
+    console.log("GROUP: ", group)
+
+    let attendeeSet = new Set();
+    for (let attendee in attendances) {
+        attendeeSet.add(`${attendee}`)
+    }
+    let userGroupSet = new Set();
+    for (let group in userGroups) {
+        userGroupSet.add(`${group}`)
+    }
+
+    console.log("USER GORUP SET: ", userGroupSet)
+
+    console.log("ATTENDANCE HAS: ", attendeeSet.has(`${sessionUser.id}`))
+    console.log("GROUPS HAS: ", userGroupSet.has(`${group.id}`))
 
     useEffect(() => {
         dispatch(getEventThunk(eventId)).then((receivedEvent) => dispatch(getGroupThunk(receivedEvent.groupId)));
     }, [dispatch, eventId])
+
+    useEffect(() => {
+        dispatch(getEventAttendeesThunk(eventId))
+        dispatch(getCurrentUserGroupsThunk())
+    }, [dispatch])
 
     if (!eventId) return null;
     if (!event.id) return null;
@@ -98,7 +123,12 @@ const EventDetailsIndex = () => {
                                         </div>
 
                                     </div>
-
+                                )}
+                                {(!attendeeSet.has(`${sessionUser.id}`) && userGroupSet.has(`${group.id}`)) && (
+                                    <button className="join-group-button">Attend</button>
+                                )}
+                                {!userGroupSet.has(`${group.id}`) && (
+                                    <p>Join the group to attend this event!</p>
                                 )}
                             </div>
                         </div>

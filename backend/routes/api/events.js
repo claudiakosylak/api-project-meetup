@@ -118,7 +118,7 @@ router.post("/:eventId/attendance", requireAuth, async (req, res) => {
     const newAttendance = await Attendance.create({
         userId: req.user.id,
         eventId: eventId,
-        status: "pending"
+        status: "attending"
     })
 
     return res.json({
