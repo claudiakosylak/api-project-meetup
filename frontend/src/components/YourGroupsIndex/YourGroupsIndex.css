@@ -1,0 +1,34 @@
+#your-groups-header {
+    margin-bottom: 20px;
+}
+
+.havent-joined-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+#havent-joined {
+    font-size: 20px;
+}
+
+#explore-groups-button {
+    margin: 20px 0px 50px 0px;
+    /* align-self: center; */
+    background-color: #1699b3;
+    color: white;
+    padding: 10px;
+    border: none;
+    font-size: 17px;
+    border: none;
+    text-align: center;
+    font-weight: 600;
+    border-radius: 10px;
+    text-decoration: none;
+}
+
+#explore-groups-button:hover {
+    cursor: pointer;
+    background-color: #30b0c9;
+}

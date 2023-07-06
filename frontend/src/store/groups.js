@@ -162,6 +162,29 @@ export const createMembershipThunk = (groupId) => async dispatch => {
     }
 }
 
+// deletes a membership / lets user leave a group
+export const deleteMembershipThunk = (groupId, memberId) => async dispatch => {
+    const res = await csrfFetch(`/api/groups/${groupId}/membership`, {
+        method: "DELETE",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            "memberId": memberId
+        })
+    })
+    if (res.ok) {
+        const success = await res.json();
+        const res2 = await fetch("/api/groups/current")
+        if (res2.ok) {
+            const currGroups = await res2.json();
+            await dispatch(getCurrentUserGroupsAction(currGroups))
+        }
+        return success;
+    } else {
+        const err = await res.json();
+        return err;
+    }
+}
+
 
 // reducer here
 
