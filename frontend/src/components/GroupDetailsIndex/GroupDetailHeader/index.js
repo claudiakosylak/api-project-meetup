@@ -5,6 +5,7 @@ import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { createMembershipThunk, getCurrentUserGroupsAction, getCurrentUserGroupsThunk } from "../../../store/groups";
+import LeaveGroupModal from "../../LeaveGroupModal";
 
 const GroupDetailHeader = ({ group, numberEvents, user }) => {
     const dispatch = useDispatch();
@@ -38,7 +39,7 @@ const GroupDetailHeader = ({ group, numberEvents, user }) => {
                     <Link to="/groups" id="go-back-groups"><i class="fa-solid fa-angle-left"></i> Groups</Link>
                 </div>
                 <div ><img src={groupPreviewImage.url} className="group-image-placeholder-details-page"
-                onError={e => { e.currentTarget.src = "https://t4.ftcdn.net/jpg/04/00/24/31/360_F_400243185_BOxON3h9avMUX10RsDkt3pJ8iQx72kS3.jpg" }} ></img></div>
+                    onError={e => { e.currentTarget.src = "https://t4.ftcdn.net/jpg/04/00/24/31/360_F_400243185_BOxON3h9avMUX10RsDkt3pJ8iQx72kS3.jpg" }} ></img></div>
 
             </div>
             <div className="group-detail-text-container-details-page">
@@ -61,16 +62,23 @@ const GroupDetailHeader = ({ group, numberEvents, user }) => {
 
                         <div className="admin-group-button">
                             <OpenModalMenuItem
-                            itemText="Delete"
-                            modalComponent={<DeleteGroupModal className="modal-container-delete" groupId={group.id}/>}
-                        /></div>
+                                itemText="Delete"
+                                modalComponent={<DeleteGroupModal className="modal-container-delete" groupId={group.id} />}
+                            /></div>
                     </div>
                 )}
                 {(!userGroupsSet.has(`${group.id}`)) && (
 
                     <button className="join-group-button"
-                    onClick={createMembership}
+                        onClick={createMembership}
                     >Join this group</button>
+                )}
+                {(userGroupsSet.has(`${group.id}`) && user && user.id !== group.Organizer.id) && (
+                    <div className="admin-group-button">
+                        <OpenModalMenuItem
+                            itemText="Leave Group"
+                            modalComponent={<LeaveGroupModal className="modal-container-delete" groupId={group.id}/>}/>
+                    </div>
                 )}
 
             </div>
