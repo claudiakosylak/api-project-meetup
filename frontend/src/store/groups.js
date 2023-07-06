@@ -6,6 +6,7 @@ const GET_GROUP = "groups/getGroup";
 const UPDATE_GROUP = "groups/updateGroup";
 const DELETE_GROUP = "groups/deleteGroup";
 const CREATE_GROUP_IMAGE = "groups/createGroupImage";
+const GET_CURRENT_USER_GROUPS = "groups/getCurrentUserGroups";
 //actions here
 
 export const getGroupsAction = groups => ({
@@ -29,18 +30,33 @@ export const deleteGroupAction = groupId => ({
 })
 
 export const createGroupImageAction = (group, image) => ({
-    TYPE: CREATE_GROUP_IMAGE,
+    type: CREATE_GROUP_IMAGE,
     group,
     image
 })
 
+export const getCurrentUserGroupsAction = (groups) => ({
+    type: GET_CURRENT_USER_GROUPS,
+    groups
+})
+
 // thunks here
 
+// gets all groups that exist
 export const getGroupsThunk = () => async (dispatch) => {
     const res = await fetch("/api/groups");
     const allGroups = await res.json();
     if (res.ok) {
         await dispatch(getGroupsAction(allGroups))
+    }
+}
+
+// gets all groups the user is an organizer or member of
+export const getCurrentUserGroupsThunk = () => async dispatch => {
+    const res = await fetch("/api/groups/current");
+    const userGroups = await res.json();
+    if (res.ok) {
+        await dispatch(getCurrentUserGroupsAction(userGroups))
     }
 }
 
@@ -125,33 +141,39 @@ export const createGroupImageThunk = (group, image) => async dispatch => {
 // reducer here
 
 
-const initialState = {allGroups: {}, currentGroup: {}};
+const initialState = {allGroups: {}, currentGroup: {}, currentUserGroups: {}};
 
 const groupsReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_GROUPS:
-            const groupsState = { ...state, allGroups: {}, currentGroup: {} };
+            const groupsState = { ...state, allGroups: {}, currentGroup: {}, currentUserGroups: {...state.currentUserGroups}};
             action.groups.Groups.forEach(group => {
                 groupsState.allGroups[group.id] = group;
             });
             return groupsState;
         case GET_GROUP:
-            const newState = {...state, allGroups: {}, currentGroup: {}};
+            const newState = {...state, allGroups: {}, currentGroup: {}, currentUserGroups: {...state.currentUserGroups}};
             newState.currentGroup = action.group;
             return newState;
         case UPDATE_GROUP:
-            const updateGroupState = {...state, allGroups: {...state.allGroups}, currentGroup: {...state.currentGroup}}
+            const updateGroupState = {...state, allGroups: {...state.allGroups}, currentGroup: {...state.currentGroup}, currentUserGroups: {...state.currentUserGroups}}
             updateGroupState.currentGroup = action.group;
             return updateGroupState;
         case DELETE_GROUP:
-            const deletedState = {...state, allGroups: {...state.allGroups}, currentGroup: {...state.currentGroup}};
+            const deletedState = {...state, allGroups: {...state.allGroups}, currentGroup: {...state.currentGroup}, currentUserGroups: {...state.currentUserGroups}};
             delete deletedState.allGroups[action.groupId];
             return deletedState;
         case CREATE_GROUP_IMAGE:
-            const preCreateState = {...state, allGroups: {}, currentGroup: {}};
+            const preCreateState = {...state, allGroups: {}, currentGroup: {}, currentGroup: {...state.currentUserGroups}};
             preCreateState.currentGroup = action.group;
             preCreateState.currentGroup.GroupImages[0] = action.image;
             return preCreateState;
+        case GET_CURRENT_USER_GROUPS:
+            const currState = {...state, allGroups: {...state.allGroups}, currentGroup: {...state.currentGroup}, currentUserGroups: {}}
+            action.groups.Groups.forEach(group => {
+                currState.currentUserGroups[group.id] = group;
+            });
+            return currState;
         default:
             return state;
     }
