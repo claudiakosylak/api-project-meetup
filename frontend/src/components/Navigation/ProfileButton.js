@@ -65,8 +65,12 @@ function ProfileButton({ user }) {
 
           </div>
           <div className="middle-dropdown">
-            <Link to="/groups" className="dropdown-groups-link">View groups</Link><br />
-            <Link to="/events" className="dropdown-groups-link">View events</Link>
+            <Link to="/groups/current" className="dropdown-groups-link">Your groups</Link><br />
+            <Link to="/events" className="dropdown-groups-link">Explore events</Link>
+          </div>
+          <div className="middle-dropdown">
+            <Link to="/groups" className="dropdown-groups-link">Explore groups</Link><br />
+            <Link to="/events" className="dropdown-groups-link">Explore events</Link>
           </div>
             <li className="middle-dropdown" id="log-out" onClick={logout}>Log Out
             </li>
