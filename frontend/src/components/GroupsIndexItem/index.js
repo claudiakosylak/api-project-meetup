@@ -13,13 +13,13 @@ const GroupsIndexItem = ({ group, events }) => {
                     <h2 className="group-list-header">{group.name}</h2>
                     <p className="list-location">{group.city}, {group.state}</p>
 
-                    <p className="group-index-about">{group.about.length > 80 ?
-                    (group.about.slice(0, 79)) + "..." : (group.about)
+                    <p className="group-index-about">{group.about.length > 75 ?
+                    (group.about.slice(0, 74)) + "..." : (group.about)
                 }</p>
                     <div className="under-groups-text-container">
                         <p>{groupEvents.length} Events</p>
                         <p>•</p>
-                        <p>{group.private ? "Private" : "Public"}</p>
+                        <p>{group.numMembers} members</p>
                     </div>
                 </div>
             </Link>
