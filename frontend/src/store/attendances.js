@@ -59,6 +59,25 @@ export const getAttendedEventsThunk = () => async dispatch => {
     }
 }
 
+// deletes attendance / allows a user to cancel for an event
+export const deleteAttendanceThunk = (eventId, userId) => async dispatch => {
+    const res = await csrfFetch(`/api/events/${eventId}/attendance`, {
+        method: "DELETE",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            "userId": userId
+        })
+    })
+    if (res.ok){
+        const message = await res.json();
+        await dispatch(getEventAttendeesThunk(eventId))
+        return message;
+    } else {
+        const error = await res.json();
+        return error;
+    }
+}
+
 
 // reducer here
 

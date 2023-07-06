@@ -11,6 +11,7 @@ import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import { dateTransformer } from "../EventsIndexItem";
 import { cleanedDateString } from "../EventsIndexItem";
 import { createAttendanceThunk, getEventAttendeesThunk } from "../../store/attendances";
+import CancelAttendanceModal from "../CancelAttendanceModal";
 
 
 const EventDetailsIndex = () => {
@@ -33,11 +34,6 @@ const EventDetailsIndex = () => {
     for (let group in userGroups) {
         userGroupSet.add(`${group}`)
     }
-
-    console.log("USER GORUP SET: ", userGroupSet)
-
-    console.log("ATTENDANCE HAS: ", attendeeSet.has(`${sessionUser.id}`))
-    console.log("GROUPS HAS: ", userGroupSet.has(`${group.id}`))
 
     useEffect(() => {
         dispatch(getEventThunk(eventId)).then((receivedEvent) => dispatch(getGroupThunk(receivedEvent.groupId)));
@@ -133,6 +129,13 @@ const EventDetailsIndex = () => {
                                 )}
                                 {!userGroupSet.has(`${group.id}`) && (
                                     <p>Join the group to attend this event!</p>
+                                )}
+                                {attendeeSet.has(`${sessionUser.id}`) && (
+                                    <div className="event-delete-button">
+                                        <OpenModalMenuItem
+                                            itemText="Cancel attendance"
+                                            modalComponent={<CancelAttendanceModal eventId={event.id} userId={sessionUser.id}/>}/>
+                                    </div>
                                 )}
                             </div>
                         </div>
