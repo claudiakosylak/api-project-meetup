@@ -90,7 +90,14 @@ router.post("/:eventId/attendance", requireAuth, async (req, res) => {
         }
     })
 
-    if (!membershipAuth) {
+    // const ownerAuth = await Group.findOne({
+    //     where: {
+    //         groupId: event.Group.id,
+    //         organizerId: req.user.id
+    //     }
+    // })
+
+    if (!membershipAuth && event.Group.organizerId !== req.user.id) {
         res.status(403);
         return res.json({ "message": "Forbidden" })
     }

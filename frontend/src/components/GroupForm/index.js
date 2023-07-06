@@ -40,7 +40,7 @@ const GroupForm = ({ group, formType }) => {
             imageUrl.slice(imageUrl.length - 4) !== ".jpg" &&
             imageUrl.slice(imageUrl.length - 5) !== ".jpeg") errors["imageUrl"] = "Image URL must end in .png, .jpg or .jpeg";
         if (!type.length) errors["type"] = "Group type is required";
-        if (!privateStatus) errors["privateStatus"] = "Visibility type is required";
+        if (privateStatus === "") errors["privateStatus"] = "Visibility type is required";
         setErrors(errors)
     }, [name, about, city, state, imageUrl, type, privateStatus])
 

@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { createEventImageThunk, createEventThunk } from "../../store/events";
 import { useHistory } from "react-router-dom";
 import "./EventForm.css";
+import { createAttendanceThunk } from "../../store/attendances";
 
 const EventForm = ({ event, formType, group }) => {
     const dispatch = useDispatch()
@@ -71,6 +72,7 @@ const EventForm = ({ event, formType, group }) => {
                 setErrors(response.errors)
                 return errors;
             } else {
+                dispatch(createAttendanceThunk(response.id))
                 history.push(`/events/${response.id}`)
             }
         }
