@@ -2,8 +2,23 @@ import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import "./GroupDetailHeader.css";
 import DeleteGroupModal from "../../DeleteGroupModal";
 import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getCurrentUserGroupsThunk } from "../../../store/groups";
 
 const GroupDetailHeader = ({ group, numberEvents, user }) => {
+    const dispatch = useDispatch();
+    const userGroupsObj = useSelector(state => state.groups.currentUserGroups)
+    let userGroupsSet = new Set();
+    for (let group in userGroupsObj) {
+        userGroupsSet.add(`${group}`)
+    }
+
+    useEffect(() => {
+        dispatch(getCurrentUserGroupsThunk())
+    }, [dispatch])
+
+    console.log("USER GROUPS HAS: ", userGroupsSet.has(`${group.id}`))
 
     if (!group.Organizer) return null;
 
@@ -49,7 +64,7 @@ const GroupDetailHeader = ({ group, numberEvents, user }) => {
                         /></div>
                     </div>
                 )}
-                {(user && user.id !== group.Organizer.id) && (
+                {(!userGroupsSet.has(`${group.id}`)) && (
 
                     <button className="join-group-button"
                     onClick={joinComingSoon}

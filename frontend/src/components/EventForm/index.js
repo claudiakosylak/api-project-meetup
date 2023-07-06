@@ -23,7 +23,7 @@ const EventForm = ({ event, formType, group }) => {
 
     useEffect(() => {
         const errors = {};
-        if (!name.length) errors["name"] = "Name is required";
+        if (name.length < 5) errors["name"] = "Name must be at least 5 characters";
         if (name.length > 30) errors["name"] = "Name must be less than 30 characters long"
         if (!type.length) errors["type"] = "Event Type is required";
         if (price === "") errors["price"] = "Price is required";
@@ -88,7 +88,7 @@ const EventForm = ({ event, formType, group }) => {
     return (
         <div className="event-form-wrapper">
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="event-form">
             <div className="form-section">
                 <h2 id="event-form-title">Create an event for {group.name}</h2>
                 <p className="form-text">What is the name of your event?</p>
@@ -121,6 +121,7 @@ const EventForm = ({ event, formType, group }) => {
                 <input className="form-price"
                     type="number"
                     value={price}
+                    min = "0"
                     onChange={(e) => setPrice(e.target.value)}
                     placeholder="0"
                 />

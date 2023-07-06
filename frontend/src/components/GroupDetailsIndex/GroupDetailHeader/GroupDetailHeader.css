@@ -70,17 +70,23 @@
 }
 
 .join-group-button {
-    background-color: #FFA384;
-    text-decoration: none;
+    margin: 20px 0px 50px 0px;
+    width: 140px;
+    /* align-self: center; */
+    background-color: #1699b3;
     color: white;
-    padding: 5px 10px;
-    border: 2px solid black;
-    box-shadow: 3px 3px black;
-    width: 200px;
-    height: 45px;
+    padding: 10px;
+    border: none;
+    font-size: 17px;
+    border: none;
+    text-align: center;
+    font-weight: 600;
+    border-radius: 10px;
 }
+
 .join-group-button:hover {
     cursor: pointer;
+    background-color: #30b0c9;
 }
 
 #go-back-groups {

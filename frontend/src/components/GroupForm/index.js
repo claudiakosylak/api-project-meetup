@@ -28,7 +28,7 @@ const GroupForm = ({ group, formType }) => {
 
     useEffect(() => {
         const errors = {};
-        if (!name.length) errors["name"] = "Name is required";
+        if (name.length < 5) errors["name"] = "Name must be at least 5 characters";
         if (name.length > 30) errors["name"] = "Name must be under 30 characters long.";
         if (about.length < 30) errors["about"] = "Description must be at least 30 characters long.";
         if (about.length > 300) errors["about"] = "Description can be a maximum of 30 characters long."

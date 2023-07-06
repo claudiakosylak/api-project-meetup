@@ -326,12 +326,12 @@ router.post("/:groupId/membership", requireAuth, async (req, res) => {
     const newMembership = await Membership.create({
         userId: req.user.id,
         groupId: groupId,
-        status: "pending"
+        status: "member"
     })
 
     return res.json({
         "memberId": req.user.id,
-        "status": "pending"
+        "status": "member"
     })
 
 })
