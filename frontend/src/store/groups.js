@@ -60,6 +60,7 @@ export const getCurrentUserGroupsThunk = () => async dispatch => {
     }
 }
 
+// gets details of a single group
 export const getGroupThunk = (groupId) => async dispatch => {
     const res = await fetch(`/api/groups/${groupId}`);
     if (res.ok) {
@@ -72,6 +73,8 @@ export const getGroupThunk = (groupId) => async dispatch => {
     }
 }
 
+
+// creates a new group
 export const createGroupThunk = (group) => async dispatch => {
     try {
         const res = await csrfFetch("/api/groups", {
@@ -138,6 +141,28 @@ export const createGroupImageThunk = (group, image) => async dispatch => {
         return err;
     }
 }
+
+// creates a new membership / joins a user to a group
+export const createMembershipThunk = (groupId) => async dispatch => {
+    const res = await csrfFetch(`/api/groups/${groupId}/membership`, {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' }
+    })
+    if (res.ok) {
+        const newMembership = await res.json();
+        const res2 = await fetch("/api/groups/current")
+        if (res2.ok) {
+            const currGroups = await res2.json();
+            await dispatch(getCurrentUserGroupsAction(currGroups))
+        }
+        return newMembership;
+    } else {
+        const err = await res.json();
+        return err;
+    }
+}
+
+
 // reducer here
 
 

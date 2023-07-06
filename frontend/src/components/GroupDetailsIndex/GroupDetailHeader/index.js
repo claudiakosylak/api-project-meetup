@@ -4,7 +4,7 @@ import DeleteGroupModal from "../../DeleteGroupModal";
 import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getCurrentUserGroupsThunk } from "../../../store/groups";
+import { createMembershipThunk, getCurrentUserGroupsAction, getCurrentUserGroupsThunk } from "../../../store/groups";
 
 const GroupDetailHeader = ({ group, numberEvents, user }) => {
     const dispatch = useDispatch();
@@ -24,8 +24,10 @@ const GroupDetailHeader = ({ group, numberEvents, user }) => {
 
     const groupPreviewImage = group.GroupImages.find(image => image.preview = true)
 
-    const joinComingSoon = (e) => {
-        return alert("Feature coming soon!")
+    const createMembership = async (e) => {
+        await dispatch(createMembershipThunk(group.id))
+        await dispatch(getCurrentUserGroupsAction())
+        return alert("You are now a member!")
     }
 
     return (
@@ -67,7 +69,7 @@ const GroupDetailHeader = ({ group, numberEvents, user }) => {
                 {(!userGroupsSet.has(`${group.id}`)) && (
 
                     <button className="join-group-button"
-                    onClick={joinComingSoon}
+                    onClick={createMembership}
                     >Join this group</button>
                 )}
 
