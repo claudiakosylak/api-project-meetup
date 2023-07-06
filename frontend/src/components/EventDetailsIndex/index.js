@@ -10,7 +10,7 @@ import DeleteEventModal from "../DeleteEventModal";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import { dateTransformer } from "../EventsIndexItem";
 import { cleanedDateString } from "../EventsIndexItem";
-import { getEventAttendeesThunk } from "../../store/attendances";
+import { createAttendanceThunk, getEventAttendeesThunk } from "../../store/attendances";
 
 
 const EventDetailsIndex = () => {
@@ -65,6 +65,10 @@ const EventDetailsIndex = () => {
 
     const eventPreviewImage = event?.EventImages?.find(image => image.preview === true);
     const groupPreviewImage = group?.GroupImages.find(image => image.preview === true);
+
+    const createAttendance = (e) => {
+        dispatch(createAttendanceThunk(eventId))
+    }
 
     return (
         <div className="event-details-page-container">
@@ -125,7 +129,7 @@ const EventDetailsIndex = () => {
                                     </div>
                                 )}
                                 {(!attendeeSet.has(`${sessionUser.id}`) && userGroupSet.has(`${group.id}`)) && (
-                                    <button className="join-group-button">Attend</button>
+                                    <button className="join-group-button" onClick={createAttendance}>Attend</button>
                                 )}
                                 {!userGroupSet.has(`${group.id}`) && (
                                     <p>Join the group to attend this event!</p>

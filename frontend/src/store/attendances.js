@@ -27,6 +27,19 @@ export const getEventAttendeesThunk = eventId => async dispatch => {
     }
 }
 
+// creates an attendance / allows a user to attend an event
+export const createAttendanceThunk = eventId => async dispatch => {
+    const res = await csrfFetch(`/api/events/${eventId}/attendance`, {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' }
+    })
+    if (res.ok) {
+        const newAttendance = await res.json();
+        await dispatch(getEventAttendeesThunk(eventId))
+        return newAttendance;
+    }
+}
+
 
 // reducer here
 
