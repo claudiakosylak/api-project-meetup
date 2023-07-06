@@ -261,6 +261,8 @@ router.put("/:eventId/attendance", requireAuth, async (req, res) => {
 
 })
 
+// gets all events the current user is attending 
+
 router.get("/current", requireAuth, async (req, res) => {
     const attendances = await Attendance.findAll({
         attributes: ["id", "userId", "eventId"],
