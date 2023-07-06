@@ -21,7 +21,7 @@ router.get("/:eventId/attendees", async (req, res) => {
 
     if (!event) {
         res.status(404);
-        return res.json({"message": "Event couldn't be found"})
+        return res.json({ "message": "Event couldn't be found" })
     }
 
     const attendees = await Attendance.findAll({
@@ -57,10 +57,10 @@ router.get("/:eventId/attendees", async (req, res) => {
     })
 
     if (event.organizerId !== req.user.id && !userMemb) {
-        return res.json({"Attendees": nonAuthResult})
+        return res.json({ "Attendees": nonAuthResult })
     }
 
-    return res.json({"Attendees": userAttendReformat})
+    return res.json({ "Attendees": userAttendReformat })
 })
 
 router.post("/:eventId/attendance", requireAuth, async (req, res) => {
@@ -77,7 +77,7 @@ router.post("/:eventId/attendance", requireAuth, async (req, res) => {
 
     if (!event) {
         res.status(404);
-        return res.json({"message": "Event couldn't be found"})
+        return res.json({ "message": "Event couldn't be found" })
     }
 
     const membershipAuth = await Membership.findOne({
@@ -92,7 +92,7 @@ router.post("/:eventId/attendance", requireAuth, async (req, res) => {
 
     if (!membershipAuth) {
         res.status(403);
-        return res.json({"message": "Forbidden"})
+        return res.json({ "message": "Forbidden" })
     }
 
     const userAttendance = await Attendance.findOne({
@@ -105,12 +105,12 @@ router.post("/:eventId/attendance", requireAuth, async (req, res) => {
     if (userAttendance) {
         if (userAttendance.status === "pending") {
             res.status(400);
-            return res.json({"message": "Attendance has already been requested"})
+            return res.json({ "message": "Attendance has already been requested" })
         }
 
         if (userAttendance.status === "attending" || userAttendance.status === "waitlist") {
             res.status(400);
-            return res.json({"message": "User is already an attendee of the group"})
+            return res.json({ "message": "User is already an attendee of the group" })
         }
 
     }
@@ -143,7 +143,7 @@ router.post("/:eventId/images", requireAuth, async (req, res) => {
 
     if (!event) {
         res.status(404);
-        return res.json({"message": "Event couldn't be found"})
+        return res.json({ "message": "Event couldn't be found" })
     }
 
     const membership = await Membership.findAll({
@@ -164,7 +164,7 @@ router.post("/:eventId/images", requireAuth, async (req, res) => {
 
     if (event.Group.organizerId !== req.user.id && membership.length === 0 && !attendee) {
         res.status(403);
-        return res.json({"message": "Forbidden"})
+        return res.json({ "message": "Forbidden" })
     }
 
     const newImage = await EventImage.create({
@@ -196,12 +196,12 @@ router.put("/:eventId/attendance", requireAuth, async (req, res) => {
 
     if (status === "pending") {
         res.status(400);
-        return res.json({"message": "Cannot change an attendance status to pending"})
+        return res.json({ "message": "Cannot change an attendance status to pending" })
     }
 
     if (!event) {
         res.status(404);
-        return res.json({"message": "Event couldn't be found"})
+        return res.json({ "message": "Event couldn't be found" })
     }
 
     const userMembership = await Membership.findOne({
@@ -245,7 +245,7 @@ router.put("/:eventId/attendance", requireAuth, async (req, res) => {
 
     if (!changedAttendance) {
         res.status(404);
-        return res.json({"message": "Attendance between the user and the event does not exist"})
+        return res.json({ "message": "Attendance between the user and the event does not exist" })
     }
 
     changedAttendance.update({
@@ -261,13 +261,23 @@ router.put("/:eventId/attendance", requireAuth, async (req, res) => {
 
 })
 
-// router.get("/current", requireAuth, async (req, res) => {
-//     const events = await Event.findAll({
-//         where: {
+router.get("/current", requireAuth, async (req, res) => {
+    const attendances = await Attendance.findAll({
+        attributes: ["id", "userId", "eventId"],
+        where: {
+            userId: req.user.id
+        },
+        include: [{
+            model: Event
+        }]
+    });
 
-//         }
-//     })
-// })
+    const events = attendances.map(attendance => {
+        return attendance.Event;
+    })
+
+    return res.json({ "Events": events })
+})
 
 router.get("/:eventId", async (req, res) => {
     const { eventId } = req.params;
@@ -295,7 +305,7 @@ router.get("/:eventId", async (req, res) => {
 
     if (!event) {
         res.status(404);
-        res.json({"message": "Event couldn't be found"})
+        res.json({ "message": "Event couldn't be found" })
     }
 
     const attending = await Attendance.count({
@@ -325,7 +335,7 @@ router.put("/:eventId", requireAuth, async (req, res) => {
 
     if (!event) {
         res.status(404);
-        return res.json({"message": "Event couldn't be found"})
+        return res.json({ "message": "Event couldn't be found" })
     }
 
     const memberships = await Membership.findAll({
@@ -338,7 +348,7 @@ router.put("/:eventId", requireAuth, async (req, res) => {
 
     if (event.Group.organizerId !== req.user.id && memberships.length === 0) {
         res.status(403);
-        return res.json({"message": "Forbidden"})
+        return res.json({ "message": "Forbidden" })
     }
 
     let currentTime = new Date();
@@ -395,8 +405,8 @@ router.put("/:eventId", requireAuth, async (req, res) => {
 })
 
 router.delete("/:eventId/attendance", requireAuth, async (req, res) => {
-    const {eventId} = req.params;
-    const {userId} = req.body;
+    const { eventId } = req.params;
+    const { userId } = req.body;
     const event = await Event.findOne({
         where: {
             id: eventId
@@ -409,7 +419,7 @@ router.delete("/:eventId/attendance", requireAuth, async (req, res) => {
 
     if (!event) {
         res.status(404);
-        return res.json({"message": "Event couldn't be found"})
+        return res.json({ "message": "Event couldn't be found" })
     }
 
     const attendee = await User.findOne({
@@ -423,14 +433,14 @@ router.delete("/:eventId/attendance", requireAuth, async (req, res) => {
         return res.json({
             "message": "Validation Error",
             "errors": {
-              "memberId": "User couldn't be found"
+                "memberId": "User couldn't be found"
             }
         })
     }
 
     if (event.Group.organizerId !== req.user.id && userId !== req.user.id) {
         res.status(403);
-        return res.json({"message": "Only the User or organizer may delete an Attendance"})
+        return res.json({ "message": "Only the User or organizer may delete an Attendance" })
     }
 
     const attendance = await Attendance.findOne({
@@ -442,7 +452,7 @@ router.delete("/:eventId/attendance", requireAuth, async (req, res) => {
 
     if (!attendance) {
         res.status(404);
-        return res.json({"message": "Attendance does not exist for this User"})
+        return res.json({ "message": "Attendance does not exist for this User" })
     }
 
     await Attendance.destroy({
@@ -451,7 +461,7 @@ router.delete("/:eventId/attendance", requireAuth, async (req, res) => {
         }
     })
 
-    return res.json({"message": "Successfully deleted attendance from event"})
+    return res.json({ "message": "Successfully deleted attendance from event" })
 
 })
 
@@ -469,7 +479,7 @@ router.delete("/:eventId", requireAuth, async (req, res) => {
 
     if (!event) {
         res.status(404);
-        return res.json({"message": "Event couldn't be found"})
+        return res.json({ "message": "Event couldn't be found" })
     }
 
     const memberships = await Membership.findAll({
@@ -482,7 +492,7 @@ router.delete("/:eventId", requireAuth, async (req, res) => {
 
     if (event.Group.organizerId !== req.user.id && memberships.length === 0) {
         res.status(403);
-        return res.json({"message": "Forbidden"})
+        return res.json({ "message": "Forbidden" })
     }
 
     await Event.destroy({
@@ -491,7 +501,7 @@ router.delete("/:eventId", requireAuth, async (req, res) => {
         }
     })
 
-    return res.json({"message": "Successfully deleted"})
+    return res.json({ "message": "Successfully deleted" })
 })
 
 router.get("/", async (req, res) => {
@@ -540,10 +550,10 @@ router.get("/", async (req, res) => {
             model: Group,
             attributes: ["id", "name", "city", "state"]
         },
-    {
-        model: Venue,
-        attributes: ["id", "city", "state"]
-    }]
+        {
+            model: Venue,
+            attributes: ["id", "city", "state"]
+        }]
     })
 
     for (let event of events) {
@@ -570,7 +580,7 @@ router.get("/", async (req, res) => {
 
     }
 
-    return res.json({"Events": events});
+    return res.json({ "Events": events });
 })
 
 
