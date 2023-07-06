@@ -17,7 +17,7 @@ module.exports = {
         type: "In Person",
         private: false,
         city: "New York City",
-        state: "NY"
+        state: "New York"
       },
       {
         organizerId: 2,
@@ -26,7 +26,7 @@ module.exports = {
         type: "In Person",
         private: false,
         city: "Los Angeles",
-        state: "CA"
+        state: "California"
       },
       {
         organizerId: 3,
@@ -35,7 +35,7 @@ module.exports = {
         type: "Online",
         private: true,
         city: "Dallas",
-        state: "TX"
+        state: "Texas"
       }
     ], {})
   },
