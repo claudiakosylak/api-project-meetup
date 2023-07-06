@@ -3,12 +3,17 @@
 }
 
 .profile-dropdown {
-    position: fixed;
+    position: absolute;
     right: 20px;
-    border: 2px solid black;
+    border: 1px solid lightgrey;
     background-color: white;
     list-style-type: none;
-    top: 60px;
+    top: 75px;
+    border-radius: 5px;
+    box-shadow: 3px 5px 5px rgba(211, 211, 211, 0.406);
+    width: 200px;
+    padding: 5px;
+    font-size: 14px;
 }
 
 .profile-dropdown > li> button {
@@ -60,18 +65,19 @@
 }
 
 .top-of-dropdown {
-    border-bottom: 2px solid black;
+    border-bottom: 1px solid lightgrey;
     padding: 10px;
 }
 
 .middle-dropdown {
-    border-bottom: 2px solid black;
     padding: 5px 10px;
 }
+
 
 .dropdown-groups-link {
     text-decoration: none;
     color: black;
+    margin: 10px 0;
 }
 
 .upper-profile-icon-group {
@@ -110,4 +116,8 @@
 #signup-top-right-button:hover {
     cursor: pointer;
     background-color: #30b0c9;
+}
+
+#log-out:hover {
+    cursor: pointer;
 }

@@ -41,6 +41,8 @@ function ProfileButton({ user }) {
     history.push("/");
   };
 
+  console.log("SHOW MENU: ", showMenu)
+
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
@@ -66,8 +68,7 @@ function ProfileButton({ user }) {
             <Link to="/groups" className="dropdown-groups-link">View groups</Link><br />
             <Link to="/events" className="dropdown-groups-link">View events</Link>
           </div>
-            <li>
-              <button onClick={logout}>Log Out</button>
+            <li className="middle-dropdown" id="log-out" onClick={logout}>Log Out
             </li>
           </>
         ) : (
