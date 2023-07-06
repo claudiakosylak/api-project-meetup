@@ -46,7 +46,7 @@ const EventDetailsIndex = () => {
             <div className="event-header-wrapper">
 
                 <div className="event-header">
-                    <p className="events-caret">{"<"}<Link to="/events">Events</Link></p>
+                    <Link to="/events" id="go-back-events"><i class="fa-solid fa-angle-left"></i> Events</Link>
                     <h1 className="event-page-title">{event.name}</h1>
                     <p className="event-host">Hosted by: {group?.Organizer?.firstName} {group?.Organizer?.lastName}</p>
                 </div>
