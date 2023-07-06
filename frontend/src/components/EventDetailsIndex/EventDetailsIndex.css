@@ -145,10 +145,11 @@
 .event-details-bottom-section {
     background-color: #E7F2F8;
     height: 300px;
-    padding-left: 150px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    width: 100%;
+    padding: 50px 150px;
 }
 
 .event-details-bottom-section > h3 {
@@ -159,13 +160,14 @@
 .event-delete-button {
     color: white;
     padding: 5px 10px;
-    border: 2px solid black;
-    box-shadow: 3px 3px black;
     background-color: darkgrey;
+    border-radius: 10px;
+    font-weight: 600;
 }
 
 .event-delete-button:hover {
     cursor: pointer;
+    background-color: rgb(139, 139, 139);
 }
 
 .event-page-group-title {
@@ -176,6 +178,8 @@
     display: flex;
     gap: 15px;
     font-size: 15px;
+    justify-content: flex-end;
+    width: 150px;
 }
 
 .group-priv {
@@ -196,5 +200,10 @@
     align-items: center;
     justify-content: space-between;
     gap: 15px;
+    font-weight: 600;
+}
+
+#go-back-events {
+    text-decoration: none;
     font-weight: 600;
 }
