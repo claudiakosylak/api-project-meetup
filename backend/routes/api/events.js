@@ -261,6 +261,14 @@ router.put("/:eventId/attendance", requireAuth, async (req, res) => {
 
 })
 
+// router.get("/current", requireAuth, async (req, res) => {
+//     const events = await Event.findAll({
+//         where: {
+
+//         }
+//     })
+// })
+
 router.get("/:eventId", async (req, res) => {
     const { eventId } = req.params;
 
