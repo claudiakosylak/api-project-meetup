@@ -121,6 +121,7 @@ const EventForm = ({ event, formType, group }) => {
                 <input className="form-price"
                     type="number"
                     value={price}
+                    min = "0"
                     onChange={(e) => setPrice(e.target.value)}
                     placeholder="0"
                 />
