@@ -27,7 +27,7 @@
 
 [Live site available here](https://meetup-api-project-pyx7.onrender.com)
 
-This project, called ReadMe, is a loose clone of the Meetup site. Users can join groups related to certain types of books and use it as a fan club or a book club with certain readings. There are events hosted both online and in person that one could attend when part of a group.
+This project, called ReadMe, is a loose clone of the Meetup site. Users can join groups related to certain types of books and use it as a fan club or a book club with certain readings. One can attend events once they are part of a group to connect with others in the group.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -57,9 +57,13 @@ Follow these instructions to get started:
    ```sh
    git clone https://github.com/claudiakosylak/api-project-meetup.git
    ```
-3. Install NPM packages in both frontend and backend folders
+2. Install NPM packages in both frontend and backend folders
    ```sh
    npm install
+   ```
+3. Start the server in both the frontend and the backend folders
+   ```sh
+   npm start
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -71,7 +75,7 @@ Follow these instructions to get started:
 
 [Front page preview](./images/front-page.png)
 
-One can currently view all available groups and events, join a group, update a group, create a group, delete a group, create an event, delete an event.
+One can currently view all available groups and events, view groups you have joined or started, view events you are attending or hosting, join or leave a group, update a group, create a group, delete a group, create an event, rsvp to attend an event, cancel an rsvp to attend an event, and delete an event. 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -79,10 +83,8 @@ One can currently view all available groups and events, join a group, update a g
 ## Roadmap
 
 - [ ] Add Update Event Feature
-- [ ] Add navigation between pages
-- [ ] Join a group and edit membership
-- [ ] RSVP to attend an event and edit attendees
 - [ ] Link groups and events to venues
+- [ ] AWS S3 Buckets to more easily upload pictures 
 
 See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
 
