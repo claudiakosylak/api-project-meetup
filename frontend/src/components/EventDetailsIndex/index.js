@@ -34,8 +34,6 @@ const EventDetailsIndex = () => {
         userGroupSet.add(`${group}`)
     }
 
-    console.log("LOCATION: ", location)
-
     useEffect(() => {
         dispatch(getEventThunk(eventId)).then((receivedEvent) => dispatch(getGroupThunk(receivedEvent.groupId)));
     }, [dispatch, eventId])
