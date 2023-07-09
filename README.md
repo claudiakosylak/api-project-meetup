@@ -73,7 +73,7 @@ Follow these instructions to get started:
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-[![Front page preview](./images/splash_page.gif)]
+![Front page preview](./images/splash_page.gif)
 
 One can currently view all available groups and events, view groups you have joined or started, view events you are attending or hosting, join or leave a group, update a group, create a group, delete a group, create an event, rsvp to attend an event, cancel an rsvp to attend an event, and delete an event. 
 
