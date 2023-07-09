@@ -65,7 +65,7 @@ Follow these instructions to get started:
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-[Front page preview](./images/front-page.png)
+[![Front page preview](./images/splash_page.gif)]
 
 One can currently view all available groups and events, join a group, update a group, create a group, delete a group, create an event, delete an event.
 
