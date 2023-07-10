@@ -565,7 +565,7 @@ router.get("/", async (req, res) => {
     if (startDate) where.startDate = startDate;
 
     const events = await Event.findAll({
-        attributes: ["id", "groupId", "venueId", "name", "type", "startDate", "endDate"],
+        attributes: ["id", "groupId", "venueId", "name", "description", "type", "startDate", "endDate"],
         where,
         limit: size,
         offset: size * (page - 1),
