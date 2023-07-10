@@ -25,9 +25,20 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
+![Front page preview](./images/splash_page.gif)
+
 [Live site available here](https://meetup-api-project-pyx7.onrender.com)
 
-This project, called ReadMe, is a loose clone of the Meetup site. Users can join groups related to certain types of books and use it as a fan club or a book club with certain readings. One can attend events once they are part of a group to connect with others in the group.
+This project, called ReadMe, is a loose clone of the Meetup site. Users can meetup with other users who are fans of similar book series or have similar reading interests. 
+
+Highlights of features: 
+* Users can create or join a group pertaining to their reading interests
+* Users can update and delete groups they own
+* Users can create or delete events for groups they own
+* Users can join or leave groups they are a member of
+* Users can RSVP to attend or cancel their RSVP for events in groups they are a part of
+* Users can view all of the groups and events they are currently a part of or attending
+* Users can browse all public groups and events on the platform 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -73,9 +84,47 @@ Follow these instructions to get started:
 <!-- USAGE EXAMPLES -->
 ## Usage
 
+### Landing Page
+
+When one lands on the site, users are invited to either join the site or to log in. Upon clicking Log In, users can also log in as a demo user. 
+
 ![Front page preview](./images/splash_page.gif)
 
-One can currently view all available groups and events, view groups you have joined or started, view events you are attending or hosting, join or leave a group, update a group, create a group, delete a group, create an event, rsvp to attend an event, cancel an rsvp to attend an event, and delete an event. 
+### View Groups and Events
+
+Users can browse all groups and events available on the site. When users are logged in, they can access the groups and events they are a part of through the profile menu in the upper right corner. 
+
+![Groups_and_events_indices_preview](./images/groups-events-indices.gif)
+
+### Create a Group
+
+Users can create a group by clicking "Start a new group" to the left of their profile icon on the top right. 
+
+![create_group_preview](./images/create-group.gif)
+
+### Manage Your Group
+
+As an owner of a group, users have the option to create an event for the group, update the group, or delete the group on the group's details page. Any user can view the general details of public groups as well as the past and upcoming events on this page. 
+
+![owned_group_preview](./images/owned-group.gif)
+
+### Create an Event
+
+Users can create events for groups that they own. They can access this form on their group's details page. 
+
+![create_event_preview](./images/create-event.gif)
+
+### Join or Leave a Group
+
+Users can join a group they are not yet a part of on the group's details page. Users can then choose to leave groups they are a part of on the same page. 
+
+![join_leave_group_preview](./images/join-leave-group.gif)
+
+### RSVP for an Event or Cancel RSVP
+
+Users can RSVP to events for groups they are a part of on that event's details page. If they are currently RSVP'd and do not wish to attend anymore, they can cancel their attendance. All users can view details for public events on this page. 
+
+![attend_event_preview](./images/attend-event.gif)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
