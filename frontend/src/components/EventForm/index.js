@@ -66,8 +66,8 @@ const EventForm = ({ event, formType, group }) => {
         }
 
         if (formType === "Create Event") {
-            const response = await dispatch(createEventThunk(eventInfo, group.id))
-            dispatch(createEventImageThunk(response, image))
+            const response = await dispatch(createEventThunk(eventInfo, group.id, image))
+            // dispatch(createEventImageThunk(response, image))
             if (response.errors) {
                 setErrors(response.errors)
                 return errors;

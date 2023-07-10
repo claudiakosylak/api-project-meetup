@@ -68,7 +68,7 @@ export const getEventThunk = (eventId) => async dispatch => {
     }
 }
 
-export const createEventThunk = (event, groupId) => async dispatch => {
+export const createEventThunk = (event, groupId, image) => async dispatch => {
     const res = await csrfFetch(`/api/groups/${groupId}/events`, {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
@@ -77,6 +77,7 @@ export const createEventThunk = (event, groupId) => async dispatch => {
     if (res.ok) {
         const newEvent = await res.json();
         await dispatch(getEventAction(newEvent))
+        await dispatch(createEventImageThunk(newEvent, image))
         return newEvent;
     } else {
         const err = await res.json();
@@ -92,7 +93,7 @@ export const createEventImageThunk = (event, image) => async dispatch => {
     })
     if (res.ok) {
         const newImage = await res.json();
-        await dispatch(createEventImageAction(event, newImage))
+        await dispatch(getEventAction(event))
         return newImage;
     } else {
         const err = await res.json();
