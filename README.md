@@ -52,9 +52,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<div align="center">
 ![Front page preview](./images/splash_page.gif)
-</div>
 
 
 [Live site available here](https://meetup-api-project-pyx7.onrender.com)
@@ -118,57 +116,44 @@ Follow these instructions to get started:
 
 When one lands on the site, users are invited to either join the site or to log in. Upon clicking Log In, users can also log in as a demo user. 
 
-<div align="center">
 ![Front page preview](./images/splash_page.gif)
-</div>
+
 
 ### View Groups and Events
 
 Users can browse all groups and events available on the site. When users are logged in, they can access the groups and events they are a part of through the profile menu in the upper right corner. 
 
-<div align="center">
 ![Groups_and_events_indices_preview](./images/groups-events-indices.gif)
-</div>
 
 ### Create a Group
 
 Users can create a group by clicking "Start a new group" to the left of their profile icon on the top right. 
 
-<div align="center">
 ![create_group_preview](./images/create-group.gif)
-</div>
 
 ### Manage Your Group
 
 As an owner of a group, users have the option to create an event for the group, update the group, or delete the group on the group's details page. Any user can view the general details of public groups as well as the past and upcoming events on this page. 
 
-<div align="center">
 ![owned_group_preview](./images/owned-group.gif)
-</div>
 
 ### Create an Event
 
 Users can create events for groups that they own. They can access this form on their group's details page. 
 
-<div align="center">
 ![create_event_preview](./images/create-event.gif)
-</div>
 
 ### Join or Leave a Group
 
 Users can join a group they are not yet a part of on the group's details page. Users can then choose to leave groups they are a part of on the same page. 
 
-<div align="center">
 ![join_leave_group_preview](./images/join-leave-group.gif)
-</div>
 
 ### RSVP for an Event or Cancel RSVP
 
 Users can RSVP to events for groups they are a part of on that event's details page. If they are currently RSVP'd and do not wish to attend anymore, they can cancel their attendance. All users can view details for public events on this page. 
 
-<div align="center">
 ![attend_event_preview](./images/attend-event.gif)
-</div>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
