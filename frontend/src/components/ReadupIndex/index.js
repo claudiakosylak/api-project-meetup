@@ -77,8 +77,8 @@ function ReadupIndex() {
             )}
                 <footer className="footer-space">
                                 <div className="footer-icons">
-                <a href="https://www.linkedin.com/in/claudiakosylak/"><i class="fa-brands fa-linkedin"></i></a>
-                <a href="https://github.com/claudiakosylak"><i class="fa-brands fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/claudiakosylak/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="https://github.com/claudiakosylak" target="_blank"><i class="fa-brands fa-github"></i></a>
                 </div>
                 <p>Developed by Claudia Kosylak</p>
                 </footer>
