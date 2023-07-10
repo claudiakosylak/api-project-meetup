@@ -1,3 +1,30 @@
+<a name="readme-top"></a>
+
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/claudiakosylak/api-project-meetup.git">
+    <img src="frontend/public/favicon.ico" alt="Logo" width="80" height="80">
+  </a>
+
+<h3 align="center">ReadUp</h3>
+
+  <p align="center">
+    ReadUp is a platform for users to meet up with others with similar reading interests. 
+    <br />
+    <a href="https://github.com/claudiakosylak/api-project-meetup"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://meetup-api-project-pyx7.onrender.com">View Live Site</a>
+    ·
+    <a href="https://github.com/claudiakosylak/api-project-meetup/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/claudiakosylak/api-project-meetup/issues">Request Feature</a>
+  </p>
+</div>
+
+
+
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
