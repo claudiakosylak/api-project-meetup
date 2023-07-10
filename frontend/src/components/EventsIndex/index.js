@@ -21,15 +21,10 @@ export const sortEvents = events => {
 function EventsIndex() {
     const [page, setPage] = useState(1);
     const eventsObj = useSelector(state => state.events.allEvents);
-    const user = useSelector(state => state.session.user);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getEventsThunk(page))
     }, [dispatch, page])
-
-    if (!user) {
-        return <Redirect to="/"/>
-    }
 
     const events = Object.values(eventsObj);
 

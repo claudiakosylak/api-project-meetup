@@ -10,7 +10,6 @@ import { getEventsThunk } from "../../store/events";
 
 function GroupsIndex() {
     const groupsObj = useSelector(state => state.groups.allGroups);
-    const user = useSelector(state => state.session.user);
     const groups = Object.values(groupsObj);
     const dispatch = useDispatch();
     const eventsObj = useSelector(state => state.events.allEvents)
@@ -21,9 +20,6 @@ function GroupsIndex() {
         dispatch(getEventsThunk())
     }, [dispatch])
 
-    if (!user) {
-        return <Redirect to="/"/>
-    }
 
     return (
         <div className="groups-wrapper-wrapper">

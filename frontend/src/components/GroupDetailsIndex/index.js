@@ -36,9 +36,6 @@ const GroupDetailsIndex = () => {
         dispatch(getGroupEventsThunk(groupId));
     }, [dispatch, groupId])
 
-    if (!sessionUser) {
-        return <Redirect to="/"/>
-    }
 
     return (
         <div className="group-details-page-container">
