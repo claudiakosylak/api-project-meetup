@@ -75,7 +75,6 @@ function ReadupIndex() {
                 </div>
                 // <button className="join-readup-button">Join ReadUp</button>
             )}
-            {sessionUser && (
                 <footer className="footer-space">
                                 <div className="footer-icons">
                 <a href="https://www.linkedin.com/in/claudiakosylak/"><i class="fa-brands fa-linkedin"></i></a>
@@ -83,7 +82,6 @@ function ReadupIndex() {
                 </div>
                 <p>Developed by Claudia Kosylak</p>
                 </footer>
-            )}
         </div>
     )
 }
