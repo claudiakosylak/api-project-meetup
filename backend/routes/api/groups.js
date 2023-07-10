@@ -125,7 +125,7 @@ router.get("/:groupId/events", async (req, res) => {
 
 
     const events = await Event.findAll({
-        attributes: ["id", "groupId", "venueId", "name", "type", "startDate", "endDate"],
+        attributes: ["id", "groupId", "venueId", "name", "type", "description", "startDate", "endDate"],
         include: [{
             model: Group,
             attributes: ["id", "name", "city", "state"]

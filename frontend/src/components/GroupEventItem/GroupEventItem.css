@@ -31,3 +31,8 @@
 #group-event-date {
     font-weight: 600;
 }
+
+.group-event-description {
+    margin-top: 10px;
+    word-break: break-word;
+}

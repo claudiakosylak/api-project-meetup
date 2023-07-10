@@ -14,7 +14,7 @@ export const timeCleaner = prevTime => {
     } else if (time[0] === 12) {
         amPM = "PM";
     } else {
-        time[0]-= 12;
+        time[0] -= 12;
         amPM = "PM";
     }
 
@@ -94,12 +94,17 @@ const EventsIndexItem = ({ event }) => {
         <Link to={`/events/${event.id}`} className="events-index-item-container">
             <div className="event-index-top">
                 <img className="group-image-placeholder" src={event.previewImage}
-                onError={e => { e.currentTarget.src = "https://t4.ftcdn.net/jpg/04/00/24/31/360_F_400243185_BOxON3h9avMUX10RsDkt3pJ8iQx72kS3.jpg" }} ></img>
+                    onError={e => { e.currentTarget.src = "https://t4.ftcdn.net/jpg/04/00/24/31/360_F_400243185_BOxON3h9avMUX10RsDkt3pJ8iQx72kS3.jpg" }} ></img>
                 <div className="event-index-text-container">
                     <div className="under-groups-text-container"><p id="event-start-time-list">{cleanedDateString(dateTransformer(event.startDate))}</p>
                     </div>
                     <h2 className="group-list-header">{event.name}</h2>
                     <p className="event-type-text">{event.type}</p>
+                    <p className="group-index-about">{event.description.length > 75 ? (
+                        event.description.slice(0, 74) + "..."
+                    ) : (
+                        event.description
+                    )}</p>
                 </div>
             </div>
         </Link >

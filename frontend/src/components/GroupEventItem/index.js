@@ -21,6 +21,7 @@ const GroupEventItem = ({event}) => {
                     <p id="group-event-date">{cleanedDateString(dateTransformer(event.startDate))}</p>
                     <h3 className="event-list-title">{event.name}</h3>
                     <p className="group-event-type">{event.type}</p>
+                    <p className="group-event-description">{event.description}</p>
                 </div>
             </div>
         </Link>
