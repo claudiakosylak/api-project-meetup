@@ -36,6 +36,7 @@
 .group-index-about {
     width: 100%;
     color: black;
+    word-break: break-word;
 }
 
 .group-list-header {
