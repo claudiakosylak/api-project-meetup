@@ -36,8 +36,8 @@ export const deleteEventAction = eventId => ({
 })
 
 //thunks here
-export const getEventsThunk = () => async (dispatch) => {
-    const res = await fetch("/api/events");
+export const getEventsThunk = (page) => async (dispatch) => {
+    const res = await fetch(`/api/events?page=${page}`);
     if (res.ok) {
         const allEvents = await res.json();
         await dispatch(getEventsAction(allEvents))

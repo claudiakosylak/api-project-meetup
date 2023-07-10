@@ -1,6 +1,7 @@
 .events-wrapper-wrapper {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 .events-wrapper {
@@ -11,4 +12,15 @@
     margin-top: 50px;
     margin-bottom: 50px;
     width: 800px;
+}
+
+.pagination-wrapper {
+    display: flex;
+    margin-bottom: 50px;
+    gap: 50px;
+}
+
+.page-toggle:hover {
+    cursor: pointer;
+    text-decoration: underline;
 }

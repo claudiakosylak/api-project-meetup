@@ -5,6 +5,7 @@ import "../GroupsIndex/GroupsIndex.css";
 import { Link } from "react-router-dom";
 import EventsIndexItem from "../EventsIndexItem";
 import "./EventsIndex.css";
+import { useState } from "react";
 
 export const sortEvents = events => {
     const currentDate = new Date();
@@ -18,11 +19,12 @@ export const sortEvents = events => {
 }
 
 function EventsIndex() {
+    const [page, setPage] = useState(1);
     const eventsObj = useSelector(state => state.events.allEvents);
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getEventsThunk())
-    }, [dispatch])
+        dispatch(getEventsThunk(page))
+    }, [dispatch, page])
     const events = Object.values(eventsObj);
 
     let sortedEvents = sortEvents(events);
@@ -44,6 +46,16 @@ function EventsIndex() {
                         />
                     ))}
                 </ul>
+            </div>
+            <div className="pagination-wrapper">
+                {page > 1 && (
+                    <p className="page-toggle" onClick={() => setPage(page -1)}><i class="fa-solid fa-chevron-left"></i> Previous Page</p>
+                )}
+            <p className="page-counter">Page {page}</p>
+            {events.length === 20 && (
+
+            <p className="page-toggle" onClick={() => setPage(page + 1)}>Next Page <i class="fa-solid fa-chevron-right"></i></p>
+            )}
             </div>
         </div>
     )
