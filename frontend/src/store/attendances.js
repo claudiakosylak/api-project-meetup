@@ -93,7 +93,6 @@ const attendanceReducer = (state = initialState, action) => {
             return newState;
         case GET_ATTENDED_EVENTS:
             const eventState = {...state, attendees: {}, attendedEvents: {}}
-            console.log("ACTION EVENTS IN THUNK: ", action.events)
             action.events.Events.forEach(event => {
                 eventState.attendedEvents[event.id] = event;
             })

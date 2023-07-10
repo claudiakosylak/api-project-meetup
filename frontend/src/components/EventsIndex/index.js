@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getEventsThunk } from "../../store/events";
 import "../GroupsIndex/GroupsIndex.css";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import EventsIndexItem from "../EventsIndexItem";
 import "./EventsIndex.css";
 import { useState } from "react";
@@ -21,10 +21,16 @@ export const sortEvents = events => {
 function EventsIndex() {
     const [page, setPage] = useState(1);
     const eventsObj = useSelector(state => state.events.allEvents);
+    const user = useSelector(state => state.session.user);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getEventsThunk(page))
     }, [dispatch, page])
+
+    if (!user) {
+        return <Redirect to="/"/>
+    }
+
     const events = Object.values(eventsObj);
 
     let sortedEvents = sortEvents(events);

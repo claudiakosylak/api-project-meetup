@@ -12,7 +12,7 @@ import { dateTransformer } from "../EventsIndexItem";
 import { cleanedDateString } from "../EventsIndexItem";
 import { createAttendanceThunk, getEventAttendeesThunk } from "../../store/attendances";
 import CancelAttendanceModal from "../CancelAttendanceModal";
-import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom";
+import { Redirect, useLocation } from "react-router-dom/cjs/react-router-dom";
 
 
 const EventDetailsIndex = () => {
@@ -43,6 +43,9 @@ const EventDetailsIndex = () => {
         dispatch(getCurrentUserGroupsThunk())
     }, [dispatch])
 
+    if (!sessionUser) {
+        return <Redirect to="/"/>
+    }
     if (!eventId) return null;
     if (!event.id) return null;
     if (!group.id) return null;

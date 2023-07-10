@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, Redirect } from "react-router-dom";
 import { getGroupThunk } from "../../store/groups";
 import GroupDetailHeader from "./GroupDetailHeader";
 import "./GroupDetailsIndex.css";
@@ -35,6 +35,10 @@ const GroupDetailsIndex = () => {
         dispatch(getGroupThunk(groupId));
         dispatch(getGroupEventsThunk(groupId));
     }, [dispatch, groupId])
+
+    if (!sessionUser) {
+        return <Redirect to="/"/>
+    }
 
     return (
         <div className="group-details-page-container">

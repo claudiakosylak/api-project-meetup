@@ -4,11 +4,12 @@ import { getCurrentUserGroupsThunk } from "../../store/groups";
 import GroupsIndexItem from "../GroupsIndexItem";
 import { getEventsThunk } from "../../store/events";
 import "./YourGroupsIndex.css";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Link, Redirect } from "react-router-dom/cjs/react-router-dom.min";
 
 
 function YourGroupsIndex() {
     const groupsObj = useSelector(state => state.groups.currentUserGroups);
+    const user = useSelector(state => state.session.user);
     const groups = Object.values(groupsObj);
     const dispatch = useDispatch();
     const eventsObj = useSelector(state => state.events.allEvents)
@@ -18,6 +19,10 @@ function YourGroupsIndex() {
         dispatch(getCurrentUserGroupsThunk())
         dispatch(getEventsThunk())
     }, [dispatch])
+
+    if (!user) {
+        return <Redirect to="/"/>
+    }
 
     return (
         <div className="groups-wrapper-wrapper">
