@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getGroupsThunk } from "../../store/groups";
 import GroupsIndexItem from "../GroupsIndexItem";
 import "./GroupsIndex.css";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { getEventsThunk } from "../../store/events";
 
 
@@ -19,6 +19,7 @@ function GroupsIndex() {
         dispatch(getGroupsThunk())
         dispatch(getEventsThunk())
     }, [dispatch])
+
 
     return (
         <div className="groups-wrapper-wrapper">

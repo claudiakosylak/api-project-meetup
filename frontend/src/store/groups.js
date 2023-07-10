@@ -94,7 +94,7 @@ export const createGroupThunk = (group) => async dispatch => {
         }
 
     } catch(err) {
-        console.log("THIS IS THE CATCH ERR: ", err)
+        return err;
     }
 }
 

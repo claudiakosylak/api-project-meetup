@@ -12,7 +12,7 @@ import { dateTransformer } from "../EventsIndexItem";
 import { cleanedDateString } from "../EventsIndexItem";
 import { createAttendanceThunk, getEventAttendeesThunk } from "../../store/attendances";
 import CancelAttendanceModal from "../CancelAttendanceModal";
-import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom";
+import { Redirect } from "react-router-dom/cjs/react-router-dom";
 
 
 const EventDetailsIndex = () => {
@@ -23,7 +23,6 @@ const EventDetailsIndex = () => {
     const group = useSelector(state => state.groups.currentGroup);
     const attendances = useSelector(state => state.attendees.attendees);
     const userGroups = useSelector(state => state.groups.currentUserGroups);
-    const location = useLocation();
 
     let attendeeSet = new Set();
     for (let attendee in attendances) {

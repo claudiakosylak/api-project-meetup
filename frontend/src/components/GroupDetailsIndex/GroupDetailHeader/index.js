@@ -19,8 +19,6 @@ const GroupDetailHeader = ({ group, numberEvents, user }) => {
         dispatch(getCurrentUserGroupsThunk())
     }, [dispatch])
 
-    console.log("USER GROUPS HAS: ", userGroupsSet.has(`${group.id}`))
-
     if (!group.Organizer) return null;
 
     const groupPreviewImage = group.GroupImages.find(image => image.preview = true)

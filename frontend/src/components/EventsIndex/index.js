@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getEventsThunk } from "../../store/events";
 import "../GroupsIndex/GroupsIndex.css";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import EventsIndexItem from "../EventsIndexItem";
 import "./EventsIndex.css";
 import { useState } from "react";
@@ -25,6 +25,7 @@ function EventsIndex() {
     useEffect(() => {
         dispatch(getEventsThunk(page))
     }, [dispatch, page])
+
     const events = Object.values(eventsObj);
 
     let sortedEvents = sortEvents(events);
